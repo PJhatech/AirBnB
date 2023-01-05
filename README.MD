@@ -1052,8 +1052,8 @@ Return all the bookings for a spot specified by id.
 
 * Require Authentication: true
 * Request
-  * Method: 
-  * URL: ?
+  * Method: GET
+  * URL: /spots/:spotId/bookings
   * Body: none
 
 * Successful Response: If you ARE NOT the owner of the spot.
@@ -1121,8 +1121,8 @@ Create and return a new booking from a spot specified by id.
 * Require Authentication: true
 * Require proper authorization: Spot must NOT belong to the current user
 * Request
-  * Method: ?
-  * URL: ?
+  * Method: POST
+  * URL: /spots/:spotId/booking/createBooking
   * Body:
 
     ```json
@@ -1203,8 +1203,8 @@ Update and return an existing booking.
 * Require Authentication: true
 * Require proper authorization: Booking must belong to the current user
 * Request
-  * Method: ?
-  * URL: ?
+  * Method: PATCH
+  * URL: /booking/:bookingId
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -1301,8 +1301,8 @@ Delete an existing booking.
 * Require proper authorization: Booking must belong to the current user or the
   Spot must belong to the current user
 * Request
-  * Method: ?
-  * URL: ?
+  * Method: DELETE
+  * URL: /bookings/:bookingId
   * Body: none
 
 * Successful Response
@@ -1353,8 +1353,8 @@ Delete an existing image for a Spot.
 * Require Authentication: true
 * Require proper authorization: Spot must belong to the current user
 * Request
-  * Method: ?
-  * URL: ?
+  * Method: DELETE
+  * URL: /spots/:spotId/images/:imageId
   * Body: none
 
 * Successful Response
@@ -1390,8 +1390,8 @@ Delete an existing image for a Review.
 * Require Authentication: true
 * Require proper authorization: Review must belong to the current user
 * Request
-  * Method: ?
-  * URL: ?
+  * Method: DELETE
+  * URL: /review/:reviewId/image/:imageId
   * Body: none
 
 * Successful Response
@@ -1427,7 +1427,7 @@ Return spots filtered by query parameters.
 * Require Authentication: false
 * Request
   * Method: GET
-  * URL: /spots/
+  * URL: /spots/search?
   * Query Parameters
     * page: integer, minimum: 0, maximum: 10, default: 0
     * size: integer, minimum: 0, maximum: 20, default: 20
