@@ -12,6 +12,12 @@ module.exports = {
 				autoIncrement: true,
 				primaryKey: true,
 				type: Sequelize.INTEGER,
+			 },
+		 	firstName: {
+				type: Sequelize.STRING,
+			},
+		 	lastName: {
+				type: Sequelize.STRING,
 			},
 			username: {
 				type: Sequelize.STRING,
