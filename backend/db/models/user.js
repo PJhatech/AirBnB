@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
 			}
 		}
 
-		static async signup({username, email, password}) {
+		static async signup({username, email, password, firstName, lastName}) {
 			const hashedPassword = bcrypt.hashSync(password);
 			const user = await User.create({
 				username,
