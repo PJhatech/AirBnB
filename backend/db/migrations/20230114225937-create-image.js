@@ -11,11 +11,15 @@ module.exports = {
 			},
 			imageableId: {
 				type: Sequelize.INTEGER,
+				autoIncrement: true,
+				allowNull: false,
+				onDelete: 'CASCADE',
 			},
 			url: {
 				type: Sequelize.TEXT,
+				allowNull: false,
 			},
-			imageavleType: {
+			imageableType: {
 				type: Sequelize.STRING,
 			},
 			createdAt: {
