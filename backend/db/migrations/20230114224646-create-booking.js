@@ -11,14 +11,18 @@ module.exports = {
 			},
 			userId: {
 				type: Sequelize.INTEGER,
-				allowNull: false,
-				autoIncrement: true,
+				references: {
+					model: 'Users',
+					key: 'id'
+				},
 				onDelete:  'CASCADE'
 			},
 			spotId: {
 				type: Sequelize.INTEGER,
-				allowNull: false,
-				autoIncrement: true,
+				references: {
+					model: 'Spots',
+					key: 'id'
+				},
 				onDelete: 'CASCADE'
 			},
 			startDate: {
