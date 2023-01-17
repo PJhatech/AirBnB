@@ -12,22 +12,28 @@ module.exports = {
 				autoIncrement: true,
 				primaryKey: true,
 				type: Sequelize.INTEGER,
-			 },
-		 	firstName: {
-				type: Sequelize.STRING,
 			},
-		 	lastName: {
+			firstName: {
 				type: Sequelize.STRING,
+				allowNull: false,
+			},
+			lastName: {
+				type: Sequelize.STRING,
+				allowNull: false,
 			},
 			username: {
 				type: Sequelize.STRING,
 				unique: true,
 				allowNull: false,
+				unique: true,
 			},
 			email: {
 				type: Sequelize.STRING,
 				unique: true,
 				allowNull: false,
+				validate: {
+					isEmail: true
+				}
 			},
 			hashedPassword: {
 				type: Sequelize.STRING,

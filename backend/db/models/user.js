@@ -42,7 +42,7 @@ module.exports = (sequelize, DataTypes) => {
 			return await User.scope("currentUser").findByPk(user.id);
 		}
 		static associate(models) {
-			// define association here
+			User.belongsToMany(models.Spot, {through: models.Booking})
 		}
 	}
 
@@ -63,13 +63,16 @@ module.exports = (sequelize, DataTypes) => {
 			},
 			firstName: {
 				type: DataTypes.STRING,
+				allowNull: false,
 			},
 			lastName: {
 				type: DataTypes.STRING,
+				allowNull: false,
 			},
 			email: {
 				type: DataTypes.STRING,
 				allowNull: false,
+				unique: true,
 				validate: {
 					len: [3, 256],
 					isEmail: true,
