@@ -44,7 +44,9 @@ module.exports = (sequelize, DataTypes) => {
 			return await User.scope("currentUser").findByPk(user.id);
 		}
 		static associate(models) {
-			// define association here
+			User.belongsToMany(models.Spot, { through: models.Booking, onDelete: 'CASCADE' });
+			User.belongsToMany(models.Spot, { through: models.Review, onDelete: 'CASCADE' });
+			User.hasMany(models.Spot, { foreignKey: 'ownerId', onDelete: 'CASCADE' });
 		}
 	}
 
@@ -69,9 +71,21 @@ module.exports = (sequelize, DataTypes) => {
 					},
 				},
 			},
+<<<<<<< HEAD
+=======
+			firstName: {
+				type: DataTypes.STRING,
+				allowNull: false,
+			},
+			lastName: {
+				type: DataTypes.STRING,
+				allowNull: false,
+			},
+>>>>>>> dev
 			email: {
 				type: DataTypes.STRING,
 				allowNull: false,
+				unique: true,
 				validate: {
 					len: [3, 256],
 					isEmail: true,
