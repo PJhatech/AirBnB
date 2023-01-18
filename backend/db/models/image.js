@@ -19,7 +19,6 @@ module.exports = (sequelize, DataTypes) => {
 		{
 			imageableId: {
 				type: DataTypes.INTEGER,
-				autoIncrement: true,
 				allowNull: false,
 				onDelete: "CASCADE",
 			},

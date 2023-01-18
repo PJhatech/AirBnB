@@ -42,7 +42,7 @@ module.exports = {
 				allowNull: false
 			},
 			price: {
-				type: Sequelize.INTEGER,
+				type: Sequelize.STRING,
 				allowNull: false
 			},
 			ownerId: {
