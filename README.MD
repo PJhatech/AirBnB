@@ -2,7 +2,7 @@
 
 ## Database Schema Design
 
-![](https://res.cloudinary.com/dyep3uddk/image/upload/v1673743706/Untitled_kv7fca.png)
+![](https://res.cloudinary.com/dyep3uddk/image/upload/v1674000850/Untitled_eqll53.png)
 
 
 ## API Documentation

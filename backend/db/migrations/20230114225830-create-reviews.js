@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("reviews", {
+    await queryInterface.createTable("Reviews", {
 			id: {
 				allowNull: false,
 				autoIncrement: true,
@@ -13,12 +13,20 @@ module.exports = {
 				type: Sequelize.INTEGER,
 				allowNull: false,
 				autoIncrement: true,
+				references: {
+					model: 'Users',
+					key: 'id',
+				},
 				onDelete: "CASCADE",
 			},
 			spotId: {
 				type: Sequelize.INTEGER,
 				allowNull: false,
 				autoIncrement: true,
+				references: {
+					model: 'Spots',
+					key: 'id',
+				},
 				onDelete: "CASCADE",
 			},
 			review: {
@@ -42,6 +50,6 @@ module.exports = {
 		});
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('reviews');
+    await queryInterface.dropTable('Reviews');
   }
 };

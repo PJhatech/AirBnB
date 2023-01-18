@@ -47,7 +47,7 @@ module.exports = {
 			},
 			ownerId: {
 				type: Sequelize.STRING,
-				allowNull: false
+				onDelete: 'CASCADE'
 			},
 			avgRating: {
 				type: Sequelize.DECIMAL,
