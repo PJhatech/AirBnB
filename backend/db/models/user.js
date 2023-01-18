@@ -71,17 +71,6 @@ module.exports = (sequelize, DataTypes) => {
 					},
 				},
 			},
-<<<<<<< HEAD
-=======
-			firstName: {
-				type: DataTypes.STRING,
-				allowNull: false,
-			},
-			lastName: {
-				type: DataTypes.STRING,
-				allowNull: false,
-			},
->>>>>>> dev
 			email: {
 				type: DataTypes.STRING,
 				allowNull: false,
