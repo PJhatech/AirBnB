@@ -46,7 +46,11 @@ module.exports = {
 				allowNull: false
 			},
 			ownerId: {
-				type: Sequelize.STRING,
+				type: Sequelize.INTEGER,
+				references: {
+					model: 'Users',
+					key: 'id',
+				},
 				onDelete: 'CASCADE'
 			},
 			avgRating: {

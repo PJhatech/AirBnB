@@ -1,8 +1,6 @@
-/** @format */
-
 const express = require("express");
 const {setTokenCookie, requireAuth} = require("../../utils/auth");
-const {Spot, Image, User} = require("../../db/models");
+const {Spot, Image, User, Review} = require("../../db/models");
 const {check} = require("express-validator");
 const {handleValidationErrors} = require("../../utils/validation");
 const {Model} = require("sequelize");
@@ -23,13 +21,13 @@ router.get("/", async (req, res) => {
 
 //Get all Spots owned by the Current User
 router.get("/current", async (req, res) => {
-	const spots = await Spot.findAll({
+	const spot = await Spot.findAll({
 		where: {
 			ownerId: req.user.id,
 		},
 	});
 
-	res.json({spots});
+		res.json({ spot });
 });
 
 
@@ -83,7 +81,7 @@ router.post("/", async (req, res) => {
 		ownerId: req.user.id,
 	});
 
-	if (newSpot) {
+	if (newSpot.ownerId === req.user.id) {
 		res.json(newSpot);
 	} else {
 		res.json({
@@ -120,16 +118,16 @@ router.post("/:spotId/images", async (req, res, next) => {
 	});
 
 
-	if (spots) {
-			await spots.update({
-			previewImage: newImage.url,
+	if (spots.ownerId === req.user.id) {
+		await spots.update({
+			// previewImage: newImage.url,
 			preview: preview,
-		})
-		res.json(spots)
+		});
+		res.json(spots);
 	} else {
 		res.json({
 			message: "Spot couldn't be found",
-			statusCode: 404
+			statusCode: 404,
 		});
 	}
 });
@@ -154,7 +152,7 @@ router.patch('/:spotId', async (req, res, next) => {
 	}
 
 
-	if (spot) {
+	if (spot.ownerId === req.user.id) {
 		await spot.update({
 			address: address,
 			city: city,
@@ -166,7 +164,7 @@ router.patch('/:spotId', async (req, res, next) => {
 			description: description,
 			price: price,
 		});
-		res.json({spot})
+		res.json({spot});
 	} else {
 		res.json({
 			message: "Validation Error",
@@ -189,24 +187,28 @@ router.patch('/:spotId', async (req, res, next) => {
 
 
 
-router.delete('/:spotId/delete', async (req, res) => {
-	// const spot = await Spot.findOne({
-	// 	where: { id: req.params.spotId }
-	// })
+router.delete('/:spotId', async (req, res) => {
+	const spot = await Spot.findOne({
+		where: { id: req.params.spotId }
+	})
 
-	const spots = await Spot.findOne({
-		where: {
-			ownerId: req.user.id,
-		},
-	});
 
-	if (spots) {
-		await spots.destroy({ spots })
+	if (spot.ownerId === req.user.id) {
+		await spot.destroy()
 		res.json({
 			message: "Successfully deleted",
 			statusCode: 200
 		});
 	} else {
+		res.status(400)
+		res.json({
+			message: "Must be Owner of Spot to Delete",
+			statusCode: 400
+		})
+	}
+
+
+	if (!spot) {
 		res.status(404)
 		res.json({
 			message: "Spot couldn't be found",
@@ -214,6 +216,19 @@ router.delete('/:spotId/delete', async (req, res) => {
 		})
 	}
 })
+
+
+//Get all Reviews by a Spot's id
+router.get("/:spotId/reviews", async (req, res) => {
+	const spotReviews = await Review.findAll({
+		where: {
+			spotId: req.params.spotId,
+		},
+	});
+
+	console.log(spotReviews);
+	res.json(spotReviews);
+});
 
 
 module.exports = router;

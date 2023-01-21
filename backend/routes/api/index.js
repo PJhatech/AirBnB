@@ -3,6 +3,7 @@ const router = require("express").Router();
 const sessionRouter = require("./session.js");
 const usersRouter = require("./users.js");
 const spotRouter = require('./spots');
+const reviewRouter = require('./reviews');
 
 //must be the last thing called
 const { restoreUser } = require("../../utils/auth.js");
@@ -12,6 +13,8 @@ const { restoreUser } = require("../../utils/auth.js");
 // If current user session is valid, set req.user to the user in the database
 // If current user session is not valid, set req.user to null
 router.use(restoreUser);
+
+router.use("/reviews", reviewRouter)
 
 router.use("/spots", spotRouter)
 

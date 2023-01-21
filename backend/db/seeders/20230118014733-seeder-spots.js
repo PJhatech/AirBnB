@@ -39,7 +39,7 @@ module.exports = {
 		"Spots",
 		[
 			{
-				ownerId: "1",
+				ownerId: 1,
 				address: "1234, testway",
 				city: "concord",
 				state: "CA",
@@ -53,7 +53,7 @@ module.exports = {
 				previewImage: "testurl",
 			},
 			{
-				ownerId: "2",
+				ownerId: 2,
 				address: "234, cameldrive",
 				city: "Baypoint",
 				state: "CA",
@@ -67,7 +67,7 @@ module.exports = {
 				previewImage: "testurl",
 			},
 			{
-				ownerId: "3",
+				ownerId: 3,
 				address: "234, cameldrive",
 				city: "Baypoint",
 				state: "CA",
@@ -81,7 +81,7 @@ module.exports = {
 				previewImage: "testurl",
 			},
 			{
-				ownerId: "4",
+				ownerId: 4,
 				address: "456, birdhavendrive",
 				city: "Pittsburg",
 				state: "CA",

@@ -58,7 +58,8 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     ownerId: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
+      allowNull: false
     },
     avgRating: {
       type: DataTypes.DECIMAL,
