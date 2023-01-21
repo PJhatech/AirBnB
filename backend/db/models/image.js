@@ -4,8 +4,8 @@
 const {Model} = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
 	class Image extends Model {
-		getImageable(options) {
-			if (!this.imageableType) return Promise.resolve(null);
+		static getImageable(options) {
+			if (!this.imageableType) return Promise.resolve();
 			const mixinMethodName = `get${this.imageableType}`;
 			return this[mixinMethodName](options);
 		}
@@ -19,7 +19,6 @@ module.exports = (sequelize, DataTypes) => {
 		{
 			imageableId: {
 				type: DataTypes.INTEGER,
-				allowNull: false,
 				onDelete: "CASCADE",
 			},
 			url: {
