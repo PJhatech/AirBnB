@@ -120,7 +120,6 @@ router.post("/:spotId/images", async (req, res, next) => {
 
 	if (spots.ownerId === req.user.id) {
 		await spots.update({
-			// previewImage: newImage.url,
 			preview: preview,
 		});
 		res.json(spots);
@@ -224,11 +223,65 @@ router.get("/:spotId/reviews", async (req, res) => {
 		where: {
 			spotId: req.params.spotId,
 		},
+		include: {
+			model: User,
+			attributes: ["id", "firstName", "lastName"]
+		}
 	});
 
-	console.log(spotReviews);
-	res.json(spotReviews);
+	if (spotReviews) {
+		res.json({spotReviews});
+	} else {
+		res.json({
+			message: "Spot couldn't be found",
+			statusCode: 404
+		});
+	}
 });
+
+
+
+//Create a Review for a Spot based on the Spot's id
+router.post("/:spotId/reviews", async (req, res) => {
+	const { review, stars } = req.body
+
+	const spot = await Spot.findByPk(req.params.spotId)
+
+
+	if (spot) {
+		const newReview = await Review.create({
+			userId: req.user.id,
+			spotId: Number(req.params.spotId),
+			review: review,
+			stars: stars
+		})
+		console.log(spot)
+		console.log(newReview)
+			res.json({ newReview })
+		} else {
+			res.status(400)
+			res.json({
+				message: "Validation error",
+				statusCode: 400,
+				errors: [
+					"Review text is required",
+					"Stars must be an integer from 1 to 5",
+				],
+			});
+		}
+
+		if (!spot) {
+			res.status(404)
+			res.json({
+				message: "Spot couldn't be found",
+				statusCode: 404,
+			});
+		}
+
+})
+
+
+
 
 
 module.exports = router;
