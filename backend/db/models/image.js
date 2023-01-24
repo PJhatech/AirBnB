@@ -2,9 +2,10 @@
 "use strict";
 const {Model} = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
+
 	class Image extends Model {
-		static getImageable(options) {
-			if (!this.imageableType) return Promise.resolve();
+		getImageable(options) {
+			if (!this.imageableType) return Promise.resolve(null);
 			const mixinMethodName = `get${this.imageableType}`;
 			return this[mixinMethodName](options);
 		}

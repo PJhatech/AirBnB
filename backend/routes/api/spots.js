@@ -228,6 +228,20 @@ router.get("/:spotId/reviews", async (req, res) => {
 			attributes: ["id", "firstName", "lastName"]
 		}
 	});
+	for await (let review of spotReviews) {
+		const reviewImages = await Image.findAll({
+			where: {
+				imageableId: req.params.spotId
+			}
+		})
+		const map = reviewImages.map(image => {
+			const obj = {}
+			obj.id = image.id
+			obj.url = image.url
+			return obj
+		})
+		review.dataValues.ReviewImages = map
+	}
 
 	if (spotReviews) {
 		res.json({spotReviews});
