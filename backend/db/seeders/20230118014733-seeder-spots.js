@@ -49,7 +49,6 @@ module.exports = {
 				name: "TestHouse",
 				description: "make it work",
 				price: "$50.00",
-				avgRating: "4.5",
 				previewImage: "testurl",
 			},
 			{
@@ -63,7 +62,6 @@ module.exports = {
 				name: "TestingHouse",
 				description: "Greatest place ever",
 				price: "$100.00",
-				avgRating: "4.8",
 				previewImage: "testurl",
 			},
 			{
@@ -77,7 +75,6 @@ module.exports = {
 				name: "TestingHouse",
 				description: "Greatest place ever",
 				price: "$100.00",
-				avgRating: "4.8",
 				previewImage: "testurl",
 			},
 			{
@@ -91,7 +88,6 @@ module.exports = {
 				name: "TestingHouse",
 				description: "We wont murder you",
 				price: "$10.00",
-				avgRating: "1",
 				previewImage: "testurl",
 			},
 		],
