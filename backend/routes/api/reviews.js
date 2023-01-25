@@ -1,4 +1,3 @@
-/** @format */
 
 const express = require("express");
 const {setTokenCookie, requireAuth} = require("../../utils/auth");
@@ -121,15 +120,19 @@ router.patch("/:reviewId/images", requireAuth, async (req, res) => {
 
 //Edit a Review
 router.patch('/:reviewId', requireAuth, async (req, res) => {
-	const { review, stars } = req.body;
-	const reviewId = await Review.findByPk(req.params.reviewId);
-	console.log(reviewId)
+	const { review, stars, id } = req.body;
+	const reviews = await Review.findOne({
+		attributes: ["id"],
+		where: { id: req.params.reviewId }
+	});
+	console.log(reviews)
 	// if (reviewId.userId === req.user.id) {
-		await reviewId.update({
+	await reviews.update({
+			id: id,
 			review: review,
 			stars: stars
 		})
-		res.json({reviewId})
+		res.json({reviews})
 	// } else {
 	// 	res.json({
 	// 		message: 'Must be the authorized User'
@@ -137,6 +140,34 @@ router.patch('/:reviewId', requireAuth, async (req, res) => {
 	// }
 })
 
+
+
+//Delete a Review
+router.delete("/:reviewId", requireAuth, async (req, res) => {
+	const review = await Review.findByPk(req.params.reviewId);
+
+	if (review) {
+		await review.destroy();
+		res.json({
+			message: "Successfully deleted",
+			statusCode: 200,
+		});
+	} else {
+		res.status(400);
+		res.json({
+			message: "Must be Owner of Spot to Delete",
+			statusCode: 400,
+		});
+	}
+
+	if (!review) {
+		res.status(404);
+		res.json({
+			message: "Spot couldn't be found",
+			statusCode: 404,
+		});
+	}
+});
 
 
 
