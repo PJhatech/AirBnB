@@ -122,31 +122,52 @@ router.patch("/:reviewId/images", requireAuth, async (req, res) => {
 router.patch('/:reviewId', requireAuth, async (req, res) => {
 	const { review, stars, id } = req.body;
 	const reviews = await Review.findOne({
-		attributes: ["id"],
 		where: { id: req.params.reviewId }
 	});
-	console.log(reviews)
-	// if (reviewId.userId === req.user.id) {
-	await reviews.update({
-			id: id,
-			review: review,
-			stars: stars
+	console.log(reviews.id)
+	if (reviews.id === req.user.id) {
+		if (reviews) {
+			await reviews.update({
+				review: review,
+				stars: stars
+			})
+			res.json(reviews)
+		} else {
+			res.status(400)
+			req.json({
+				message: "Validation error",
+				statusCode: 400,
+				errors: [
+					"Review text is required",
+					"Stars must be an integer from 1 to 5",
+				],
+			});
+		}
+
+		if (!reviews) {
+			res.status(404);
+			res.json({
+				message: "Review couldn't be found",
+				statusCode: 404,
+			});
+		}
+
+	} else {
+		res.json({
+			message: 'Must be the authorized User'
 		})
-		res.json({reviews})
-	// } else {
-	// 	res.json({
-	// 		message: 'Must be the authorized User'
-	// 	})
-	// }
+	}
 })
 
 
 
 //Delete a Review
 router.delete("/:reviewId", requireAuth, async (req, res) => {
-	const review = await Review.findByPk(req.params.reviewId);
+	const review = await Review.findOne({
+		where: {id: req.params.reviewId},
+	});
 
-	if (review) {
+	if (review.dataValues.userId === req.user.id) {
 		await review.destroy();
 		res.json({
 			message: "Successfully deleted",

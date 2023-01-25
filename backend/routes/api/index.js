@@ -2,8 +2,9 @@
 const router = require("express").Router();
 const sessionRouter = require("./session.js");
 const usersRouter = require("./users.js");
-const spotRouter = require('./spots');
-const reviewRouter = require('./reviews');
+const spotRouter = require("./spots");
+const reviewRouter = require("./reviews");
+const bookingRouter = require("./bookings");
 
 //must be the last thing called
 const { restoreUser } = require("../../utils/auth.js");
@@ -14,9 +15,11 @@ const { restoreUser } = require("../../utils/auth.js");
 // If current user session is not valid, set req.user to null
 router.use(restoreUser);
 
-router.use("/reviews", reviewRouter)
+router.use("/bookings", bookingRouter);
 
-router.use("/spots", spotRouter)
+router.use("/reviews", reviewRouter);
+
+router.use("/spots", spotRouter);
 
 router.use("/session", sessionRouter);
 

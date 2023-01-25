@@ -1,12 +1,14 @@
 const express = require("express");
 const {setTokenCookie, requireAuth} = require("../../utils/auth");
-const {Spot, Image, User, Review} = require("../../db/models");
+const {Spot, Image, User, Review, Booking} = require("../../db/models");
 const {check} = require("express-validator");
 const {handleValidationErrors} = require("../../utils/validation");
 const { Model } = require("sequelize");
 const image = require("../../db/models/image");
 const spot = require("../../db/models/spot");
-const sequelize = require('sequelize')
+const sequelize = require('sequelize');
+const booking = require("../../db/models/booking");
+const { verify } = require("jsonwebtoken");
 const router = express.Router();
 
 //Get all Spots
@@ -401,7 +403,38 @@ router.post("/:spotId/reviews", requireAuth, async (req, res) => {
 
 
 
+//Get all Bookings for a Spot based on the Spot's id
+router.get('/:spotId/bookings', requireAuth, async (req, res) => {
+	const verify = await Booking.findByPk(req.params.spotId);
 
+   const Bookings = await Booking.findAll({
+		where: { id: req.params.spotId },
+		include: {
+			model: User,
+			attributes: ['id', 'firstName', 'lastName']
+		}
+	})
+
+
+	
+	if (verify.userId === req.user.id) {
+		if (verify) {
+			res.json({ Bookings })
+		} else {
+			res.status(404);
+			res.json({
+				message: "Spot couldn't be found",
+				statusCode: 404,
+			});
+		}
+	} else {
+		res.json({
+				spotId: verify.spotId,
+				startDate: verify.startDate,
+				endDate: verify.endDate
+		})
+	}
+})
 
 
 module.exports = router;
