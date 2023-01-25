@@ -75,6 +75,13 @@ router.get("/current", requireAuth, async (req, res) => {
 router.patch("/:reviewId/images", requireAuth, async (req, res) => {
 	const {url, preview} = req.body;
 	const review = await Review.findByPk(req.params.reviewId);
+   const images = await Image.findAll({
+		where: {
+			imageableType: "Review",
+			imageableId: req.params.reviewId
+		},
+   });
+
 
 	if (!review) {
 		res.status(404);
@@ -82,22 +89,55 @@ router.patch("/:reviewId/images", requireAuth, async (req, res) => {
 			message: "Review could not be found",
 			statusCode: 404,
 		});
-	}
-	if (review.userId === req.user.id) {
-		const newImage = await Image.create({
-			url,
-			imageableType: "Review",
-			imageableId: req.params.reviewId,
-		});
-		res.json({
-			id: newImage.id,
-			url: newImage.url,
-		});
+   }
+
+   if (review.userId === req.user.id) {
+      if (images.length < 10) {
+         const newImage = await Image.create({
+            url,
+            imageableType: "Review",
+            imageableId: req.params.reviewId,
+         });
+         res.json({
+            id: newImage.id,
+            url: newImage.url,
+         });
+      } else {
+         res.status(403)
+         res.json({
+				message: "Maximum number of images for this resource was reached",
+				statusCode: 403,
+			});
+      }
+
    } else {
       res.json({
          message: "Must be the Authorized User"
       })
    }
 });
+
+
+
+//Edit a Review
+router.patch('/:reviewId', requireAuth, async (req, res) => {
+	const { review, stars } = req.body;
+	const reviewId = await Review.findByPk(req.params.reviewId);
+	console.log(reviewId)
+	// if (reviewId.userId === req.user.id) {
+		await reviewId.update({
+			review: review,
+			stars: stars
+		})
+		res.json({reviewId})
+	// } else {
+	// 	res.json({
+	// 		message: 'Must be the authorized User'
+	// 	})
+	// }
+})
+
+
+
 
 module.exports = router;

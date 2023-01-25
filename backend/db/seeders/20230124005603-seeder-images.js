@@ -6,11 +6,11 @@ module.exports = {
     await queryInterface.bulkInsert(
 		"Images",
 		[
-			{
-				imageableId: 1,
-				url: "https://res.cloudinary.com/dyep3uddk/image/upload/v1673479961/samples/landscapes/nature-mountains.jpg",
-				imageableType: "Spot",
-			},
+			// {
+			// 	imageableId: 1,
+			// 	url: "https://res.cloudinary.com/dyep3uddk/image/upload/v1673479961/samples/landscapes/nature-mountains.jpg",
+			// 	imageableType: "Spot",
+			// },
 			{
 				imageableId: 1,
 				url: "https://res.cloudinary.com/dyep3uddk/image/upload/v1673479956/samples/landscapes/architecture-signs.jpg",

@@ -59,7 +59,6 @@ module.exports = (sequelize, DataTypes) => {
     },
     ownerId: {
       type: DataTypes.INTEGER,
-      allowNull: false
     },
     previewImage: {
       type: DataTypes.STRING,
