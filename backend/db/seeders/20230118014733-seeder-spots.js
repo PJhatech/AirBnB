@@ -1,36 +1,6 @@
 'use strict';
 const { Spot, Booking, User } = require('../models');
 
-// const locationInfo = [
-// {
-// 				ownerId: "1",
-// 				address: "1234, testway",
-// 				city: "concord",
-// 				state: "CA",
-// 				country: "United States",
-// 				lat: 1.5,
-// 				lng: 2.5,
-// 				name: "TestHouse",
-// 				description: "make it work",
-// 				price: "$50.00",
-// 				avgRating: "4.5",
-// 				previewImage: "testurl",
-// 			},
-// 			{
-// 				ownerId: "2",
-// 				address: "234, cameldrive",
-// 				city: "Baypoint",
-// 				state: "CA",
-// 				country: "United States",
-// 				lat: 1.5,
-// 				lng: 2.5,
-// 				name: "TestingHouse",
-// 				description: "Greatest place ever",
-// 				price: "$100.00",
-// 				avgRating: "4.8",
-// 				previewImage: "testurl",
-// },
-
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
