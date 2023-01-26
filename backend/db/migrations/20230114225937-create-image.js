@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Images", {
+		await queryInterface.createTable("Images", {
 			id: {
 				allowNull: false,
 				autoIncrement: true,
@@ -19,6 +19,10 @@ module.exports = {
 			},
 			imageableType: {
 				type: Sequelize.STRING,
+			},
+			preview: {
+				type: Sequelize.BOOLEAN,
+				allowNull: false,
 			},
 			createdAt: {
 				allowNull: false,

@@ -28,6 +28,10 @@ module.exports = (sequelize, DataTypes) => {
 			imageableType: {
 				type: DataTypes.STRING,
 			},
+			preview: {
+				type: DataTypes.BOOLEAN,
+				allowNull: false,
+			},
 		},
 		{
 			sequelize,

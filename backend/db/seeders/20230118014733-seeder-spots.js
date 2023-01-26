@@ -19,7 +19,7 @@ module.exports = {
 				name: "TestHouse",
 				description: "make it work",
 				price: "$50.00",
-				previewImage: "testurl",
+				// previewImage: "testurl",
 			},
 			{
 				ownerId: 2,
@@ -32,7 +32,7 @@ module.exports = {
 				name: "TestingHouse",
 				description: "Greatest place ever",
 				price: "$100.00",
-				previewImage: "testurl",
+				// previewImage: "testurl",
 			},
 			{
 				ownerId: 3,
@@ -45,7 +45,7 @@ module.exports = {
 				name: "TestingHouse",
 				description: "Greatest place ever",
 				price: "$100.00",
-				previewImage: "testurl",
+				// previewImage: "testurl",
 			},
 			{
 				ownerId: 4,
@@ -58,7 +58,7 @@ module.exports = {
 				name: "TestingHouse",
 				description: "We wont murder you",
 				price: "$10.00",
-				previewImage: "testurl",
+				// previewImage: "testurl",
 			},
 		],
 		{}

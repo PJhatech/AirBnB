@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // Spot.belongsToMany(models.User, { through: models.Booking });
       Spot.hasMany(models.Booking, { foreignKey: 'spotId' });
       Spot.hasMany(models.Review, { foreignKey: 'spotId' });
-      Spot.belongsTo(models.User, { foreignKey: 'ownerId' });
+      Spot.belongsTo(models.User, { foreignKey: 'ownerId', as: 'Owner' });
       Spot.hasMany(models.Image, {
         foreignKey: "imageableId",
         constraints: false,
@@ -61,9 +61,6 @@ module.exports = (sequelize, DataTypes) => {
     ownerId: {
       type: DataTypes.INTEGER,
     },
-    previewImage: {
-      type: DataTypes.STRING,
-    }
   }, {
     sequelize,
     modelName: 'Spot',
