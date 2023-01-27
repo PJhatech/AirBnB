@@ -34,11 +34,12 @@ module.exports = {
      ], {});
   },
   down: async (queryInterface, Sequelize) => {
-		options.tableName = "Bookings";
+    options.tableName = "Bookings";
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(
-			options,
-		);
+      options,
+    );
+  }
   // async down (queryInterface, Sequelize) {
   //    await queryInterface.bulkDelete('Bookings');
   // }
