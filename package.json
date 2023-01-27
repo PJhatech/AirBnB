@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "## Database Schema Design",
   "main": "index.js",
-   "scripts": {
+ "scripts": {
     "install": "npm --prefix backend install backend",
     "dev:backend": "npm install --prefix backend start",
     "sequelize": "npm run --prefix backend sequelize",
@@ -21,5 +21,9 @@
   "bugs": {
     "url": "https://github.com/PJhatech/AirBnB/issues"
   },
-  "homepage": "https://github.com/PJhatech/AirBnB#readme"
+  "homepage": "https://github.com/PJhatech/AirBnB#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3"
+  },
+  "devDependencies": {}
 }
