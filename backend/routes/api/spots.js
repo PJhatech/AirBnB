@@ -8,7 +8,6 @@ const {handleValidationErrors} = require("../../utils/validation");
 const {Model} = require("sequelize");
 const sequelize = require("sequelize");
 const {verify} = require("jsonwebtoken");
-const e = require("express");
 const router = express.Router();
 
 //Get all Spots
