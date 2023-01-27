@@ -5,42 +5,45 @@ if (process.env.NODE_ENV === "production") {
 }
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface, Sequelize) {
-     await queryInterface.bulkInsert('Bookings', [
-      {
-        userId: 1,
-        spotId: 2,
-        startDate: new Date(),
-        endDate: new Date(),
-      },
-      {
-        userId: 2,
-        spotId: 1,
-        startDate: new Date(),
-        endDate: new Date(),
-      },
-      {
-        userId: 3,
-        spotId: 2,
-        startDate: new Date(),
-        endDate: new Date(),
-      },
-      {
-        userId: 4,
-        spotId: 3,
-        startDate: new Date(),
-        endDate: new Date(),
-      },
-     ], {});
-  },
-  down: async (queryInterface, Sequelize) => {
-    options.tableName = "Bookings";
-    const Op = Sequelize.Op;
-    return queryInterface.bulkDelete(
-      options,
-    );
-  }
-  // async down (queryInterface, Sequelize) {
-  //    await queryInterface.bulkDelete('Bookings');
-  // }
+	up: async (queryInterface, Sequelize) => {
+		options.tableName = "Bookings";
+		await queryInterface.bulkInsert(
+			options,
+			[
+				{
+					userId: 1,
+					spotId: 2,
+					startDate: new Date(),
+					endDate: new Date(),
+				},
+				{
+					userId: 2,
+					spotId: 1,
+					startDate: new Date(),
+					endDate: new Date(),
+				},
+				{
+					userId: 3,
+					spotId: 2,
+					startDate: new Date(),
+					endDate: new Date(),
+				},
+				{
+					userId: 4,
+					spotId: 3,
+					startDate: new Date(),
+					endDate: new Date(),
+				},
+			],
+			{}
+		);
+	},
+	down: async (queryInterface, Sequelize) => {
+		options.tableName = "Bookings";
+		const Op = Sequelize.Op;
+		return queryInterface.bulkDelete(options);
+	},
+	// async down (queryInterface, Sequelize) {
+	//    await queryInterface.bulkDelete('Bookings');
+	// }
 };

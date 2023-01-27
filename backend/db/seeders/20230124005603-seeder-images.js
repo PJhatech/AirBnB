@@ -5,123 +5,124 @@ if (process.env.NODE_ENV === "production") {
 }
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface, Sequelize) {
-    await queryInterface.bulkInsert(
-			"Images",
+	up: async (queryInterface, Sequelize) => {
+		options.tableName = "Images";
+		await queryInterface.bulkInsert(
+			options,
 			[
 				{
 					imageableId: 1,
 					url: "https://res.cloudinary.com/dyep3uddk/image/upload/v1673479961/samples/landscapes/nature-mountains.jpg",
 					imageableType: "Spot",
-					preview: true
+					preview: true,
 				},
 				{
 					imageableId: 1,
 					url: "https://res.cloudinary.com/dyep3uddk/image/upload/v1673479961/samples/landscapes/nature-mountains.jpg",
 					imageableType: "Spot",
-					preview: true
+					preview: true,
 				},
 				{
 					imageableId: 1,
 					url: "https://res.cloudinary.com/dyep3uddk/image/upload/v1673479961/samples/landscapes/nature-mountains.jpg",
 					imageableType: "Spot",
-					preview: true
+					preview: true,
 				},
 				{
 					imageableId: 2,
 					url: "https://res.cloudinary.com/dyep3uddk/image/upload/v1673479961/samples/landscapes/nature-mountains.jpg",
 					imageableType: "Spot",
-					preview: true
+					preview: true,
 				},
 				{
 					imageableId: 2,
 					url: "https://res.cloudinary.com/dyep3uddk/image/upload/v1673479961/samples/landscapes/nature-mountains.jpg",
 					imageableType: "Spot",
-					preview: true
+					preview: true,
 				},
 				{
 					imageableId: 3,
 					url: "https://res.cloudinary.com/dyep3uddk/image/upload/v1673479961/samples/landscapes/nature-mountains.jpg",
 					imageableType: "Spot",
-					preview: true
+					preview: true,
 				},
 				{
 					imageableId: 3,
 					url: "https://res.cloudinary.com/dyep3uddk/image/upload/v1673479961/samples/landscapes/nature-mountains.jpg",
 					imageableType: "Spot",
-					preview: true
+					preview: true,
 				},
 				{
 					imageableId: 4,
 					url: "https://res.cloudinary.com/dyep3uddk/image/upload/v1673479961/samples/landscapes/nature-mountains.jpg",
 					imageableType: "Spot",
-					preview: true
+					preview: true,
 				},
 				{
 					imageableId: 4,
 					url: "https://res.cloudinary.com/dyep3uddk/image/upload/v1673479961/samples/landscapes/nature-mountains.jpg",
 					imageableType: "Spot",
-					preview: true
+					preview: true,
 				},
 				{
 					imageableId: 1,
 					url: "https://res.cloudinary.com/dyep3uddk/image/upload/v1673479956/samples/landscapes/architecture-signs.jpg",
 					imageableType: "Review",
-					preview: true
+					preview: true,
 				},
 				{
 					imageableId: 1,
 					url: "https://res.cloudinary.com/dyep3uddk/image/upload/v1673479956/samples/landscapes/architecture-signs.jpg",
 					imageableType: "Review",
-					preview: true
+					preview: true,
 				},
 				{
 					imageableId: 1,
 					url: "https://res.cloudinary.com/dyep3uddk/image/upload/v1673479956/samples/landscapes/architecture-signs.jpg",
 					imageableType: "Review",
-					preview: true
+					preview: true,
 				},
 				{
 					imageableId: 1,
 					url: "https://res.cloudinary.com/dyep3uddk/image/upload/v1673479956/samples/landscapes/architecture-signs.jpg",
 					imageableType: "Review",
-					preview: true
+					preview: true,
 				},
 				{
 					imageableId: 2,
 					url: "https://res.cloudinary.com/dyep3uddk/image/upload/v1673479956/samples/landscapes/architecture-signs.jpg",
 					imageableType: "Review",
-					preview: true
+					preview: true,
 				},
 				{
 					imageableId: 2,
 					url: "https://res.cloudinary.com/dyep3uddk/image/upload/v1673479956/samples/landscapes/architecture-signs.jpg",
 					imageableType: "Review",
-					preview: true
+					preview: true,
 				},
 				{
 					imageableId: 3,
 					url: "https://res.cloudinary.com/dyep3uddk/image/upload/v1673479956/samples/landscapes/architecture-signs.jpg",
 					imageableType: "Review",
-					preview: true
+					preview: true,
 				},
 				{
 					imageableId: 3,
 					url: "https://res.cloudinary.com/dyep3uddk/image/upload/v1673479956/samples/landscapes/architecture-signs.jpg",
 					imageableType: "Review",
-					preview: true
+					preview: true,
 				},
 				{
 					imageableId: 4,
 					url: "https://res.cloudinary.com/dyep3uddk/image/upload/v1673479956/samples/landscapes/architecture-signs.jpg",
 					imageableType: "Review",
-					preview: true
+					preview: true,
 				},
 				{
 					imageableId: 4,
 					url: "https://res.cloudinary.com/dyep3uddk/image/upload/v1673479956/samples/landscapes/architecture-signs.jpg",
 					imageableType: "Review",
-					preview: true
+					preview: true,
 				},
 				// {
 				// 	imageableId: 3,
@@ -151,9 +152,11 @@ module.exports = {
 			],
 			{}
 		);
-  },
+	},
 
-  async down (queryInterface, Sequelize) {
-     await queryInterface.bulkDelete('Images');
-  }
+	down: async (queryInterface, Sequelize) => {
+		options.tableName = "Images";
+		const Op = Sequelize.Op;
+		return queryInterface.bulkDelete(options);
+	},
 };
