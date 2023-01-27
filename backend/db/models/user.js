@@ -6,11 +6,7 @@ module.exports = (sequelize, DataTypes) => {
 	class User extends Model {
 		toSafeObject() {
 			const {id, username, email, firstName, lastName} = this; // context will be the User instance
-<<<<<<< HEAD
 			return {id, username, email,firstName, lastName};
-=======
-			return {id, username, email, firstName, lastName};
->>>>>>> dev
 		}
 
 		validatePassword(password) {
@@ -36,11 +32,7 @@ module.exports = (sequelize, DataTypes) => {
 			}
 		}
 
-<<<<<<< HEAD
 		static async signup({username, email, password, firstName, lastName}) {
-=======
-		static async signup({firstName, lastName, username, email, password}) {
->>>>>>> dev
 			const hashedPassword = bcrypt.hashSync(password);
 			const user = await User.create({
 				firstName,
@@ -68,8 +60,7 @@ module.exports = (sequelize, DataTypes) => {
 			lastName: {
 				type: DataTypes.STRING,
 				allowNull: false,
-<<<<<<< HEAD
-				
+
 			},
 			username: {
 				type: DataTypes.STRING,
@@ -83,8 +74,6 @@ module.exports = (sequelize, DataTypes) => {
 						}
 					},
 				},
-=======
->>>>>>> dev
 			},
 			email: {
 				type: DataTypes.STRING,
