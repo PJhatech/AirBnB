@@ -9,6 +9,14 @@ module.exports = {
 				primaryKey: true,
 				type: Sequelize.INTEGER,
 			},
+			ownerId: {
+				type: Sequelize.INTEGER,
+				references: {
+					model: 'Users',
+					key: 'id',
+				},
+				onDelete: 'CASCADE'
+			},
 			address: {
 				type: Sequelize.STRING,
 				allowNull: false
@@ -44,14 +52,6 @@ module.exports = {
 			price: {
 				type: Sequelize.STRING,
 				allowNull: false
-			},
-			ownerId: {
-				type: Sequelize.INTEGER,
-				references: {
-					model: 'Users',
-					key: 'id',
-				},
-				onDelete: 'CASCADE'
 			},
 			createdAt: {
 				allowNull: false,

@@ -8,6 +8,7 @@ const {handleValidationErrors} = require("../../utils/validation");
 const {Model} = require("sequelize");
 const sequelize = require("sequelize");
 const {verify} = require("jsonwebtoken");
+const e = require("express");
 const router = express.Router();
 
 //Get all Spots
@@ -16,16 +17,22 @@ router.get("/", async (req, res) => {
 		attributes: {
 			include: [
 				[
-					sequelize.fn("COALESCE", sequelize.fn("AVG",
-					sequelize.col("Reviews.stars")), 0),"averageStarRating",
+					sequelize.fn(
+						"COALESCE",
+						sequelize.fn("AVG", sequelize.col("Reviews.stars")),
+						0
+					),
+					"averageStarRating",
 				],
 			],
 		},
-		include: [{
-			model: Review,
-			attributes: [],
-		}],
-		group: ['spot.id']
+		include: [
+			{
+				model: Review,
+				attributes: [],
+			},
+		],
+		group: ["spot.id"],
 	});
 
 	res.json({spot});
@@ -39,21 +46,33 @@ router.get("/current", requireAuth, async (req, res) => {
 		},
 		include: [
 			{
-			model: Review,
-			attributes: [],
+				model: Review,
+				attributes: [],
 			},
 			{
 				model: Image,
 				attributes: [],
-
-			}
+			},
 		],
 		attributes: {
-			include: [[
-				sequelize.fn("COALESCE", sequelize.fn("AVG",
-				sequelize.col("Reviews.stars")), 0), "averageStarRating"],
-				[sequelize.fn("COALESCE", sequelize.col("Images.url"),
-				sequelize.literal("'No image has been uploaded'")), "previewImages"]]
+			include: [
+				[
+					sequelize.fn(
+						"COALESCE",
+						sequelize.fn("AVG", sequelize.col("Reviews.stars")),
+						0
+					),
+					"averageStarRating",
+				],
+				[
+					sequelize.fn(
+						"COALESCE",
+						sequelize.col("Images.url"),
+						sequelize.literal("'No image has been uploaded'")
+					),
+					"previewImages",
+				],
+			],
 		},
 		group: ["spot.id"],
 	});
@@ -63,82 +82,89 @@ router.get("/current", requireAuth, async (req, res) => {
 
 //Get details of a Spot from an id
 router.get("/:id", async (req, res, next) => {
-	const check = await Spot.findByPk(req.params.id)
+	const check = await Spot.findByPk(req.params.id);
 
 	if (check) {
-	const spots = await Spot.findAll({
-		where: {id: req.params.id},
-		include: [
-			{
-			model: Review,
-			attributes: []
+		const spots = await Spot.findAll({
+			where: {id: req.params.id},
+			include: [
+				{
+					model: Review,
+					attributes: [],
+				},
+				{
+					model: User,
+					as: "Owner",
+					attributes: ["id", "firstName", "lastName"],
+				},
+			],
+			attributes: {
+				include: [
+					[
+						sequelize.fn(
+							"COALESCE",
+							sequelize.fn("AVG", sequelize.col("Reviews.stars")),
+							0
+						),
+						"averageStarRating",
+					],
+				],
 			},
-			{
-				model: User,
-				as: 'Owner',
-				attributes: ['id', 'firstName', 'lastName']
-			},
-		],
-		attributes: {
-			include:
-				[[sequelize.fn("COALESCE", sequelize.fn("AVG",
-				sequelize.col("Reviews.stars")), 0),"averageStarRating",],],
-		},
-	});
-
-	for await (let review of spots) {
-		let numReview = 0;
-
-		const numReviews = await Review.findAll({
-			where: {spotId: req.params.id},
 		});
 
-		while (numReview < numReviews.length) {
-			numReview++;
+		for await (let review of spots) {
+			let numReview = 0;
+
+			const numReviews = await Review.findAll({
+				where: {spotId: req.params.id},
+			});
+
+			while (numReview < numReviews.length) {
+				numReview++;
+			}
+			review.dataValues.numReviews = numReview;
 		}
-		review.dataValues.numReviews = numReview;
-	}
 
-	for await (let spot of spots) {
-		const spotImages = await Image.findAll({
-			where: {
-				imageableId: req.params.id,
-				imageableType: "Spot",
-			},
+		for await (let spot of spots) {
+			const spotImages = await Image.findAll({
+				where: {
+					imageableId: req.params.id,
+					imageableType: "Spot",
+				},
+			});
+			const map = spotImages.map((image) => {
+				const obj = {};
+				obj.id = image.id;
+				obj.url = image.url;
+				obj.preview = image.preview;
+				return obj;
+			});
+			spot.dataValues.SpotImages = map;
+		}
+
+		// for await (let ownerId of spots) {
+		// 	const owner = await User.findAll({
+		// 		where: {id: req.params.id},
+		// 	});
+
+		// 	const map = owner.map((user) => {
+		// 		const obj = {};
+		// 		obj.id = user.id;
+		// 		obj.firstName = user.firstName;
+		// 		obj.lastName = user.lastName;
+		// 		return obj;
+		// 	});
+
+		// 	ownerId.dataValues.Owner = map;
+		// }
+
+		res.json(spots);
+	} else {
+		res.json({
+			statusCode: "404",
+			message: "Spot couldnt be found",
 		});
-		const map = spotImages.map((image) => {
-			const obj = {};
-			obj.id = image.id;
-			obj.url = image.url;
-			obj.preview = image.preview;
-			return obj;
-		});
-		spot.dataValues.SpotImages = map;
 	}
-
-	// for await (let ownerId of spots) {
-	// 	const owner = await User.findAll({
-	// 		where: {id: req.params.id},
-	// 	});
-
-	// 	const map = owner.map((user) => {
-	// 		const obj = {};
-	// 		obj.id = user.id;
-	// 		obj.firstName = user.firstName;
-	// 		obj.lastName = user.lastName;
-	// 		return obj;
-	// 	});
-
-	// 	ownerId.dataValues.Owner = map;
-	// }
-
-	res.json(spots);
-} else {
-	res.json({
-		statusCode: "404",
-		message: "Spot couldnt be found",
-	});
-}
 });
 
 //Creates and returns a new spot
@@ -195,7 +221,7 @@ router.post("/:spotId/images", requireAuth, async (req, res, next) => {
 	const {url, preview} = req.body;
 
 	const spots = await Spot.findOne({
-		where: { id: req.params.spotId }
+		where: {id: req.params.spotId},
 	});
 
 	if (spots) {
@@ -203,12 +229,12 @@ router.post("/:spotId/images", requireAuth, async (req, res, next) => {
 			url: url,
 			imageableType: "Spot",
 			imageableId: req.params.spotId,
-			preview: preview
+			preview: preview,
 		});
 		res.json({
 			id: newImage.id,
 			url: newImage.url,
-			preview: preview
+			preview: preview,
 		});
 	} else {
 		res.json({
@@ -345,50 +371,43 @@ router.get("/:spotId/reviews", async (req, res) => {
 //Create a Review for a Spot based on the Spot's id
 router.post("/:spotId/reviews", requireAuth, async (req, res) => {
 	const {review, stars} = req.body;
+	const spot = await Spot.findByPk(req.params.spotId)
 
+	console.log(spot)
 	const reviews = await Review.findAll({
 		where: {
-			userId: req.user.id,
+
 			spotId: req.params.spotId,
 		},
 	});
-
-	if (!reviews) {
-		res.status(404);
+	if (!spot) {
 		res.json({
-			message: "Spot couldn't be found",
+			message: "Review couldn't be found",
 			statusCode: 404,
 		});
-	}
-
-	if (reviews.length) {
-		res.status(403);
-		res.json({
-			message: "User already has a review for this spot",
-			statusCode: 403,
-		});
-	}
-	if (!reviews.length) {
-		const newReview = await Review.create({
-			userId: req.user.id,
-			spotId: req.params.spotId,
-			review: review,
-			stars: stars,
-		});
-
-		res.json(newReview);
 	} else {
-		res.status(400);
-		res.json({
-			message: "Validation error",
-			statusCode: 400,
-			errors: [
-				"Review text is required",
-				"Stars must be an integer from 1 to 5",
-			],
-		});
+		if (reviews.length) {
+			res.status(403);
+			res.json({
+				message: "User already has a review for this spot",
+				statusCode: 403,
+			});
+		} else if (!reviews.length) {
+			const newReview = await Review.create({
+				userId: req.user.id,
+				spotId: req.params.spotId,
+				review: review,
+				stars: stars,
+			});
+			res.json(newReview);
+		} else {
+			res.status(400);
+			res.json({
+				message: "Validation error",
+				statusCode: 400
+			});
+		}
 	}
-
 });
 
 

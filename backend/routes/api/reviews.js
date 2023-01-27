@@ -4,7 +4,8 @@ const {setTokenCookie, requireAuth} = require("../../utils/auth");
 const {Spot, Image, User, Review} = require("../../db/models");
 const {check} = require("express-validator");
 const {handleValidationErrors} = require("../../utils/validation");
-const {Model} = require("sequelize");
+const { Model } = require("sequelize");
+const sequelize = require("sequelize");
 const image = require("../../db/models/image");
 const spot = require("../../db/models/spot");
 const review = require("../../db/models/review");
@@ -45,7 +46,24 @@ router.get("/current", requireAuth, async (req, res) => {
 					"lng",
 					"name",
 					"price",
-					"previewImage",
+					[
+						sequelize.fn(
+							"COALESCE",
+							sequelize.col("Images.url"),
+							sequelize.literal("'No image has been uploaded'")
+						),
+						"previewImages",
+					],
+				],
+				include: [
+					[
+						sequelize.fn(
+							"COALESCE",
+							sequelize.col("Images.url"),
+							sequelize.literal("'No image has been uploaded'")
+						),
+						"previewImages",
+					],
 				],
 			},
 		],
@@ -71,7 +89,7 @@ router.get("/current", requireAuth, async (req, res) => {
 });
 
 //Add an Image to a Review based on the Review's id
-router.patch("/:reviewId/images", requireAuth, async (req, res) => {
+router.post("/:reviewId/images", requireAuth, async (req, res) => {
 	const {url, preview} = req.body;
 	const review = await Review.findByPk(req.params.reviewId);
    const images = await Image.findAll({
@@ -95,11 +113,11 @@ router.patch("/:reviewId/images", requireAuth, async (req, res) => {
          const newImage = await Image.create({
             url,
             imageableType: "Review",
-            imageableId: req.params.reviewId,
+				imageableId: req.params.reviewId,
          });
          res.json({
             id: newImage.id,
-            url: newImage.url,
+				url: newImage.url,
          });
       } else {
          res.status(403)
