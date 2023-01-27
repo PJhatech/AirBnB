@@ -33,8 +33,13 @@ module.exports = {
       },
      ], {});
   },
-
-  async down (queryInterface, Sequelize) {
-     await queryInterface.bulkDelete('Bookings');
-  }
+  down: async (queryInterface, Sequelize) => {
+		options.tableName = "Bookings";
+    const Op = Sequelize.Op;
+    return queryInterface.bulkDelete(
+			options,
+		);
+  // async down (queryInterface, Sequelize) {
+  //    await queryInterface.bulkDelete('Bookings');
+  // }
 };
