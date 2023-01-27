@@ -6,7 +6,11 @@ module.exports = (sequelize, DataTypes) => {
 	class User extends Model {
 		toSafeObject() {
 			const {id, username, email, firstName, lastName} = this; // context will be the User instance
+<<<<<<< HEAD
 			return {id, username, email,firstName, lastName};
+=======
+			return {id, username, email, firstName, lastName};
+>>>>>>> dev
 		}
 
 		validatePassword(password) {
@@ -32,7 +36,11 @@ module.exports = (sequelize, DataTypes) => {
 			}
 		}
 
+<<<<<<< HEAD
 		static async signup({username, email, password, firstName, lastName}) {
+=======
+		static async signup({firstName, lastName, username, email, password}) {
+>>>>>>> dev
 			const hashedPassword = bcrypt.hashSync(password);
 			const user = await User.create({
 				firstName,
@@ -44,8 +52,9 @@ module.exports = (sequelize, DataTypes) => {
 			return await User.scope("currentUser").findByPk(user.id);
 		}
 		static associate(models) {
-			User.belongsToMany(models.Spot, { through: models.Booking, onDelete: 'CASCADE' });
-			User.belongsToMany(models.Spot, { through: models.Review, onDelete: 'CASCADE' });
+			User.hasMany(models.Review, { foreignKey: 'userId' });
+			// User.belongsToMany(models.Spot, {through: models.Booking});
+			User.hasMany(models.Booking, { foreignKey: 'userId'});
 			User.hasMany(models.Spot, { foreignKey: 'ownerId', onDelete: 'CASCADE' });
 		}
 	}
@@ -59,6 +68,7 @@ module.exports = (sequelize, DataTypes) => {
 			lastName: {
 				type: DataTypes.STRING,
 				allowNull: false,
+<<<<<<< HEAD
 				
 			},
 			username: {
@@ -73,6 +83,8 @@ module.exports = (sequelize, DataTypes) => {
 						}
 					},
 				},
+=======
+>>>>>>> dev
 			},
 			email: {
 				type: DataTypes.STRING,
@@ -81,6 +93,19 @@ module.exports = (sequelize, DataTypes) => {
 				validate: {
 					len: [3, 256],
 					isEmail: true,
+				},
+			},
+			username: {
+				type: DataTypes.STRING,
+				allowNull: false,
+				unique: true,
+				validate: {
+					len: [4, 30],
+					isNotEmail(value) {
+						if (Validator.isEmail(value)) {
+							throw new Error("Cannot be an email.");
+						}
+					},
 				},
 			},
 			hashedPassword: {

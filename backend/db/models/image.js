@@ -1,8 +1,8 @@
-/** @format */
 
 "use strict";
 const {Model} = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
+
 	class Image extends Model {
 		getImageable(options) {
 			if (!this.imageableType) return Promise.resolve(null);
@@ -19,8 +19,6 @@ module.exports = (sequelize, DataTypes) => {
 		{
 			imageableId: {
 				type: DataTypes.INTEGER,
-				autoIncrement: true,
-				allowNull: false,
 				onDelete: "CASCADE",
 			},
 			url: {
@@ -29,6 +27,11 @@ module.exports = (sequelize, DataTypes) => {
 			},
 			imageableType: {
 				type: DataTypes.STRING,
+			},
+			preview: {
+				type: DataTypes.BOOLEAN,
+				allowNull: false,
+				defaultValue: false
 			},
 		},
 		{

@@ -1,0 +1,5 @@
+{
+	"javascript.format.enable": true,
+	"json.format.keepLines": true,
+	"prettier.tabWidth": 3
+}
