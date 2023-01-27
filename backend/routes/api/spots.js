@@ -24,11 +24,23 @@ router.get("/", async (req, res) => {
 					),
 					"averageStarRating",
 				],
+				[
+					sequelize.fn(
+						"COALESCE",
+						sequelize.col("Images.url"),
+						sequelize.literal("'No image has been uploaded'")
+					),
+					"previewImages",
+				],
 			],
 		},
 		include: [
 			{
 				model: Review,
+				attributes: [],
+			},
+			{
+				model: Image,
 				attributes: [],
 			},
 		],
@@ -322,49 +334,50 @@ router.delete("/:spotId", requireAuth, async (req, res) => {
 
 //Get all Reviews by a Spot's id
 router.get("/:spotId/reviews", async (req, res) => {
-	const Reviews = await Review.findAll({
-		attributes: [
-			"id",
-			"userId",
-			"spotId",
-			"review",
-			"stars",
-			"createdAt",
-			"updatedAt",
-		],
-		where: {
-			spotId: req.params.spotId,
-		},
-		include: {
-			model: User,
-			attributes: ["id", "firstName", "lastName"],
-		},
-	});
-
-	console.log(Reviews);
-	for await (let review of Reviews) {
-		const reviewImages = await Image.findAll({
-			where: {
-				imageableId: req.params.spotId,
-				imageableType: "Review",
-			},
-		});
-		const map = reviewImages.map((image) => {
-			const obj = {};
-			obj.id = image.id;
-			obj.url = image.url;
-			return obj;
-		});
-		review.dataValues.ReviewImages = map;
-	}
-
-	if (Reviews) {
-		res.json({Reviews});
-	} else {
+	const spot = await Spot.findByPk(req.params.spotId)
+	if (!spot) {
+		res.status(404)
 		res.json({
 			message: "Spot couldn't be found",
 			statusCode: 404,
 		});
+	} else {
+
+		const Reviews = await Review.findAll({
+			attributes: [
+				"id",
+				"userId",
+				"spotId",
+				"review",
+				"stars",
+				"createdAt",
+				"updatedAt",
+			],
+			where: {
+				spotId: req.params.spotId,
+			},
+			include: {
+				model: User,
+				attributes: ["id", "firstName", "lastName"],
+			},
+		});
+
+		for await (let review of Reviews) {
+			const reviewImages = await Image.findAll({
+				where: {
+					imageableId: review.dataValues.id,
+					imageableType: "Review",
+				},
+			});
+			const map = reviewImages.map((image) => {
+				const obj = {};
+				obj.id = image.id;
+				obj.url = image.url;
+				return obj;
+			});
+			review.dataValues.ReviewImages = map;
+		}
+		res.json({Reviews});
 	}
 });
 

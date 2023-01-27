@@ -29,6 +29,10 @@ router.get("/current", requireAuth, async (req, res) => {
 		},
 		include: [
 			{
+				model: Image,
+				attributes: []
+			},
+			{
 				model: User,
 				where: {id: req.user.id},
 				attributes: ["id", "firstName", "lastName"],
@@ -46,25 +50,22 @@ router.get("/current", requireAuth, async (req, res) => {
 					"lng",
 					"name",
 					"price",
-					[
-						sequelize.fn(
-							"COALESCE",
-							sequelize.col("Images.url"),
-							sequelize.literal("'No image has been uploaded'")
-						),
-						"previewImages",
-					],
 				],
-				include: [
-					[
-						sequelize.fn(
-							"COALESCE",
-							sequelize.col("Images.url"),
-							sequelize.literal("'No image has been uploaded'")
-						),
-						"previewImages",
+			},
+			{
+				model: Spot,
+				attributes: {
+					include: [
+						[
+							sequelize.fn(
+								"COALESCE",
+								sequelize.col("Images.url"),
+								sequelize.literal("'No image has been uploaded'")
+							),
+							"previewImages",
+						],
 					],
-				],
+				},
 			},
 		],
 	});
@@ -137,13 +138,20 @@ router.post("/:reviewId/images", requireAuth, async (req, res) => {
 
 
 //Edit a Review
-router.patch('/:reviewId', requireAuth, async (req, res) => {
+router.put('/:reviewId', requireAuth, async (req, res) => {
 	const { review, stars, id } = req.body;
 	const reviews = await Review.findOne({
 		where: { id: req.params.reviewId }
 	});
-	console.log(reviews.id)
-	if (reviews.id === req.user.id) {
+	if (!reviews) {
+		res.status(404);
+		res.json({
+			message: "Review couldn't be found",
+			statusCode: 404,
+		});
+	}
+
+	if (reviews.userId === req.user.id) {
 		if (reviews) {
 			await reviews.update({
 				review: review,
@@ -162,13 +170,6 @@ router.patch('/:reviewId', requireAuth, async (req, res) => {
 			});
 		}
 
-		if (!reviews) {
-			res.status(404);
-			res.json({
-				message: "Review couldn't be found",
-				statusCode: 404,
-			});
-		}
 
 	} else {
 		res.json({
