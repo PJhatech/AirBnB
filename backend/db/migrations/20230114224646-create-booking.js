@@ -50,7 +50,7 @@ module.exports = {
 		},options);
   },
 	async down(queryInterface, Sequelize) {
-	  options.tableName = "Users";
+	  options.tableName = "Bookings";
     await queryInterface.dropTable(options);
   }
 };
