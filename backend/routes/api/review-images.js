@@ -24,7 +24,7 @@ router.delete('/:reviewImageId', requireAuth, async (req, res) => {
          }
    })
 
-   console.log(reviewImage)
+
    if (review.userId === req.user.id) {
       if(reviewImage){
          await reviewImage.destroy();

@@ -23,7 +23,7 @@ router.delete('/:spotImageId', requireAuth, async (req, res) => {
          }
    })
 
-   console.log(spotImage)
+  
    if (spot.ownerId === req.user.id) {
       if(spotImage){
          await spotImage.destroy();

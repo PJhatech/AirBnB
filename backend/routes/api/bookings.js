@@ -56,7 +56,7 @@ router.put("/:bookingId", requireAuth, async (req, res) => {
 			statusCode: 404,
 		});
    }
-console.log(booking.endDate)
+
       if (booking.endDate > test) {
          if (booked) {
             res.status(403)
@@ -115,7 +115,7 @@ router.delete('/:bookingId', requireAuth, async (req, res) => {
 		})
 	}
 
-	console.log(booked.userId)
+	
 	if (booking >= test) {
 		res.json({
 			message: "Bookings that have been started can't be deleted",
