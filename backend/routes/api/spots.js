@@ -152,10 +152,20 @@ router.get("/", async (req, res) => {
 
 
 //Get all Spots owned by the Current User
+// router.get("/current", requireAuth, async (req, res) => {
+// 	const spots = await Spot.findAll()
+// 	res.json(spots)
+// })
 router.get("/current", requireAuth, async (req, res) => {
-	const spot = await Spot.findAll({
+	const spots = await Spot.findAll({
 		where: {
 			ownerId: req.user.id,
+		},
+		attributes: {
+			include: [
+				[sequelize.fn("COALESCE", sequelize.fn("AVG",
+				sequelize.col("Reviews.stars")),0),"averageStarRating",
+				]],
 		},
 		include: [
 			{
@@ -163,22 +173,10 @@ router.get("/current", requireAuth, async (req, res) => {
 				attributes: [],
 			},
 		],
-		attributes: {
-			include: [
-				[
-					sequelize.fn(
-						"COALESCE",
-						sequelize.fn("AVG", sequelize.col("Reviews.stars")),
-						0
-					),
-					"averageStarRating",
-				],
-			],
-		},
 		group: ["spot.id"],
 	});
-	console.log(spot)
-	res.json({spot});
+	console.log(spots)
+	res.json({spots});
 });
 
 //Get details of a Spot from an id
@@ -211,6 +209,7 @@ router.get("/:id", async (req, res, next) => {
 					],
 				],
 			},
+			group: ["spot.id"],
 		});
 
 		for await (let review of spots) {
@@ -368,7 +367,7 @@ router.put("/:spotId", requireAuth, async (req, res) => {
 			description: description,
 			price: price,
 		});
-		
+
 		res.json(spot);
 	} else {
 		res.json({
