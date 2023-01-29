@@ -1,28 +1,29 @@
-'use strict';
-const {Model} = require('sequelize');
+
+"use strict";
+const {Model} = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class Spot extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      Spot.hasMany(models.Booking, { foreignKey: 'spotId' });
-      Spot.hasMany(models.Review, { foreignKey: 'spotId' });
-      Spot.belongsTo(models.User, { foreignKey: 'ownerId', as: 'Owner' });
-      Spot.hasMany(models.Image, {
-        foreignKey: "imageableId",
-        constraints: false,
-        scope: { imageableType: "Spot" }
-      });
-    }
-  }
-  Spot.init(
+	class Spot extends Model {
+		/**
+		 * Helper method for defining associations.
+		 * This method is not a part of Sequelize lifecycle.
+		 * The `models/index` file will call this method automatically.
+		 */
+		static associate(models) {
+			Spot.hasMany(models.Booking, {foreignKey: "spotId"});
+			Spot.hasMany(models.Review, {foreignKey: "spotId"});
+			Spot.belongsTo(models.User, {foreignKey: "ownerId", as: "Owner"});
+			Spot.hasMany(models.Image, {
+				foreignKey: "imageableId",
+				constraints: false,
+				scope: {imageableType: "Spot"},
+			});
+		}
+	}
+	Spot.init(
 		{
-      ownerId: {
-        type: DataTypes.INTEGER,
-      },
+			ownerId: {
+				type: DataTypes.INTEGER,
+			},
 			address: {
 				type: DataTypes.STRING,
 				allowNull: false,
@@ -59,12 +60,14 @@ module.exports = (sequelize, DataTypes) => {
 				type: DataTypes.DECIMAL,
 				allowNull: false,
 			},
-
+			previewImage: {
+				type: DataTypes.TEXT,
+			},
 		},
 		{
 			sequelize,
 			modelName: "Spot",
 		}
-  );
-  return Spot;
+	);
+	return Spot;
 };
