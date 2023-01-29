@@ -62,6 +62,7 @@ module.exports = (sequelize, DataTypes) => {
 			},
 			previewImage: {
 				type: DataTypes.TEXT,
+				defaultValue: false
 			},
 		},
 		{

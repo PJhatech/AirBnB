@@ -20,13 +20,13 @@ module.exports = {
 					imageableId: 1,
 					url: "https://res.cloudinary.com/dyep3uddk/image/upload/v1673479961/samples/landscapes/nature-mountains.jpg",
 					imageableType: "Spot",
-					preview: true,
+					preview: false,
 				},
 				{
 					imageableId: 1,
 					url: "https://res.cloudinary.com/dyep3uddk/image/upload/v1673479961/samples/landscapes/nature-mountains.jpg",
 					imageableType: "Spot",
-					preview: true,
+					preview: false,
 				},
 				{
 					imageableId: 2,
@@ -38,7 +38,7 @@ module.exports = {
 					imageableId: 2,
 					url: "https://res.cloudinary.com/dyep3uddk/image/upload/v1673479961/samples/landscapes/nature-mountains.jpg",
 					imageableType: "Spot",
-					preview: true,
+					preview: false,
 				},
 				{
 					imageableId: 3,
@@ -50,7 +50,7 @@ module.exports = {
 					imageableId: 3,
 					url: "https://res.cloudinary.com/dyep3uddk/image/upload/v1673479961/samples/landscapes/nature-mountains.jpg",
 					imageableType: "Spot",
-					preview: true,
+					preview: false,
 				},
 				{
 					imageableId: 4,
@@ -62,31 +62,31 @@ module.exports = {
 					imageableId: 4,
 					url: "https://res.cloudinary.com/dyep3uddk/image/upload/v1673479961/samples/landscapes/nature-mountains.jpg",
 					imageableType: "Spot",
-					preview: true,
+					preview: false,
 				},
 				{
 					imageableId: 1,
 					url: "https://res.cloudinary.com/dyep3uddk/image/upload/v1673479956/samples/landscapes/architecture-signs.jpg",
 					imageableType: "Review",
-					preview: true,
+					preview: false,
 				},
 				{
 					imageableId: 1,
 					url: "https://res.cloudinary.com/dyep3uddk/image/upload/v1673479956/samples/landscapes/architecture-signs.jpg",
 					imageableType: "Review",
-					preview: true,
+					preview: false,
 				},
 				{
 					imageableId: 1,
 					url: "https://res.cloudinary.com/dyep3uddk/image/upload/v1673479956/samples/landscapes/architecture-signs.jpg",
 					imageableType: "Review",
-					preview: true,
+					preview: false,
 				},
 				{
 					imageableId: 1,
 					url: "https://res.cloudinary.com/dyep3uddk/image/upload/v1673479956/samples/landscapes/architecture-signs.jpg",
 					imageableType: "Review",
-					preview: true,
+					preview: false
 				},
 				{
 					imageableId: 2,
@@ -98,7 +98,7 @@ module.exports = {
 					imageableId: 2,
 					url: "https://res.cloudinary.com/dyep3uddk/image/upload/v1673479956/samples/landscapes/architecture-signs.jpg",
 					imageableType: "Review",
-					preview: true,
+					preview: false,
 				},
 				{
 					imageableId: 3,
@@ -110,19 +110,19 @@ module.exports = {
 					imageableId: 3,
 					url: "https://res.cloudinary.com/dyep3uddk/image/upload/v1673479956/samples/landscapes/architecture-signs.jpg",
 					imageableType: "Review",
-					preview: true,
+					preview: false,
 				},
 				{
 					imageableId: 4,
 					url: "https://res.cloudinary.com/dyep3uddk/image/upload/v1673479956/samples/landscapes/architecture-signs.jpg",
 					imageableType: "Review",
-					preview: true,
+					preview: false
 				},
 				{
 					imageableId: 4,
 					url: "https://res.cloudinary.com/dyep3uddk/image/upload/v1673479956/samples/landscapes/architecture-signs.jpg",
 					imageableType: "Review",
-					preview: true,
+					preview: false
 				},
 				// {
 				// 	imageableId: 3,

@@ -59,6 +59,7 @@ module.exports = {
 			},
 			previewImage: {
 				type: Sequelize.TEXT,
+				defaultValue: false
 			},
 			createdAt: {
 				allowNull: false,
