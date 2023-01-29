@@ -22,7 +22,7 @@ module.exports = {
 					lng: 2.5,
 					name: "TestHouse",
 					description: "make it work",
-					price: "$50.00",
+					price: 50.00,
 					// previewImage: "testurl",
 				},
 				{
@@ -35,7 +35,7 @@ module.exports = {
 					lng: 2.5,
 					name: "TestingHouse",
 					description: "Greatest place ever",
-					price: "$100.00",
+					price: 100.00,
 					// previewImage: "testurl",
 				},
 				{
@@ -48,7 +48,7 @@ module.exports = {
 					lng: 2.5,
 					name: "TestingHouse",
 					description: "Greatest place ever",
-					price: "$100.00",
+					price: 100.00,
 					// previewImage: "testurl",
 				},
 				{
@@ -61,7 +61,7 @@ module.exports = {
 					lng: 4.5,
 					name: "TestingHouse",
 					description: "We wont murder you",
-					price: "$10.00",
+					price: 10.00,
 					// previewImage: "testurl",
 				},
 			],

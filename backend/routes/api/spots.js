@@ -13,7 +13,95 @@ const router = express.Router();
 
 //Get all Spots
 router.get("/", async (req, res) => {
+	const { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query
+
+	if (page < 0) {
+		res.status(400)
+		res.json({
+			message: "Validation Error",
+			error: "Page must be greater than or equal to 0",
+		});
+	}
+
+	if (size < 0) {
+		res.status(400);
+		res.json({
+			message: "Validation Error",
+			error: "size must be greater than or equal to 0",
+		});
+	}
+
+	if (maxPrice < 0) {
+		res.status(400);
+		res.json({
+			message: "Validation Error",
+			error: "Maximum price must be greater than or equal to 0",
+		});
+	}
+	if (minPrice < 0) {
+		res.status(400);
+		res.json({
+			message: "Validation Error",
+			error: "Minimum price must be greater than or equal to 0",
+		});
+	}
+
+	if (!isNaN(minPrice)) {
+		res.status(400);
+		res.json({
+			message: "Validation Error",
+			error: "Minimum longitude is invalid",
+		});
+	}
+
+	if (!isNaN(minLng)) {
+		res.status(400);
+		res.json({
+			message: "Validation Error",
+			error: "Minimum longitude is invalid",
+		});
+	}
+
+	if (!isNaN(maxLng)) {
+		res.status(400);
+		res.json({
+			message: "Validation Error",
+			error: "Maximum longitude is invalid",
+		});
+	}
+
+	if (!isNaN(minLat)) {
+		res.status(400);
+		res.json({
+			message: "Validation Error",
+			error: "Maximum latitude is invalid",
+		});
+	}
+
+	if (!isNaN(maxLat)) {
+		res.status(400);
+		res.json({
+			message: "Validation Error",
+			error: "Maximum latitude is invalid",
+		});
+	}
+
 	const spot = await Spot.findAll({
+		// where: {
+		// 	lat: { [Op.between]: [minLat, maxLat] },
+		// 	lng: { [Op.between]: [minLng, maxLng] },
+		// 	price: {[Op.between]: [minPrice, maxPrice]},
+		// },
+		include: [
+			{
+				model: Review,
+				attributes: [],
+			},
+			{
+				model: Image,
+				attributes: [],
+			},
+		],
 		attributes: {
 			include: [
 				[
@@ -30,20 +118,16 @@ router.get("/", async (req, res) => {
 				],
 			],
 		},
-		include: [
-			{
-				model: Review,
-				attributes: [],
-			},
-			{
-				model: Image,
-				attributes: [],
-			},
-		],
-		group: ["spot.id"],
-	});
+		limit: size,
+		offset: (page - 1) * size,
+		// group: ["spot.id"],
 
-	res.json({spot});
+	});
+	spot.page = page
+	spot.size = size
+	res.json({
+		spot, page, size
+	});
 });
 
 //Get all Spots owned by the Current User
@@ -465,10 +549,10 @@ router.post("/:spotId/bookings", requireAuth, async (req, res) => {
 		where: {
 			[Op.or]: [
 				{
-					startDate: {[Op.between]: [startDate, endDate],},
+					startDate: {[Op.between]: [startDate, endDate]},
 				},
 				{
-					endDate: {[Op.between]: [startDate, endDate],},
+					endDate: {[Op.between]: [startDate, endDate]},
 				},
 			],
 		},
@@ -520,5 +604,7 @@ router.post("/:spotId/bookings", requireAuth, async (req, res) => {
 	}
 
 });
+
+
 
 module.exports = router;
