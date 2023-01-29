@@ -152,10 +152,6 @@ router.get("/", async (req, res) => {
 
 
 //Get all Spots owned by the Current User
-// router.get("/current", requireAuth, async (req, res) => {
-// 	const spots = await Spot.findAll()
-// 	res.json(spots)
-// })
 router.get("/current", requireAuth, async (req, res) => {
 	const spots = await Spot.findAll({
 		where: {
@@ -175,15 +171,24 @@ router.get("/current", requireAuth, async (req, res) => {
 		],
 		group: ["spot.id"],
 	});
-	console.log(spots)
+
+
 	res.json({spots});
 });
 
+
 //Get details of a Spot from an id
 router.get("/:id", async (req, res, next) => {
-	const check = await Spot.findByPk(req.params.id);
+	const check = await Spot.findOne({
+		where: {ownerId: req.params.id}
+	});
 
-	if (check) {
+	if (!check) {
+		res.json({
+			statusCode: "404",
+			message: "Spot couldnt be found",
+		});
+	} else {
 		const spots = await Spot.findAll({
 			where: {id: req.params.id},
 			include: [
@@ -254,11 +259,6 @@ router.get("/:id", async (req, res, next) => {
 		// }
 
 		res.json(spots);
-	} else {
-		res.json({
-			statusCode: "404",
-			message: "Spot couldnt be found",
-		});
 	}
 });
 
