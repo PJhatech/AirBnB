@@ -18,11 +18,11 @@ router.delete('/:reviewImageId', requireAuth, async (req, res) => {
       where: { userId: req.user.id }
    })
    const reviewImage = await Image.findOne({
-         attributes: {
-            imageableId: req.params.reviewImageId,
-            imageableType: "Review"
-         }
-   })
+         where: {
+               id: req.params.reviewImageId,
+               imageableType: "Review"
+            }
+    })
 
    if (!reviewImage) {
       res.status(404);
