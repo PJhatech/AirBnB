@@ -57,10 +57,6 @@ module.exports = {
 				type: Sequelize.DECIMAL,
 				allowNull: false
 			},
-			previewImage: {
-				type: Sequelize.TEXT,
-				defaultValue: false
-			},
 			createdAt: {
 				allowNull: false,
 				type: Sequelize.DATE,

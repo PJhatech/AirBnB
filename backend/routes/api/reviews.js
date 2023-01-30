@@ -186,6 +186,14 @@ router.delete("/:reviewId", requireAuth, async (req, res) => {
 		where: {id: req.params.reviewId},
 	});
 
+	if (!review) {
+		res.status(404);
+		res.json({
+			message: "Spot couldn't be found",
+			statusCode: 404,
+		});
+	}
+	
 	if (review.dataValues.userId === req.user.id) {
 		await review.destroy();
 		res.json({
@@ -200,13 +208,6 @@ router.delete("/:reviewId", requireAuth, async (req, res) => {
 		});
 	}
 
-	if (!review) {
-		res.status(404);
-		res.json({
-			message: "Spot couldn't be found",
-			statusCode: 404,
-		});
-	}
 });
 
 

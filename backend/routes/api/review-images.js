@@ -24,6 +24,14 @@ router.delete('/:reviewImageId', requireAuth, async (req, res) => {
          }
    })
 
+   if (!reviewImage) {
+      res.status(404);
+		return res.json({
+			message: "Review Image couldn't be found",
+			statusCode: 404,
+		});
+   }
+
 
    if (review.userId === req.user.id) {
       if(reviewImage){
@@ -31,12 +39,6 @@ router.delete('/:reviewImageId', requireAuth, async (req, res) => {
          res.json({
 				message: "Successfully deleted",
 				statusCode: 200,
-			});
-      } else {
-         res.status(404)
-         res.json({
-				message: "Review Image couldn't be found",
-				statusCode: 404,
 			});
       }
    } else {
