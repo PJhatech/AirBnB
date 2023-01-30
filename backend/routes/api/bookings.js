@@ -24,6 +24,24 @@ router.get("/current", requireAuth, async (req, res) => {
 		],
 	});
 
+	for await (let booking of Bookings) {
+		const previewImages = await Image.findAll({
+			where: {
+				imageableType: "Spot",
+				imageableId: booking.dataValues.Spot.id,
+				preview: true,
+			},
+			attributes: ["url"],
+		});
+
+		if (previewImages.length) {
+			const image = previewImages.map((value) => value.url);
+			booking.dataValues.Spot.dataValues.previewImage = image[0];
+		} else {
+			booking.dataValues.Spot.dataValues.previewImage = "No Image Url";
+		}
+	}
+
 	res.json({Bookings});
 });
 
@@ -51,7 +69,7 @@ router.put("/:bookingId", requireAuth, async (req, res) => {
 
    if (!booking) {
       res.status(404)
-      res.json({
+   	return  res.json({
 			message: "Booking couldn't be found",
 			statusCode: 404,
 		});
@@ -60,7 +78,7 @@ router.put("/:bookingId", requireAuth, async (req, res) => {
       if (booking.endDate > test) {
          if (booked) {
             res.status(403)
-            res.json({
+            return res.json({
 					message:
 						"Sorry, this spot is already booked for the specified dates",
 					statusCode: 403,
@@ -76,10 +94,10 @@ router.put("/:bookingId", requireAuth, async (req, res) => {
                startDate: startDate,
                endDate: endDate
             })
-            res.json(booking)
+            return res.json(booking)
          } else {
             res.status(400)
-            res.json({
+            return res.json({
                message: "Validation error",
                statusCode: 400,
                errors: ["endDate cannot come before startDate"],
@@ -87,7 +105,7 @@ router.put("/:bookingId", requireAuth, async (req, res) => {
          }
 
       } else {
-         res.json({
+         return res.json({
 				message: "Past bookings can't be modified",
 				statusCode: 403,
 			});
@@ -109,15 +127,15 @@ router.delete('/:bookingId', requireAuth, async (req, res) => {
 
 	if (!booked) {
 		res.status(404)
-		res.json({
+		return res.json({
 			message: "Booking couldn't be found",
 			statusCode: 404,
 		})
 	}
 
-	
+
 	if (booking >= test) {
-		res.json({
+		return res.json({
 			message: "Bookings that have been started can't be deleted",
 			statusCode: 403,
 		});
@@ -126,7 +144,7 @@ router.delete('/:bookingId', requireAuth, async (req, res) => {
    if (booked.userId === req.user.id) {
 		if (booking) {
 			await booking.destroy();
-			res.json({
+			return res.json({
 				message: "Successfully deleted",
 				statusCode: 200,
 			});

@@ -52,11 +52,28 @@ router.get("/current", requireAuth, async (req, res) => {
 					"price",
 				],
 			},
-	
+
 		],
 	});
 
 	for await (let review of Reviews) {
+			const previewImages = await Image.findAll({
+				where: {
+					imageableType: "Spot",
+					imageableId: review.dataValues.Spot.id,
+					preview: true,
+				},
+				attributes: ["url"],
+			});
+		
+			if (previewImages.length) {
+				const image = previewImages.map((value) => value.url);
+				review.dataValues.Spot.dataValues.previewImage = image[0];
+			} else {
+				review.dataValues.Spot.dataValues.previewImage = "No Image Url";
+			}
+
+
 		const reviewImages = await Image.findAll({
 			where: {
 				imageableType: "Review",
