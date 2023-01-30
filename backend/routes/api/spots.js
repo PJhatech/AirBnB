@@ -137,7 +137,7 @@ router.get("/", async (req, res) => {
 			const image = previewImages.map((value) => value.url);
 			spot.dataValues.previewImage = image[0];
 		} else {
-			spot.dataValues.previewImages = "No Image Url";
+			spot.dataValues.previewImage = "No Image Url";
 		}
 
 		const reviews = await Review.findAll({
@@ -188,6 +188,22 @@ router.get("/current", requireAuth, async (req, res) => {
 			spot.dataValues.AvgRatiing = sum;
 		} else {
 			spot.dataValues.AvgRatiing = 0;
+		}
+
+		const previewImages = await Image.findAll({
+			where: {
+				imageableType: "Spot",
+				imageableId: spot.id,
+				preview: true,
+			},
+			attributes: ["url"],
+		});
+
+		if (previewImages.length) {
+			const image = previewImages.map((value) => value.url);
+			spot.dataValues.previewImage = image[0];
+		} else {
+			spot.dataValues.previewImage = "No Image Url";
 		}
 	}
 	res.json({Spots});
@@ -241,7 +257,7 @@ router.get("/:id", async (req, res, next) => {
 				const image = previewImages.map((value) => value.url);
 				spot.dataValues.previewImage = image[0];
 			} else {
-				spot.dataValues.previewImages = "No Image Url";
+				spot.dataValues.previewImage = "No Image Url";
 			}
 
 			const reviews = await Review.findAll({

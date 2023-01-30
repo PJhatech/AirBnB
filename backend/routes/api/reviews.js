@@ -52,21 +52,7 @@ router.get("/current", requireAuth, async (req, res) => {
 					"price",
 				],
 			},
-			{
-				model: Spot,
-				attributes: {
-					include: [
-						[
-							sequelize.fn(
-								"COALESCE",
-								sequelize.col("Images.url"),
-								sequelize.literal("'No image has been uploaded'")
-							),
-							"previewImages",
-						],
-					],
-				},
-			},
+	
 		],
 	});
 
@@ -193,7 +179,7 @@ router.delete("/:reviewId", requireAuth, async (req, res) => {
 			statusCode: 404,
 		});
 	}
-	
+
 	if (review.dataValues.userId === req.user.id) {
 		await review.destroy();
 		res.json({
