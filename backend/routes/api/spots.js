@@ -159,14 +159,22 @@ router.get("/current", requireAuth, async (req, res) => {
 		},
 		attributes: {
 			include: [
-				[sequelize.fn("COALESCE", sequelize.fn("AVG",
-				sequelize.col("Reviews.stars")),0),"averageStarRating",
-				]],
+				[
+					sequelize.fn(
+						"COALESCE",
+						sequelize.fn("AVG", sequelize.col("Reviews.stars")),
+						0
+					),
+					"averageStarRating",
+				],
+			],
 		},
 		include: [
 			{
 				model: Review,
 				attributes: [],
+				subQuery: false,
+				required: false,
 			},
 		],
 		group: ["spot.id"],
@@ -195,11 +203,15 @@ router.get("/:id", async (req, res, next) => {
 				{
 					model: Review,
 					attributes: [],
+					subQuery: false,
+					required: false,
 				},
 				{
 					model: User,
 					as: "Owner",
 					attributes: ["id", "firstName", "lastName"],
+					subQuery: false,
+					required: false,
 				},
 			],
 			attributes: {
