@@ -36,15 +36,15 @@ router.delete('/:reviewImageId', requireAuth, async (req, res) => {
    if (review.userId === req.user.id) {
       if(reviewImage){
          await reviewImage.destroy();
-         res.json({
+         return res.json({
 				message: "Successfully deleted",
 				statusCode: 200,
 			});
       }
    } else {
-      res.json({
-         message: 'Must be Authorized User'
-      })
+      return res.json({
+			message: "Must be Authorized User",
+		});
    }
 
 })

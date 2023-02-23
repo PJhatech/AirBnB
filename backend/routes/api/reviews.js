@@ -65,7 +65,7 @@ router.get("/current", requireAuth, async (req, res) => {
 				},
 				attributes: ["url"],
 			});
-		
+
 			if (previewImages.length) {
 				const image = previewImages.map((value) => value.url);
 				review.dataValues.Spot.dataValues.previewImage = image[0];
@@ -106,7 +106,7 @@ router.post("/:reviewId/images", requireAuth, async (req, res) => {
 
 	if (!review) {
 		res.status(404);
-		res.json({
+		return res.json({
 			message: "Review could not be found",
 			statusCode: 404,
 		});
@@ -119,22 +119,22 @@ router.post("/:reviewId/images", requireAuth, async (req, res) => {
             imageableType: "Review",
 				imageableId: req.params.reviewId,
          });
-         res.json({
-            id: newImage.id,
+         return res.json({
+				id: newImage.id,
 				url: newImage.url,
-         });
+			});
       } else {
          res.status(403)
-         res.json({
+         return res.json({
 				message: "Maximum number of images for this resource was reached",
 				statusCode: 403,
 			});
       }
 
    } else {
-      res.json({
-         message: "Must be the Authorized User"
-      })
+      return res.json({
+			message: "Must be the Authorized User",
+		});
    }
 });
 
@@ -148,7 +148,7 @@ router.put('/:reviewId', requireAuth, async (req, res) => {
 	});
 	if (!reviews) {
 		res.status(404);
-		res.json({
+		return res.json({
 			message: "Review couldn't be found",
 			statusCode: 404,
 		});
@@ -163,7 +163,7 @@ router.put('/:reviewId', requireAuth, async (req, res) => {
 			res.json(reviews)
 		} else {
 			res.status(400)
-			req.json({
+			return req.json({
 				message: "Validation error",
 				statusCode: 400,
 				errors: [
@@ -175,9 +175,9 @@ router.put('/:reviewId', requireAuth, async (req, res) => {
 
 
 	} else {
-		res.json({
-			message: 'Must be the authorized User'
-		})
+		return res.json({
+			message: "Must be the authorized User",
+		});
 	}
 })
 
@@ -191,7 +191,7 @@ router.delete("/:reviewId", requireAuth, async (req, res) => {
 
 	if (!review) {
 		res.status(404);
-		res.json({
+		return res.json({
 			message: "Spot couldn't be found",
 			statusCode: 404,
 		});
@@ -199,13 +199,13 @@ router.delete("/:reviewId", requireAuth, async (req, res) => {
 
 	if (review.dataValues.userId === req.user.id) {
 		await review.destroy();
-		res.json({
+		return res.json({
 			message: "Successfully deleted",
 			statusCode: 200,
 		});
 	} else {
 		res.status(400);
-		res.json({
+		return res.json({
 			message: "Must be Owner of Spot to Delete",
 			statusCode: 400,
 		});

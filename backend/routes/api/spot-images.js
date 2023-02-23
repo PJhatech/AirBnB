@@ -32,13 +32,13 @@ router.delete("/:spotImageId", requireAuth, async (req, res) => {
 		if (spot.ownerId === req.user.id) {
 			if (spotImage) {
 				await spotImage.destroy();
-				res.json({
+				return res.json({
 					message: "Successfully deleted",
 					statusCode: 200,
 				});
 			}
 		} else {
-			req.json({
+			return req.json({
 				message: "Must be Authorized User",
 			});
 		}

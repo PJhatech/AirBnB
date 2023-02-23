@@ -78,7 +78,7 @@ router.put("/:bookingId", requireAuth, async (req, res) => {
       if (booking.endDate > test) {
          if (booked) {
             res.status(403)
-            return res.json({
+            res.json({
 					message:
 						"Sorry, this spot is already booked for the specified dates",
 					statusCode: 403,
@@ -150,9 +150,9 @@ router.delete('/:bookingId', requireAuth, async (req, res) => {
 			});
 		}
 	} else {
-		res.json({
-			message: "Must be Authorized User"
-		})
+		return res.json({
+			message: "Must be Authorized User",
+		});
 	}
 
 })

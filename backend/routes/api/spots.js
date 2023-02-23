@@ -18,7 +18,7 @@ router.get("/", async (req, res) => {
 
 	if (page < 0) {
 		res.status(400);
-		res.json({
+		return res.json({
 			message: "Validation Error",
 			error: "Page must be greater than or equal to 0",
 		});
@@ -26,7 +26,7 @@ router.get("/", async (req, res) => {
 
 	if (size < 0) {
 		res.status(400);
-		res.json({
+		return res.json({
 			message: "Validation Error",
 			error: "size must be greater than or equal to 0",
 		});
@@ -34,14 +34,14 @@ router.get("/", async (req, res) => {
 
 	if (maxPrice < 0) {
 		res.status(400);
-		res.json({
+		return res.json({
 			message: "Validation Error",
 			error: "Maximum price must be greater than or equal to 0",
 		});
 	}
 	if (minPrice < 0) {
 		res.status(400);
-		res.json({
+		return res.json({
 			message: "Validation Error",
 			error: "Minimum price must be greater than or equal to 0",
 		});
@@ -49,7 +49,7 @@ router.get("/", async (req, res) => {
 
 	if (!isNaN(minPrice)) {
 		res.status(400);
-		res.json({
+		return res.json({
 			message: "Validation Error",
 			error: "Minimum longitude is invalid",
 		});
@@ -65,7 +65,7 @@ router.get("/", async (req, res) => {
 
 	if (!isNaN(maxLng)) {
 		res.status(400);
-		res.json({
+		return res.json({
 			message: "Validation Error",
 			error: "Maximum longitude is invalid",
 		});
@@ -73,7 +73,7 @@ router.get("/", async (req, res) => {
 
 	if (!isNaN(minLat)) {
 		res.status(400);
-		res.json({
+		return res.json({
 			message: "Validation Error",
 			error: "Maximum latitude is invalid",
 		});
@@ -81,7 +81,7 @@ router.get("/", async (req, res) => {
 
 	if (!isNaN(maxLat)) {
 		res.status(400);
-		res.json({
+		return res.json({
 			message: "Validation Error",
 			error: "Maximum latitude is invalid",
 		});
@@ -164,7 +164,6 @@ router.get("/", async (req, res) => {
 		page,
 		size,
 	});
-	res.json({spots});
 });
 
 //Get all Spots owned by the Current User
@@ -211,12 +210,10 @@ router.get("/current", requireAuth, async (req, res) => {
 
 //Get details of a Spot from an id
 router.get("/:id", async (req, res, next) => {
-	const check = await Spot.findOne({
-		where: {ownerId: req.params.id},
-	});
+	const check = await Spot.findByPk(req.params.id)
 
 	if (!check) {
-		return res.json({
+		res.json({
 			statusCode: "404",
 			message: "Spot couldnt be found",
 		});
@@ -326,9 +323,9 @@ router.post("/", requireAuth, async (req, res) => {
 	});
 
 	if (newSpot.ownerId === req.user.id) {
-		res.json(newSpot);
+		return res.json(newSpot);
 	} else {
-		res.json({
+		return res.json({
 			message: "Validation Error",
 			statusCode: 400,
 			errors: [
@@ -368,7 +365,7 @@ router.post("/:spotId/images", requireAuth, async (req, res, next) => {
 			imageableId: req.params.spotId,
 			preview: preview,
 		});
-		res.json({
+		return res.json({
 			id: newImage.id,
 			url: newImage.url,
 			preview: preview,
@@ -441,14 +438,14 @@ router.delete("/:spotId", requireAuth, async (req, res) => {
 	if (spot.ownerId === req.user.id) {
 		if (spot) {
 			await spot.destroy();
-			res.json({
+			return res.json({
 				message: "Successfully deleted",
 				statusCode: 200,
 			});
 		}
 	} else {
 		res.status(400);
-		res.json({
+		return res.json({
 			message: "Must be Owner of Spot to Delete",
 			statusCode: 400,
 		});
@@ -522,7 +519,7 @@ router.post("/:spotId/reviews", requireAuth, async (req, res) => {
 	} else {
 		if (reviews.length) {
 			res.status(403);
-			res.json({
+			return res.json({
 				message: "User already has a review for this spot",
 				statusCode: 403,
 			});
@@ -533,10 +530,10 @@ router.post("/:spotId/reviews", requireAuth, async (req, res) => {
 				review: review,
 				stars: stars,
 			});
-			res.json(newReview);
+			return res.json(newReview);
 		} else {
 			res.status(400);
-			res.json({
+			return res.json({
 				message: "Validation error",
 				statusCode: 400,
 			});
@@ -565,10 +562,10 @@ router.get("/:spotId/bookings", requireAuth, async (req, res) => {
 
 	if (verify.userId === req.user.id) {
 		if (verify) {
-			res.json({Bookings});
+			return res.json({Bookings});
 		}
 	} else {
-		res.json({
+		return res.json({
 			Bookings: {
 				spotId: verify.spotId,
 				startDate: verify.startDate,
@@ -603,15 +600,15 @@ router.post("/:spotId/bookings", requireAuth, async (req, res) => {
 		});
 	}
 
-	if (spot.ownerId === req.user.id) {
-		res.json({
+	if (spot.ownerId !== req.user.id) {
+		return res.json({
 			message: "Cannot book your own Spot!",
 		});
 	}
 
 	if (booked) {
 		res.status(403);
-		res.json({
+		return res.json({
 			message: "Sorry, this spot is already booked for the specified dates",
 			statusCode: 403,
 			errors: [
@@ -627,10 +624,10 @@ router.post("/:spotId/bookings", requireAuth, async (req, res) => {
 			startDate: startDate,
 			endDate: endDate,
 		});
-		res.json(newBooking);
+		return res.json(newBooking);
 	} else {
 		res.status(400);
-		res.json({
+		return res.json({
 			message: "Validation error",
 			statusCode: 400,
 			errors: ["endDate cannot be on or before startDate"],
