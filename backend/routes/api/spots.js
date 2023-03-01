@@ -1,5 +1,3 @@
-/** @format */
-
 const express = require("express");
 const {setTokenCookie, requireAuth} = require("../../utils/auth");
 const {Spot, Image, User, Review, Booking} = require("../../db/models");
@@ -157,12 +155,12 @@ router.get("/", async (req, res) => {
 		}
 	}
 
-	spots.page = page;
-	spots.size = size;
+	// spots.page = page;
+	// spots.size = size;
 	res.json({
-		spots,
-		page,
-		size,
+		...spots,
+		// page,
+		// size,
 	});
 });
 

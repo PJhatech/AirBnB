@@ -1,0 +1,12 @@
+img {
+   width: min(80%, 25rem);
+}
+
+.spots {
+  width: 100%;
+
+  display: grid;
+  grid-template-rows: repeat(auto-fill, 30%);
+  grid-template-columns: repeat(4, auto);
+  gap: 20px;
+}
