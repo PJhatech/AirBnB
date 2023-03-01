@@ -7,6 +7,7 @@ import GetSpots from "./components/Spots";
 
 
 
+
 function App() {
 	const dispatch = useDispatch();
 	const [isLoaded, setIsLoaded] = useState(false);
@@ -26,6 +27,10 @@ function App() {
 					</Route>
 
 					<Route path='/spots'>
+						<h1>Spots Route path</h1>
+					</Route>
+
+					<Route exact path='/spots/:id'>
 						<h1>Spots Route path</h1>
 					</Route>
 				</Switch>}
