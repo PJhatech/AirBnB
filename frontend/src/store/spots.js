@@ -1,30 +1,49 @@
+
 const GET_SPOTS = "session/GET_SPOTS";
+const SPOT_INDEX = "session/INDEX"
 
 
-const spotActionCreator = (getSpots) => {
+//Action
+const getAllSpots = (spotList) => {
 	return {
       type: GET_SPOTS,
-      getSpots
+      spotList
+	};
+};
+
+const spotIndex = (spotIndex) => {
+	return {
+      type: SPOT_INDEX,
+      spotIndex
 	};
 };
 
 
+//Thunk
 export const spotsThunk = () => async (dispatch) => {
-	const response = await fetch("/api/spots");
-   const getSpots = await response.json();
-   console.log(getSpots)
-   dispatch(spotActionCreator(getSpots));
-   return response
-};
+   const response = await fetch("/api/spots");
+   const allSpots = await response.json();
+   dispatch(getAllSpots(allSpots));
+   return allSpots
+}
+
+export const spotIndexThunk = (id) => async (dispatch) => {
+   const response = await fetch(`/api/spots/${id}`);
+   const index = await response.json();
+   dispatch(spotIndex(index));
+   return index
+}
 
 
+//State & Reducer
 const initialState = {}
 
 const spotReducer = (state = initialState, action) => {
-
    switch (action.type) {
       case GET_SPOTS:
-         return {...state, ...action.getSpots}
+         return { ...state, ...action.spotList };
+      case SPOT_INDEX:
+         return { ...action.spotIndex };
       default:
          return state
    }

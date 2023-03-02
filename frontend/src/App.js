@@ -3,9 +3,9 @@ import {useDispatch} from "react-redux";
 import {Switch, Route} from "react-router-dom";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
-import GetSpots from "./components/Spots";
-
-
+import SpotList from "./components/Spots/SpotList";
+import SpotPage from "./components/Spots/SpotPage";
+import SpotIndex from "./components/Spots/SpotIndex";
 
 
 function App() {
@@ -15,26 +15,23 @@ function App() {
 		dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
 	}, [dispatch]);
 
-
 	return (
 		<>
 			<Navigation isLoaded={isLoaded} />
-			<GetSpots />
 			<nav>
-				{isLoaded && <Switch>
-					<Route path='/' exact>
-						<h1>Home Page Route</h1>
-					</Route>
+				{isLoaded && (
+					<Switch>
+						<Route path="/" exact>
+							<h1>Home Page Route</h1>
+							<SpotList />
+						</Route>
 
-					<Route path='/spots'>
-						<h1>Spots Route path</h1>
-					</Route>
-
-					<Route exact path='/spots/:id'>
-						<h1>Spots Route path</h1>
-					</Route>
-				</Switch>}
-				</nav>
+						<Route path="/spots">
+							<Route path="/spots/:id" component={SpotPage}  />
+						</Route>
+					</Switch>
+				)}
+			</nav>
 		</>
 	);
 }
