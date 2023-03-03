@@ -30,7 +30,8 @@ export const spotsThunk = () => async (dispatch) => {
 export const spotIndexThunk = (id) => async (dispatch) => {
    const response = await fetch(`/api/spots/${id}`);
    const index = await response.json();
-   dispatch(spotIndex(index));
+
+   dispatch(spotIndex(index[0]));
    return index
 }
 
@@ -43,7 +44,8 @@ const spotReducer = (state = initialState, action) => {
       case GET_SPOTS:
          return { ...state, ...action.spotList };
       case SPOT_INDEX:
-         return { ...action.spotIndex };
+         console.log(action)
+         return {...state, ...action.spotIndex};
       default:
          return state
    }

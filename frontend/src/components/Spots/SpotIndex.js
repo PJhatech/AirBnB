@@ -1,31 +1,44 @@
+import React, {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {useParams} from "react-router-dom";
+import {spotIndexThunk} from "../../store/spots";
 
-// import React, {useEffect} from "react";
-// import {useSelector, useDispatch} from "react-redux";
-// import {useParams} from "react-router-dom";
-// import {spotIndexThunk} from "../../store/spots";
+function SpotIndex() {
+	const {id} = useParams();
+	const dispatch = useDispatch();
+	const spot = useSelector((state) => state.spots);
 
-// const SpotPage = (props) => {
-//    const { id } = useParams();
-//    const dispatch = useDispatch();
-//    const spotIndexSelector = useSelector((state) => state.spots);
-//    const spot = Object.values(spotIndexSelector);
+	const [isLoaded, setIsLoaded] = useState(false);
 
-//    useEffect(() => {
-//       dispatch(spotIndexThunk(id));
-//    }, []);
+	useEffect(() => {
+		dispatch(spotIndexThunk(id)).then(() => setIsLoaded(true));
+	}, [dispatch]);
+	console.log(spot, "<===========1===========>");
 
-//    console.log(props.spot, "<===========1===========>");
-//    // console.log(spotIndexSelector, "<===========2===========>");
-//    return (
-//       <div>
-//           {spot.map(({name}) => (
-//             <div>
-//                {spot}
-// 				{ console.log(spot) }
-// 			</div>
-//          ))}
-// 		</div>
-// 	);
-// };
+	return (
+		<>
+			{isLoaded && (
+				<div>
+					<div>
+						<div>
+							<div>
+							{spot.name}
+							<br />
+							{spot.city},{spot.state},{spot.country}
+							</div>
+							<br />
+							<img src={spot.previewImage} alt={spot.city} />
+							<br />
+							<div>
+							Hosted by {spot.Owner.firstName} {spot.Owner.lastName}
+								${spot.price} {spot.AvgRating}
+							</div>
+						</div>
+					</div>
+				</div>
+			)}
+		</>
+	);
+}
 
-// export default SpotPage;
+export default SpotIndex;

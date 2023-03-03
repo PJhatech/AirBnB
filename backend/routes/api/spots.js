@@ -266,9 +266,9 @@ router.get("/:id", async (req, res, next) => {
 					sum += review.stars;
 				});
 				sum = sum / reviews.length;
-				spot.dataValues.AvgRatiing = sum;
+				spot.dataValues.AvgRating = sum;
 			} else {
-				spot.dataValues.AvgRatiing = 0;
+				spot.dataValues.AvgRating = 0;
 			}
 		}
 
