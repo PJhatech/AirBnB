@@ -1,6 +1,6 @@
-
 const GET_SPOTS = "session/GET_SPOTS";
-const SPOT_INDEX = "session/INDEX"
+const SPOT_INDEX = "session/INDEX";
+const CREATE_SPOT = "session/CREATE_SPOT"
 
 
 //Action
@@ -11,12 +11,19 @@ const getAllSpots = (spotList) => {
 	};
 };
 
-const spotIndex = (spotIndex) => {
+const spotIndex = (spot) => {
 	return {
       type: SPOT_INDEX,
-      spotIndex
+      spot
 	};
 };
+
+const addSpot = (spotList) => {
+   return {
+      type: CREATE_SPOT,
+      spotList
+   }
+}
 
 
 //Thunk
@@ -29,12 +36,24 @@ export const spotsThunk = () => async (dispatch) => {
 
 export const spotIndexThunk = (id) => async (dispatch) => {
    const response = await fetch(`/api/spots/${id}`);
-   const index = await response.json();
+   const spot = await response.json();
 
-   dispatch(spotIndex(index[0]));
-   return index
+   dispatch(spotIndex(spot[0]));
+   return spot
 }
 
+export const createSpotThunk = (payload) => async (dispatch) => {
+   const response = await fetch("/api/spots", {
+		method: "POST",
+      header: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+   });
+
+   if (response.ok) {
+      const spot = await response.json();
+      dispatch(addSpot(spot));
+   }
+}
 
 //State & Reducer
 const initialState = {}
@@ -44,8 +63,25 @@ const spotReducer = (state = initialState, action) => {
       case GET_SPOTS:
          return { ...state, ...action.spotList };
       case SPOT_INDEX:
-         console.log(action)
-         return {...state, ...action.spotIndex};
+         return { ...state, ...action.spot };
+      case CREATE_SPOT:
+         if (!state[action.spot.id]) {
+            const newState = {
+               ...state,
+               [action.spot.id]: action.spot
+            };
+            const spots = newState.spotList.map(id => newState[id]);
+            spots.push(action.spot);
+            console.log(newState)
+            return newState
+         };
+         return {
+            ...state,
+            [action.spot.id]: {
+               ...state[action.spot.id],
+               ...action.spot
+            }
+         };
       default:
          return state
    }

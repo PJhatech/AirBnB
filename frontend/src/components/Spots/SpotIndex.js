@@ -13,7 +13,7 @@ function SpotIndex() {
 	useEffect(() => {
 		dispatch(spotIndexThunk(id)).then(() => setIsLoaded(true));
 	}, [dispatch]);
-	console.log(spot, "<===========1===========>");
+
 
 	return (
 		<>

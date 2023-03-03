@@ -5,7 +5,7 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import SpotList from "./components/Spots/SpotList";
 import SpotIndex from "./components/Spots/SpotIndex";
-
+import CreateSpotForm from "./components/Spots/CreateSpotForm";
 
 
 function App() {
@@ -17,7 +17,7 @@ function App() {
 
 	return (
 		<>
-			<Navigation isLoaded={isLoaded} />
+		<Navigation isLoaded={isLoaded} />
 			<nav>
 				{isLoaded && (
 					<Switch>
@@ -27,8 +27,10 @@ function App() {
 						</Route>
 
 						<Route path="/spots">
+							<Route component={CreateSpotForm} />
 							<Route path="/spots/:id" component={SpotIndex} />
 						</Route>
+
 					</Switch>
 				)}
 			</nav>

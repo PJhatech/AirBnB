@@ -18,7 +18,7 @@ function SpotList() {
 		<>
 			{isLoaded && (
 			<div>
-				<h1>spots</h1>
+				<h1>spotList</h1>
 				<div className="spots">
 					{spotList.map((spotList) => (
 						<div key={spotList.id}>
