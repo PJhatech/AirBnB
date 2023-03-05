@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {NavLink} from "react-router-dom";
+import {NavLink, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {spotsThunk} from "../../store/spots";
 import "./Spot.css";
@@ -14,10 +14,12 @@ function SpotList() {
 	useEffect(() => {
 		dispatch(spotsThunk()).then(() => setIsLoaded(true));
 	}, [dispatch]);
+
+
 	return (
 		<>
 			{isLoaded && (
-			<div>
+				<div>
 				<h1>spotList</h1>
 				<div className="spots">
 					{spotList.map((spotList) => (

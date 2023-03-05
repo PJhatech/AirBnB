@@ -1,6 +1,7 @@
 const GET_SPOTS = "session/GET_SPOTS";
 const SPOT_INDEX = "session/INDEX";
 const CREATE_SPOT = "session/CREATE_SPOT"
+const SPOT_IMAGES = "session/SPOT_IMAGES";
 
 
 //Action
@@ -24,6 +25,13 @@ const addSpot = (spotList) => {
       spotList
    }
 }
+
+const getSpotImages = (getSpotImages) => {
+	return {
+		type: SPOT_IMAGES,
+		getSpotImages,
+	};
+};
 
 
 //Thunk
@@ -55,6 +63,13 @@ export const createSpotThunk = (payload) => async (dispatch) => {
    }
 }
 
+export const getImageThunk = (id) => async (dispatch) => {
+   const response = await fetch(`/api/spots/${id}/images`);
+   const images = await response.json();
+   dispatch(getSpotImages(images))
+   return images
+};
+
 //State & Reducer
 const initialState = {}
 
@@ -82,6 +97,8 @@ const spotReducer = (state = initialState, action) => {
                ...action.spot
             }
          };
+      case SPOT_IMAGES:
+         return{...state, ...action.getSpotImages}
       default:
          return state
    }

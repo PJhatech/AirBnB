@@ -3,10 +3,13 @@ import {useDispatch, useSelector} from "react-redux";
 import {useParams} from "react-router-dom";
 import {spotIndexThunk} from "../../store/spots";
 
+
 function SpotIndex() {
 	const {id} = useParams();
 	const dispatch = useDispatch();
 	const spot = useSelector((state) => state.spots);
+	const spotPreviewImage = spot.previewImage;
+	// const image = Object.values(spotPreviewImage)
 
 	const [isLoaded, setIsLoaded] = useState(false);
 
@@ -14,6 +17,7 @@ function SpotIndex() {
 		dispatch(spotIndexThunk(id)).then(() => setIsLoaded(true));
 	}, [dispatch]);
 
+	console.log(spotPreviewImage)
 
 	return (
 		<>
@@ -22,16 +26,16 @@ function SpotIndex() {
 					<div>
 						<div>
 							<div>
-							{spot.name}
-							<br />
-							{spot.city},{spot.state},{spot.country}
+								{spot.name}
+								<br />
+								{spot.city},{spot.state},{spot.country}
 							</div>
 							<br />
 							<img src={spot.previewImage} alt={spot.city} />
 							<br />
 							<div>
-							Hosted by {spot.Owner.firstName} {spot.Owner.lastName}
-								${spot.price} {spot.AvgRating}
+								Hosted by {spot.Owner.firstName} {spot.Owner.lastName}$
+								{spot.price} {spot.AvgRating}
 							</div>
 						</div>
 					</div>
