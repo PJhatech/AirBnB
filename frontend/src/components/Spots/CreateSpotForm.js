@@ -5,7 +5,6 @@ import {createImageThunk, createSpotThunk, spotsThunk} from "../../store/spots";
 import ImageSpots from "./test";
 
 const CreateSpotForm = () => {
-	const {imageableId, imageableType} = useParams();
 	const dispatch = useDispatch();
 	const history = useHistory();
 
@@ -16,13 +15,14 @@ const CreateSpotForm = () => {
 	const [lat, setLat] = useState();
 	const [lng, setLng] = useState();
 	const [name, setName] = useState();
-	const [description, setDiscription] = useState();
+	const [description, setDescription] = useState();
 	const [price, setPrice] = useState();
 	const [url, setImageUrl] = useState();
 	const [preview, setPreview] = useState(); //previewImage
-	const [ownerId, setOwnerId] = useState();
+	const [imageableId, setImageableId] = useState()
 
-	// console.log(imageableIxd, "<--------1------->")
+
+
 	const [isLoaded, setIsLoaded] = useState(false);
 
 	useEffect(() => {
@@ -41,14 +41,17 @@ const CreateSpotForm = () => {
 			name,
 			description,
 			price,
-			// ownerId,
 		};
 
-		const spotImage = {url, preview, imageableId, imageableType};
-		dispatch(createSpotThunk(newSpot));
-		console.log(spotImage, "<---------1--------->");
-		dispatch(createImageThunk(spotImage));
-		history.push(`/spots/${newSpot.id}`);
+		const createdSpot = await dispatch(createSpotThunk(newSpot));
+		const imageableId = createdSpot.id
+		if (createdSpot) {
+			const spotId = createdSpot.id
+			const spotImage = { url, preview, imageableId };
+			const imageArr = [url, preview];
+			await dispatch(createImageThunk(imageArr, spotId));
+		}
+		history.push(`/spots/${createdSpot.id}`);
 	};
 
 	return (
@@ -103,7 +106,7 @@ const CreateSpotForm = () => {
 				<input
 					type="text"
 					value={description}
-					onChange={(e) => setDiscription(e.target.value)}
+					onChange={(e) => setDescription(e.target.value)}
 					placeholder="Please write at least 30 characters"
 					min="30"
 					required
@@ -123,8 +126,19 @@ const CreateSpotForm = () => {
 					placeholder="Price per night (USD)"
 					required
 				/>
-				<input type="text" value={url} placeholder="Image Url" />
-				<input type="text" value={preview} placeholder="Preview Url" />
+				<input
+					type="text"
+					value={url}
+					onChange={(e) => setImageUrl(e.target.value)}
+					placeholder="Image Url"
+				/>
+				<input
+					type="text"
+					value={preview}
+					onChange={(e) => setPreview(e.target.value)}
+					placeholder="Preview Url"
+				/>
+
 				<button type="submit">Create a Spot</button>
 			</form>
 		</div>

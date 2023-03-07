@@ -1,5 +1,6 @@
 {
 	"javascript.format.enable": true,
 	"json.format.keepLines": true,
-	"prettier.tabWidth": 3
+	"prettier.tabWidth": 3,
+	"cSpell.words": ["imageableId"]
 }

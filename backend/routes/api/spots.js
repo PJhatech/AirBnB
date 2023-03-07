@@ -363,6 +363,7 @@ router.post("/:spotId/images", requireAuth, async (req, res, next) => {
 			imageableId: req.params.spotId,
 			preview: preview,
 		});
+		console.log(newImage, "<_______4______>")
 		return res.json({
 			id: newImage.id,
 			url: newImage.url,
