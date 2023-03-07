@@ -10,14 +10,17 @@ function SpotIndex() {
 	const spot = useSelector((state) => state.spots);
 	const spotPreviewImage = spot.previewImage;
 	// const image = Object.values(spotPreviewImage)
-
+	const spotOwner = spot.Owner
 	const [isLoaded, setIsLoaded] = useState(false);
 
 	useEffect(() => {
 		dispatch(spotIndexThunk(id)).then(() => setIsLoaded(true));
 	}, [dispatch]);
 
-	console.log(spotPreviewImage)
+	// console.log(spotPreviewImage)
+	if(!spot.Owner){
+		return null
+	}
 
 	return (
 		<>
@@ -34,8 +37,12 @@ function SpotIndex() {
 							<img src={spot.previewImage} alt={spot.city} />
 							<br />
 							<div>
-								Hosted by {spot.Owner.firstName} {spot.Owner.lastName}$
-								{spot.price} {spot.AvgRating}
+								Hosted by
+								{spotOwner ? spotOwner.firstName  : null}
+								{spotOwner ? spot.Owner.lastName : null}
+								{spot.price } {spot.AvgRating}
+
+
 							</div>
 						</div>
 					</div>
