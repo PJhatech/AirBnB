@@ -4,7 +4,6 @@ import {useSelector} from "react-redux";
 import {useState} from "react";
 import ProfileButton from "./ProfileButton";
 import "./Navigation.css";
-import CreateSpotForm from "../Spots/CreateSpotForm";
 
 function Navigation({isLoaded}) {
 	const sessionUser = useSelector((state) => state.session.user);
@@ -19,18 +18,16 @@ function Navigation({isLoaded}) {
 
 	return (
 		<ul>
-			<li>
-				<NavLink exact to="/">
-					Home
-				</NavLink>
-			</li>
+			{isLoaded && (
+				<li>
+					<NavLink exact to="/">
+						Home
+					</NavLink>
+				</li>
+			)}
 			{sessionUser && (
 				<div>
-					<NavLink exact to="/spots">
-						{/* <CreateSpotForm> */}
-							Create a New Spot
-						{/* </CreateSpotForm> */}
-					</NavLink>
+					<NavLink to="/spots">Create a New Spot</NavLink>
 				</div>
 			)}
 			{isLoaded && (

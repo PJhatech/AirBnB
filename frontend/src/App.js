@@ -16,24 +16,21 @@ function App() {
 
 	return (
 		<>
-		<Navigation isLoaded={isLoaded} />
+			<Navigation isLoaded={isLoaded} />
 			<nav>
 				{isLoaded && (
 					<Switch>
 						<Route path="/" exact>
 							<h1>Home Page Route</h1>
 							{/* <Route path="/spots" component={CreateSpotForm} /> */}
-
 							<SpotList />
 						</Route>
 
-							<Route exact path="/spots">
-								<CreateSpotForm isLoaded={isLoaded} />
-							</Route>
-
-						<Route path="/spots">
-							<Route path="/spots/:id" component={SpotIndex} />
+						<Route exact path="/spots">
+							<CreateSpotForm isLoaded={isLoaded} />
 						</Route>
+
+						<Route path="/spots/:id" component={SpotIndex} />
 
 					</Switch>
 				)}

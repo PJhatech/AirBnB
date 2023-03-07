@@ -134,9 +134,6 @@ const spotReducer = (state = initialState, action) => {
 					...action.spot,
 				},
 			};
-			let createReportState = {...state};
-			createReportState[action.newReport.id] = action.newReport;
-			return createReportState;
 		case CREATE_IMAGE:
 			return {...state, ...action.createImage};
 		// case SPOT_IMAGES:

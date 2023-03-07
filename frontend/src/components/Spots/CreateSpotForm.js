@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react";
-import {useParams, useHistory} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
+import {useHistory} from "react-router-dom";
+import {useDispatch} from "react-redux";
 import {createImageThunk, createSpotThunk, spotsThunk} from "../../store/spots";
-import ImageSpots from "./test";
+
 
 const CreateSpotForm = () => {
 	const dispatch = useDispatch();
@@ -19,14 +19,10 @@ const CreateSpotForm = () => {
 	const [price, setPrice] = useState();
 	const [url, setImageUrl] = useState();
 	const [preview, setPreview] = useState(); //previewImage
-	const [imageableId, setImageableId] = useState()
 
-
-
-	const [isLoaded, setIsLoaded] = useState(false);
 
 	useEffect(() => {
-		dispatch(spotsThunk()).then(() => setIsLoaded(true));
+		dispatch(spotsThunk());
 	}, [dispatch]);
 
 	const handleSubmit = async (e) => {
@@ -44,14 +40,12 @@ const CreateSpotForm = () => {
 		};
 
 		const createdSpot = await dispatch(createSpotThunk(newSpot));
-		const imageableId = createdSpot.id
 		if (createdSpot) {
 			const spotId = createdSpot.id
-			const spotImage = { url, preview, imageableId };
 			const imageArr = [url, preview];
 			await dispatch(createImageThunk(imageArr, spotId));
+			history.push(`/spots/${createdSpot.id}`);
 		}
-		history.push(`/spots/${createdSpot.id}`);
 	};
 
 	return (

@@ -3,10 +3,21 @@ img {
 }
 
 .spots {
-  width: 100%;
+  width: 80%;
 
   display: grid;
-  grid-template-rows: repeat(auto-fill, 30%);
+  grid-template-rows: repeat(auto-fill, 40%);
   grid-template-columns: repeat(4, auto);
-  gap: 20px;
+  gap: 50px;
+
+  /* width: 1366px;
+  height: 768px;
+
+  display: grid;
+  grid-template-rows: repeat(auto-fit, 40%);
+  grid-template-columns: repeat(4, auto);
+  gap: 8px; */
+
+  /* justify-content: space-evenly;
+  align-content: space-evenly; */
 }

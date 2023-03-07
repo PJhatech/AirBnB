@@ -17,7 +17,6 @@ function SpotIndex() {
 		dispatch(spotIndexThunk(id)).then(() => setIsLoaded(true));
 	}, [dispatch]);
 
-	// console.log(spotPreviewImage)
 	if(!spot.Owner){
 		return null
 	}
@@ -41,8 +40,6 @@ function SpotIndex() {
 								{spotOwner ? spotOwner.firstName  : null}
 								{spotOwner ? spot.Owner.lastName : null}
 								{spot.price } {spot.AvgRating}
-
-
 							</div>
 						</div>
 					</div>
