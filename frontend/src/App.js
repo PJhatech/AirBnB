@@ -6,6 +6,7 @@ import Navigation from "./components/Navigation";
 import SpotList from "./components/Spots/SpotList";
 import SpotIndex from "./components/Spots/SpotIndex";
 import CreateSpotForm from "./components/Spots/CreateSpotForm";
+import CurrentUser from "./components/CurrentUser";
 
 function App() {
 	const dispatch = useDispatch();
@@ -22,8 +23,10 @@ function App() {
 					<Switch>
 						<Route path="/" exact>
 							<h1>Home Page Route</h1>
-							{/* <Route path="/spots" component={CreateSpotForm} /> */}
 							<SpotList />
+						</Route>
+						<Route exact path="/spots/current">
+							<CurrentUser component={CreateSpotForm} />
 						</Route>
 
 						<Route exact path="/spots">
@@ -31,6 +34,10 @@ function App() {
 						</Route>
 
 						<Route path="/spots/:id" component={SpotIndex} />
+
+							{/* <SpotIndex */}
+							{/* // <CreateSpotForm /> */}
+						{/* </Route> */}
 
 					</Switch>
 				)}

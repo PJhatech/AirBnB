@@ -182,9 +182,9 @@ router.get("/current", requireAuth, async (req, res) => {
 				sum += review.stars;
 			});
 			sum = sum / reviews.length;
-			spot.dataValues.AvgRatiing = sum;
+			spot.dataValues.AvgRating = sum;
 		} else {
-			spot.dataValues.AvgRatiing = 0;
+			spot.dataValues.AvgRating = 0;
 		}
 
 		const previewImages = await Image.findAll({
@@ -304,6 +304,7 @@ router.post("/", requireAuth, async (req, res) => {
 		name,
 		description,
 		price,
+		previewImage,
 		ownerId = req.user.id,
 	} = req.body;
 
@@ -317,6 +318,7 @@ router.post("/", requireAuth, async (req, res) => {
 		name: name,
 		description: description,
 		price: price,
+		previewImage: previewImage,
 		ownerId: req.user.id,
 	});
 

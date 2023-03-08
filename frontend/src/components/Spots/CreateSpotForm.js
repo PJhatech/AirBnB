@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {useHistory} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {createImageThunk, createSpotThunk, spotsThunk} from "../../store/spots";
-
+import UpdateSpot from "./UpdateSpot";
 
 const CreateSpotForm = () => {
 	const dispatch = useDispatch();
@@ -19,11 +19,12 @@ const CreateSpotForm = () => {
 	const [price, setPrice] = useState();
 	const [url, setImageUrl] = useState();
 	const [preview, setPreview] = useState(); //previewImage
+	const [previewImage, setPreviewImage] = useState();
 
 
-	useEffect(() => {
-		dispatch(spotsThunk());
-	}, [dispatch]);
+	// useEffect(() => {
+	// 	dispatch(spotsThunk());
+	// }, [dispatch]);
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -37,15 +38,16 @@ const CreateSpotForm = () => {
 			name,
 			description,
 			price,
+			previewImage,
 		};
-
 		const createdSpot = await dispatch(createSpotThunk(newSpot));
 		if (createdSpot) {
 			const spotId = createdSpot.id
 			const imageArr = [url, preview];
 			await dispatch(createImageThunk(imageArr, spotId));
-			history.push(`/spots/${createdSpot.id}`);
+			setPreviewImage(createdSpot.url)
 		}
+		history.push(`/spots/${createdSpot.id}`);
 	};
 
 	return (

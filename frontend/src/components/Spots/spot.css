@@ -3,12 +3,12 @@ img {
 }
 
 .spots {
-  width: 80%;
+  width: 100%;
 
   display: grid;
   grid-template-rows: repeat(auto-fill, 40%);
   grid-template-columns: repeat(4, auto);
-  gap: 50px;
+  gap: 40px;
 
   /* width: 1366px;
   height: 768px;

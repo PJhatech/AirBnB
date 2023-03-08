@@ -3,6 +3,9 @@ const GET_SPOTS = "session/GET_SPOTS";
 const SPOT_INDEX = "session/INDEX";
 const CREATE_SPOT = "session/CREATE_SPOT";
 const CREATE_IMAGE = "session/CREATE_IMAGE";
+const UPDATE_SPOT = "sessin/UPDATE_SPOT";
+const CREATE_REVIEW = "session/CREATE_IMAGE";
+const DELETE_SPOT = "session/DELETE_SPOT";
 // const SPOT_IMAGES = "session/SPOT_IMAGES";
 
 //Action
@@ -41,6 +44,26 @@ const createImage = (createImage) => {
 	};
 };
 
+const createReview = (createReview) => {
+	return {
+		type: CREATE_REVIEW,
+		createReview
+	}
+}
+
+const updateSpot = (updateSpot) => {
+	return {
+		type: UPDATE_SPOT,
+		updateSpot
+	}
+}
+
+const deleteSpot = () => {
+	return {
+		type: DELETE_SPOT
+	}
+}
+
 //Thunk
 export const spotsThunk = () => async (dispatch) => {
 	const response = await fetch("/api/spots");
@@ -72,6 +95,30 @@ export const createSpotThunk = (newSpot) => async (dispatch) => {
 	}
 };
 
+export const updateSpotThunk = (putData, spotId) => async (dispatch) => {
+	const response = await csrfFetch(`/api/spots/${spotId}`, {
+		method: "PUT",
+		body: JSON.stringify(putData)
+	});
+
+	if (response.ok) {
+		const put = await response.json();
+		dispatch(updateSpot(put));
+		return put
+	}
+}
+
+export const getUserSpots = (user) => async (dispatch) => {
+	const response = await csrfFetch("/api/spots")
+	const data = await response.json();
+	const filterSpots = Object.values(data);
+
+	const ownedSpots = filterSpots.filter(spot => spot.ownerId === user.user.id)
+	const ownedSpotObj = {};
+	ownedSpots.map(spot => ownedSpotObj[spot.id] = spot)
+	return dispatch(getAllSpots(ownedSpotObj))
+}
+
 // export const getImageThunk = (id) => async (dispatch) => {
 //    const response = await fetch(`/api/spots/${id}/images`);
 //    const images = await response.json();
@@ -88,9 +135,7 @@ export const createImageThunk = (imageArr, spotId) => async (dispatch) => {
 			preview: true,
 			imageableId: spotId
 		};
-		const response = await csrfFetch(
-			`/api/spots/${spotId}/images`,
-			{
+		const response = await csrfFetch(`/api/spots/${spotId}/images`, {
 				method: "POST",
 				header: {"Content-Type": "application/json"},
 				body: JSON.stringify(spotImageObj),
@@ -106,6 +151,31 @@ export const createImageThunk = (imageArr, spotId) => async (dispatch) => {
 		}
 	});
 	return res;
+};
+
+export const createReviewThunk = (reviewData) => async (dispatch) => {
+	const response = await csrfFetch(`api/spot/${reviewData.spotId}/reviews`, {
+		method: "POST",
+		header: { "Content-Type": "application/json" },
+		body: JSON.stringify(reviewData)
+	})
+
+	if (response.ok) {
+		const reviewData = await response.json();
+		dispatch(createReview(reviewData));
+		return reviewData
+	}
+}
+
+export const deleteSpotThunk = (spotId) => async (dispatch) => {
+	const response = await csrfFetch(`/api/spot/${spotId}`, {
+		method: "DELETE",
+	});
+
+	if (response.ok) {
+		dispatch(deleteSpot(response));
+		return response;
+	}
 };
 
 //State & Reducer
@@ -135,7 +205,13 @@ const spotReducer = (state = initialState, action) => {
 				},
 			};
 		case CREATE_IMAGE:
-			return {...state, ...action.createImage};
+			return { ...state, ...action.createImage };
+		case CREATE_REVIEW:
+			return { ...state, ...action.createReview }
+		case DELETE_SPOT:
+			const newState = {...state};
+			delete newState[action.spot.id];
+			return newState;
 		// case SPOT_IMAGES:
 		//    return { ...state, ...action.getSpotImages }
 		default:
