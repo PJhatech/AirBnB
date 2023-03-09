@@ -90,7 +90,6 @@ const ManageSpots = () => {
 						<br />
 					</div>
 				))}
-			<div></div>
 		</div>
 	);
 };

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {useHistory} from "react-router-dom";
 import {useDispatch} from "react-redux";
-import {createReviewThunk} from "../../store/spots";
+import {createReviewThunk} from "../../../store/spots";
 
 const CreateReviewForm = () => {
 	const dispatch = useDispatch();

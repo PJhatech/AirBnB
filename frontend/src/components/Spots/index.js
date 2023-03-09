@@ -55,27 +55,8 @@ function SpotIndex() {
 							</div> */}
 						</div>
 					</div>
-					{/* <div>
-					<OpenModalButton
-					buttonText="Post Your Review"
-					modalComponent={<CreateReviewForm />}/>
-				</div> */}
 				</div>
 			)}
-			{/* <button onClick={() => showButton()}>
-				Update
-				<div hidden={hide}>
-					<UpdateSpot spot={spot} />
-				</div>
-			</button> */}
-			{/*
-			<button onClick={handleSubmit}>
-				Delete
-				{spot.id}
-			</button> */}
-			{/* <UpdateSpot spot={spot} />
-				<button onClick={showButton}>
-				</button> */}
 		</>
 	);
 }

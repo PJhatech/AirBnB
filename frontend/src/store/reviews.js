@@ -5,10 +5,11 @@ const CREATE_REVIEW = "session/CREATE_IMAGE";
 
 
 //Action
-const getReviews = (getReviews) => {
+const getReviews = (review, reviewList) => {
    return {
       type: REVIEWS,
-      getReviews
+		review,
+		reviewList
    }
 }
 
@@ -20,11 +21,19 @@ const createReview = (createReview) => {
 };
 
 //Thunk
-export const reviewsThunk = (payload) => async (dispatch) => {
-   const response = await csrfFetch(`api/reviews/${payload.spotId / reviews}`)
+export const userReviewsThunk = (current) => async (dispatch) => {
+	const response = await csrfFetch(`api/reviews/${current}`);
    const reviews = await response.json();
    dispatch(getReviews(reviews));
 }
+
+export const reviewIndexThunk = (spotId) => async (dispatch) => {
+	const response = await fetch(`/api/${spotId}/reviews`);
+	const review = await response.json();
+
+	dispatch(getReviews(review[0]));
+	return review;
+};
 
 export const createReviewThunk = (reviewData) => async (dispatch) => {
 	const response = await csrfFetch(`api/reviews/${reviewData.spotId}/reviews`, {
