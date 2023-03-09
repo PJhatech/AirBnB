@@ -1,43 +1,71 @@
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useParams} from "react-router-dom";
-import {spotIndexThunk, deleteSpotThunk} from "../../store/spots";
+import {getUserSpots, deleteSpotThunk} from "../../store/spots";
 import UpdateSpot from "./UpdateSpot";
+import { useModal } from "../../context/Modal";
 
 
-function DeleteSpot() {
-	const {id} = useParams();
+
+function DeleteSpot(spot) {
 	const dispatch = useDispatch();
-	const spot = useSelector((state) => state.spots);
+	const {closeModal} = useModal();
+
+	const userSpot = Object.values(spot);
+	const user = useSelector((state) => state.session);
 	const spotOwner = spot.Owner;
-	const [isLoaded, setIsLoaded] = useState(false);
 
-	const [hide, setHide] = useState(true);
-	const showButton = () => setHide(false);
+	// const [isLoaded, setLoaded] = useState(false);
+	// const [hide, setHide] = useState(true);
+	// const showButton = () => setHide(false);
 
-	useEffect(() => {
-		dispatch(spotIndexThunk(id)).then(() => setIsLoaded(true));
-	}, [dispatch]);
+	// const [spotUser, setSpotUser] = useState(userSpot);
 
-	if (!spot.Owner) {
-		return null;
-	}
+	// useEffect(() => {
+	// 	dispatch(getUserSpots(user)).then(() => setLoaded(true));
+	// }, [dispatch]);
+
+
+	// if (user) {
+	// 	return null;
+	// }
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-
-		if (spotOwner) {
-			await dispatch(deleteSpotThunk(spot.id));
-		}
+		console.log(spot.prop)
+		return dispatch(deleteSpotThunk(spot.prop.id));
 	};
 
 	return (
 		<>
-			<button onClick={handleSubmit}>
+			<div>
+				<h1>Confirm Delete</h1>
+				<p>
+				Are you sure you want to delete this spot? This action cannot be
+				reversed.
+				</p>
+				<button type="submit" onClick={handleSubmit}>
+					Yes(Delete Spot)
+				</button>
+			</div>
+			{/* <h1>Delete Spot?</h1>
+			<form onSubmit={handleSubmit}>
+				<label>
+					delete
+					<input
+						type="text"
+						value={spotUser}
+						onChange={(e) => setSpotUser(e.target.value)}
+					/>
+				</label>
+				<button type="submit">Delete</button>
+			</form> */}
+			{/* <button onClick={handleSubmit}>
 				Delete
-				{spot.id}
-			</button>
-
+				{userSpot}
+			</button> */}
 		</>
 	);
 }
+
+export default DeleteSpot

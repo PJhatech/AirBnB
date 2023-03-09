@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {useHistory} from "react-router-dom";
 import {useDispatch} from "react-redux";
-import {createImageThunk, createSpotThunk, spotsThunk} from "../../store/spots";
+import {createImageThunk, createSpotThunk, spotsThunk, spotIndexThunk} from "../../store/spots";
 import UpdateSpot from "./UpdateSpot";
 
 const CreateSpotForm = () => {
@@ -48,6 +48,7 @@ const CreateSpotForm = () => {
 			setPreviewImage(createdSpot.url)
 		}
 		history.push(`/spots/${createdSpot.id}`);
+		dispatch(spotIndexThunk(createdSpot.id))
 	};
 
 	return (

@@ -58,9 +58,10 @@ const updateSpot = (updateSpot) => {
 	}
 }
 
-const deleteSpot = () => {
+const deleteSpot = (spotId) => {
 	return {
-		type: DELETE_SPOT
+		type: DELETE_SPOT,
+		spotId
 	}
 }
 
@@ -68,8 +69,9 @@ const deleteSpot = () => {
 export const spotsThunk = () => async (dispatch) => {
 	const response = await fetch("/api/spots");
 	const allSpots = await response.json();
+	console.log(allSpots,"<-------3----->")
 	dispatch(getAllSpots(allSpots));
-	return allSpots;
+	// return allSpots;
 };
 
 export const spotIndexThunk = (id) => async (dispatch) => {
@@ -81,14 +83,13 @@ export const spotIndexThunk = (id) => async (dispatch) => {
 };
 
 export const createSpotThunk = (newSpot) => async (dispatch) => {
-	console.log(newSpot, "<-------2----->");
 	const response = await csrfFetch("/api/spots", {
 		method: "POST",
-		header: {"Content-Type": "application/json"},
 		body: JSON.stringify(newSpot),
 	});
 
 	if (response.ok) {
+		console.log("HELLO")
 		const spot = await response.json();
 		dispatch(addSpot(spot));
 		return spot;
@@ -112,11 +113,14 @@ export const getUserSpots = (user) => async (dispatch) => {
 	const response = await csrfFetch("/api/spots")
 	const data = await response.json();
 	const filterSpots = Object.values(data);
-
 	const ownedSpots = filterSpots.filter(spot => spot.ownerId === user.user.id)
 	const ownedSpotObj = {};
 	ownedSpots.map(spot => ownedSpotObj[spot.id] = spot)
-	return dispatch(getAllSpots(ownedSpotObj))
+
+	if (ownedSpots) {
+		await dispatch(getAllSpots(ownedSpots))
+	}
+	return ownedSpotObj
 }
 
 // export const getImageThunk = (id) => async (dispatch) => {
@@ -168,7 +172,7 @@ export const createReviewThunk = (reviewData) => async (dispatch) => {
 }
 
 export const deleteSpotThunk = (spotId) => async (dispatch) => {
-	const response = await csrfFetch(`/api/spot/${spotId}`, {
+	const response = await csrfFetch(`/api/spots/${spotId}`, {
 		method: "DELETE",
 	});
 
@@ -182,19 +186,22 @@ export const deleteSpotThunk = (spotId) => async (dispatch) => {
 const initialState = {};
 
 const spotReducer = (state = initialState, action) => {
+	let newState = {}
 	switch (action.type) {
 		case GET_SPOTS:
-			return {...state, ...action.spotList};
+			return action.spotList.reduce((state, spot) => {
+				state[spot.id] = spot
+				return state
+			},{});
+			// return {...action.spotList};
 		case SPOT_INDEX:
-			return {...state, ...action.spot};
+			return {...state, [action.spot.id]:  action.spot};
 		case CREATE_SPOT:
-			if (!state[action.spot.id]) {
-				const newState = {
+				{
+				 newState = {
 					...state,
 					[action.spot.id]: action.spot,
 				};
-				// const spots = newState.spotList.map(id => newState[id]);
-				// spots.push(action.spot);
 				return newState;
 			}
 			return {
@@ -204,13 +211,20 @@ const spotReducer = (state = initialState, action) => {
 					...action.spot,
 				},
 			};
+		case UPDATE_SPOT:
+				newState = {
+					...state,
+					[action.updateSpot.id]: action.updateSpot,
+				}
+				return newState
+
 		case CREATE_IMAGE:
 			return { ...state, ...action.createImage };
 		case CREATE_REVIEW:
 			return { ...state, ...action.createReview }
 		case DELETE_SPOT:
-			const newState = {...state};
-			delete newState[action.spot.id];
+			 newState = {...state};
+			delete newState[action.spotId];
 			return newState;
 		// case SPOT_IMAGES:
 		//    return { ...state, ...action.getSpotImages }

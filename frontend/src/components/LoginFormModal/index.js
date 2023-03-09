@@ -3,6 +3,7 @@ import * as sessionActions from "../../store/session";
 import {useDispatch} from "react-redux";
 import {useModal} from "../../context/Modal";
 import "./LoginForm.css";
+import { NavLink } from "react-router-dom";
 
 function LoginFormModal() {
 	const dispatch = useDispatch();
@@ -50,6 +51,7 @@ function LoginFormModal() {
 					/>
 				</label>
 				<button type="submit">Log In</button>
+
 			</form>
 		</>
 	);

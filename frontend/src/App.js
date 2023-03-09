@@ -7,6 +7,8 @@ import SpotList from "./components/Spots/SpotList";
 import SpotIndex from "./components/Spots/SpotIndex";
 import CreateSpotForm from "./components/Spots/CreateSpotForm";
 import CurrentUser from "./components/CurrentUser";
+import UpdateSpot from "./components/Spots/UpdateSpot";
+import DeleteSpot from "./components/Spots/DeleteSpot";
 
 function App() {
 	const dispatch = useDispatch();
@@ -25,15 +27,14 @@ function App() {
 							<h1>Home Page Route</h1>
 							<SpotList />
 						</Route>
+
 						<Route exact path="/spots/current">
-							<CurrentUser component={CreateSpotForm} />
+							<CurrentUser />
 						</Route>
-
-						<Route exact path="/spots">
-							<CreateSpotForm isLoaded={isLoaded} />
-						</Route>
-
+						<Route exact path="/spots/new" component={CreateSpotForm} />
+						<Route  path="/spots/:spotId/edit" component={UpdateSpot} />
 						<Route path="/spots/:id" component={SpotIndex} />
+						{/* <Route path=" /spots/:spotId/delete" component={DeleteSpot}/> */}
 
 							{/* <SpotIndex */}
 							{/* // <CreateSpotForm /> */}

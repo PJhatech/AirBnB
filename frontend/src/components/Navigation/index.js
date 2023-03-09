@@ -19,11 +19,18 @@ function Navigation({isLoaded}) {
 	return (
 		<ul>
 			{isLoaded && (
+				<div>
 				<li>
 					<NavLink exact to="/">
 						Home
 					</NavLink>
 				</li>
+				<li>
+					<NavLink exact to="/spots/new">
+						Create New Spot
+					</NavLink>
+				</li>
+				</div>
 			)}
 			{/* {sessionUser && (
 				<div>

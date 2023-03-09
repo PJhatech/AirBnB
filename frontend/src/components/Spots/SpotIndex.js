@@ -9,8 +9,12 @@ import OpenModalButton from "../OpenModalButton";
 function SpotIndex() {
 	const {id} = useParams();
 	const dispatch = useDispatch();
-	const spot = useSelector((state) => state.spots);
-	const spotOwner = spot.Owner;
+	const spot = useSelector((state) => state.spots[id]);
+	// const spotOwner = spot?.Owner;
+	let spotOwner
+	if (spot) {
+		spotOwner = spot.Owner
+	}
 	const [isLoaded, setIsLoaded] = useState(false);
 
 	const [hide, setHide] = useState(true);
@@ -20,18 +24,10 @@ function SpotIndex() {
 		dispatch(spotIndexThunk(id)).then(() => setIsLoaded(true));
 	}, [dispatch]);
 
-	if (!spot.Owner) {
-		return null;
-	}
-
-	   const handleSubmit = async (e) => {
-			e.preventDefault();
-			if (spotOwner) {
-				await dispatch(deleteSpotThunk(spot.id))
-			}
-		};
-
-
+	// if (!spot?.Owner) {
+	// 	return null;
+	// }
+	console.log(spot, "<------1------->");
 	return (
 		<>
 			{isLoaded && (
@@ -73,11 +69,11 @@ function SpotIndex() {
 					<UpdateSpot spot={spot} />
 				</div>
 			</button> */}
-
+{/*
 			<button onClick={handleSubmit}>
 				Delete
 				{spot.id}
-			</button>
+			</button> */}
 			{/* <UpdateSpot spot={spot} />
 				<button onClick={showButton}>
 				</button> */}

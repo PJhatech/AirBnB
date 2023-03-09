@@ -10,7 +10,7 @@ const {verify} = require("jsonwebtoken");
 const router = express.Router();
 
 //Get all Spots
-router.get("/", async (req, res) => {
+router.get("", async (req, res) => {
 	let {page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice} =
 		req.query;
 
@@ -112,11 +112,11 @@ router.get("/", async (req, res) => {
 	}
 
 	const spots = await Spot.findAll({
-		where: {
-			lat: {[Op.between]: [minLat, maxLat]},
-			lng: {[Op.between]: [minLng, maxLng]},
-			price: {[Op.between]: [minPrice, maxPrice]},
-		},
+		// where: {
+		// 	lat: {[Op.between]: [minLat, maxLat]},
+		// 	lng: {[Op.between]: [minLng, maxLng]},
+		// 	price: {[Op.between]: [minPrice, maxPrice]},
+		// },
 		limit: size,
 		offset: (page - 1) * size,
 	});
@@ -149,19 +149,19 @@ router.get("/", async (req, res) => {
 				sum += review.stars;
 			});
 			sum = sum / reviews.length;
-			spot.dataValues.AvgRatiing = sum;
+			spot.dataValues.AvgRating = sum;
 		} else {
-			spot.dataValues.AvgRatiing = 0;
+			spot.dataValues.AvgRating = 0;
 		}
 	}
 
 	// spots.page = page;
 	// spots.size = size;
-	res.json({
-		...spots,
+	res.json(
+		spots
 		// page,
 		// size,
-	});
+	);
 });
 
 //Get all Spots owned by the Current User
@@ -440,8 +440,7 @@ router.delete("/:spotId", requireAuth, async (req, res) => {
 		if (spot) {
 			await spot.destroy();
 			return res.json({
-				message: "Successfully deleted",
-				statusCode: 200,
+				spot
 			});
 		}
 	} else {
