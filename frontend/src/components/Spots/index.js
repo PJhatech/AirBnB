@@ -2,7 +2,6 @@ import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useParams} from "react-router-dom";
 import {spotIndexThunk, deleteSpotThunk} from "../../store/spots";
-import UpdateSpot from "./UpdateSpot";
 // import {CreateReviewForm} from "../CreateReviewForm/index.js";
 import OpenModalButton from "../OpenModalButton";
 
@@ -11,9 +10,9 @@ function SpotIndex() {
 	const dispatch = useDispatch();
 	const spot = useSelector((state) => state.spots[id]);
 	// const spotOwner = spot?.Owner;
-	let spotOwner
+	let spotOwner;
 	if (spot) {
-		spotOwner = spot.Owner
+		spotOwner = spot.Owner;
 	}
 	const [isLoaded, setIsLoaded] = useState(false);
 
@@ -69,7 +68,7 @@ function SpotIndex() {
 					<UpdateSpot spot={spot} />
 				</div>
 			</button> */}
-{/*
+			{/*
 			<button onClick={handleSubmit}>
 				Delete
 				{spot.id}

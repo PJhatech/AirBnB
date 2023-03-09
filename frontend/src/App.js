@@ -3,12 +3,11 @@ import {useDispatch} from "react-redux";
 import {Switch, Route} from "react-router-dom";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
-import SpotList from "./components/Spots/SpotList";
-import SpotIndex from "./components/Spots/SpotIndex";
-import CreateSpotForm from "./components/Spots/CreateSpotForm";
-import CurrentUser from "./components/CurrentUser";
-import UpdateSpot from "./components/Spots/UpdateSpot";
-import DeleteSpot from "./components/Spots/DeleteSpot";
+import SpotList from "./components/Spots/SpotList/index";
+import SpotIndex from "./components/Spots/index";
+import CreateForm from "./components/Spots/CreateForm/index";
+import ManageSpots from "./components/Spots/ManageSpots/index";
+import UpdateSpot from "./components/Spots/UpdateSpot/index";
 
 function App() {
 	const dispatch = useDispatch();
@@ -29,17 +28,16 @@ function App() {
 						</Route>
 
 						<Route exact path="/spots/current">
-							<CurrentUser />
+							<ManageSpots />
 						</Route>
-						<Route exact path="/spots/new" component={CreateSpotForm} />
-						<Route  path="/spots/:spotId/edit" component={UpdateSpot} />
+						<Route exact path="/spots/new" component={CreateForm} />
+						<Route path="/spots/:spotId/edit" component={UpdateSpot} />
 						<Route path="/spots/:id" component={SpotIndex} />
 						{/* <Route path=" /spots/:spotId/delete" component={DeleteSpot}/> */}
 
-							{/* <SpotIndex */}
-							{/* // <CreateSpotForm /> */}
+						{/* <SpotIndex */}
+						{/* // <CreateForm /> */}
 						{/* </Route> */}
-
 					</Switch>
 				)}
 			</nav>

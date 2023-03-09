@@ -1,8 +1,12 @@
 import React, {useEffect, useState} from "react";
 import {useHistory} from "react-router-dom";
 import {useDispatch} from "react-redux";
-import {createImageThunk, createSpotThunk, spotsThunk, spotIndexThunk} from "../../store/spots";
-import UpdateSpot from "./UpdateSpot";
+import {
+	createImageThunk,
+	createSpotThunk,
+	spotsThunk,
+	spotIndexThunk,
+} from "../../../store/spots";
 
 const CreateSpotForm = () => {
 	const dispatch = useDispatch();
@@ -20,7 +24,6 @@ const CreateSpotForm = () => {
 	const [url, setImageUrl] = useState();
 	const [preview, setPreview] = useState(); //previewImage
 	const [previewImage, setPreviewImage] = useState();
-
 
 	// useEffect(() => {
 	// 	dispatch(spotsThunk());
@@ -42,13 +45,13 @@ const CreateSpotForm = () => {
 		};
 		const createdSpot = await dispatch(createSpotThunk(newSpot));
 		if (createdSpot) {
-			const spotId = createdSpot.id
+			const spotId = createdSpot.id;
 			const imageArr = [url, preview];
 			await dispatch(createImageThunk(imageArr, spotId));
-			setPreviewImage(createdSpot.url)
+			setPreviewImage(createdSpot.url);
 		}
 		history.push(`/spots/${createdSpot.id}`);
-		dispatch(spotIndexThunk(createdSpot.id))
+		dispatch(spotIndexThunk(createdSpot.id));
 	};
 
 	return (

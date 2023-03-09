@@ -3,8 +3,7 @@ const GET_SPOTS = "session/GET_SPOTS";
 const SPOT_INDEX = "session/INDEX";
 const CREATE_SPOT = "session/CREATE_SPOT";
 const CREATE_IMAGE = "session/CREATE_IMAGE";
-const UPDATE_SPOT = "sessin/UPDATE_SPOT";
-const CREATE_REVIEW = "session/CREATE_IMAGE";
+const UPDATE_SPOT = "session/UPDATE_SPOT";
 const DELETE_SPOT = "session/DELETE_SPOT";
 // const SPOT_IMAGES = "session/SPOT_IMAGES";
 
@@ -43,13 +42,6 @@ const createImage = (createImage) => {
 		createImage,
 	};
 };
-
-const createReview = (createReview) => {
-	return {
-		type: CREATE_REVIEW,
-		createReview
-	}
-}
 
 const updateSpot = (updateSpot) => {
 	return {
@@ -157,19 +149,7 @@ export const createImageThunk = (imageArr, spotId) => async (dispatch) => {
 	return res;
 };
 
-export const createReviewThunk = (reviewData) => async (dispatch) => {
-	const response = await csrfFetch(`api/spot/${reviewData.spotId}/reviews`, {
-		method: "POST",
-		header: { "Content-Type": "application/json" },
-		body: JSON.stringify(reviewData)
-	})
 
-	if (response.ok) {
-		const reviewData = await response.json();
-		dispatch(createReview(reviewData));
-		return reviewData
-	}
-}
 
 export const deleteSpotThunk = (spotId) => async (dispatch) => {
 	const response = await csrfFetch(`/api/spots/${spotId}`, {
@@ -220,8 +200,6 @@ const spotReducer = (state = initialState, action) => {
 
 		case CREATE_IMAGE:
 			return { ...state, ...action.createImage };
-		case CREATE_REVIEW:
-			return { ...state, ...action.createReview }
 		case DELETE_SPOT:
 			 newState = {...state};
 			delete newState[action.spotId];

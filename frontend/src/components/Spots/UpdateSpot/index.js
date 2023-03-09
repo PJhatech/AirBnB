@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react";
 import {useHistory} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import { updateSpotThunk, getUserSpots } from "../../store/spots";
-import { useParams } from "react-router-dom";
+import {updateSpotThunk, getUserSpots} from "../../../store/spots";
+import {useParams} from "react-router-dom";
 
 const UpdateSpot = () => {
 	const dispatch = useDispatch();
@@ -10,7 +10,7 @@ const UpdateSpot = () => {
 	const userSpots = Object.values(ownerSpot);
 	const user = useSelector((state) => state.session);
 	const spotOwner = userSpots.Owner;
-	const {spotId} = useParams()
+	const {spotId} = useParams();
 	const [loaded, setLoaded] = useState(false);
 	const history = useHistory();
 
@@ -41,7 +41,7 @@ const UpdateSpot = () => {
 	const updatePreviewImage = (e) => setPreviewImage(e.target.value);
 
 	useEffect(() => {
-	   dispatch(getUserSpots(user)).then(() => setLoaded(true));;
+		dispatch(getUserSpots(user)).then(() => setLoaded(true));
 	}, [dispatch]);
 
 	const handleSubmit = async (e) => {
@@ -61,10 +61,10 @@ const UpdateSpot = () => {
 
 		if (user) {
 			// const spotId = userSpots.id
-			console.log(user, "<----------2---------->")
-			dispatch(updateSpotThunk(putData, spotId))
-			history.push(`/spots/${spotId}`)
-			dispatch(getUserSpots(user))
+			console.log(user, "<----------2---------->");
+			dispatch(updateSpotThunk(putData, spotId));
+			history.push(`/spots/${spotId}`);
+			dispatch(getUserSpots(user));
 		}
 	};
 

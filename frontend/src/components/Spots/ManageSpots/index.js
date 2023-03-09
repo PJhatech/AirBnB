@@ -6,11 +6,11 @@ import {
 	getUserSpots,
 	deleteSpotThunk,
 	updateSpotThunk,
-} from "../../store/spots";
-import DeleteSpot from "../Spots/DeleteSpot.js";
-import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
+} from "../../../store/spots";
+import DeleteSpot from "../DeleteSpot/index";
+import OpenModalMenuItem from "../../Navigation/OpenModalMenuItem";
 
-const CurrentUser = () => {
+const ManageSpots = () => {
 	const dispatch = useDispatch();
 	const ownedSpots = useSelector((state) => state.spots);
 	const user = useSelector((state) => state.session);
@@ -55,7 +55,7 @@ const CurrentUser = () => {
 		}
 	};
 
-	const ulClassName = (showMenu ? "" : " hidden");
+	const ulClassName = showMenu ? "" : " hidden";
 	return (
 		<div>
 			<div>
@@ -83,10 +83,10 @@ const CurrentUser = () => {
 							<button>Update</button>
 						</NavLink>
 						<OpenModalMenuItem
-								itemText="Delete"
-								onItemClick={showMenu}
-								modalComponent={<DeleteSpot prop={spot} />}
-							/>
+							itemText="Delete"
+							onItemClick={showMenu}
+							modalComponent={<DeleteSpot prop={spot} />}
+						/>
 						<br />
 					</div>
 				))}
@@ -95,4 +95,4 @@ const CurrentUser = () => {
 	);
 };
 
-export default CurrentUser;
+export default ManageSpots;
