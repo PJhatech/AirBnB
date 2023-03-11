@@ -68,14 +68,20 @@ const reviewReducer = (state = initialState, action) => {
 	let newState = {};
 	switch (action.type) {
 		case SPOT_REVIEW:
-			newState =[...action.spotReviews.Reviews]
-			newState.forEach(review => newState[review.id] = review)
+			const spotReviews = []
+			action.spotReviews.Reviews.forEach(review => {
+				spotReviews[review.id] = review
+			})
+			return {...spotReviews}
+			// newState =[...action.spotReviews.Reviews]
+			// newState.forEach(review => newState[review.id] = review)
 			// console.log(newState)
-			return newState
+			// return newState
 		case CREATE_REVIEW:
-			// newState = {...state};
-			newState[action.newReview.id] = action.newReview;
-			return {...newState}
+			newState = { ...state };
+
+			// newState[action.newReview.id] = action.newReview;
+			return { ...newState, [action.newReview.id]: action.newReview}
 		case DELETE_REVIEW:
 			newState = { ...state };
 			delete newState[action.id];

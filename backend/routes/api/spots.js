@@ -507,9 +507,10 @@ router.post("/:spotId/reviews", requireAuth, async (req, res) => {
 	const spot = await Spot.findByPk(req.params.spotId);
 
 	console.log(spot);
-	const reviews = await Review.findAll({
+	const reviews = await Review.findOne({
 		where: {
 			spotId: req.params.spotId,
+			userId: req.user.id
 		},
 	});
 	if (!spot) {
@@ -518,13 +519,13 @@ router.post("/:spotId/reviews", requireAuth, async (req, res) => {
 			statusCode: 404,
 		});
 	} else {
-		if (reviews.length ) {
-			// res.status(403);
-			// return res.json({
-			// 	message: "User already has a review for this spot",
-			// 	statusCode: 403,
-			// });
-		} else if (!reviews.length) {
+		if (reviews) {
+			res.status(403);
+			return res.json({
+				message: "User already has a review for this spot",
+				statusCode: 403,
+			});
+		} else if (!reviews) {
 			const newReview = await Review.create({
 				userId: req.user.id,
 				spotId: req.params.spotId,

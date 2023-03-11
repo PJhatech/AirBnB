@@ -52,6 +52,7 @@ function SpotIndex() {
 								{spotOwner ? spot.Owner.lastName : null}
 								{spot.description}
 								{spot.price} {spot.AvgRating}
+								{console.log(spot)}(
 								<div>
 									<SpotReview key={spot.id} spot={spot} />
 								</div>

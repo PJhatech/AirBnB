@@ -8,8 +8,11 @@ import DeleteReviewModal from "../DeleteReviewModal";
 export default function SpotReview({spot}) {
 	const dispatch = useDispatch();
 	const reviewList = useSelector((state) => state.reviews);
+	const user = useSelector(state => state.session.user)
+	console.log(user.id)
+	// const spot = useSelector((state) => state.spots[id]);
 
-
+	const [hide, setHide] = useState(true);
 	const [showMenu, setShowMenu] = useState(false);
 	const [isLoaded, setIsLoaded] = useState(false);
 	const closeMenu = () => setShowMenu(false);
@@ -25,22 +28,28 @@ export default function SpotReview({spot}) {
 				<div>
 					<h1>Spot Review</h1>
 					<div>
-						{Object.values(
-							reviewList).map((reviews) => (
-								<>
-									{reviews.review}
-									<OpenModalMenuItem
-										itemText="Delete"
-										onItemClick={closeMenu}
-										modalComponent={
-											<DeleteReviewModal
-												reviewId={reviews.id}
-												spotId={spot.id}
-											/>
-										}
-									/>
-								</>
-							))}
+						{Object.values(reviewList).map((reviews) => (
+							<>
+								{reviews.review}
+								<br/>
+								{user.id === reviews.userId ? (
+									<div>
+										<OpenModalMenuItem
+											itemText="Delete"
+											onItemClick={closeMenu}
+											modalComponent={
+												<DeleteReviewModal
+													reviewId={reviews.id}
+													spotId={spot.id}
+												/>
+											}
+										/>
+									</div>
+								) : (
+									[hide]
+								)}
+							</>
+						))}
 					</div>
 				</div>
 			)}
