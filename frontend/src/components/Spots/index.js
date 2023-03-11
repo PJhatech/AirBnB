@@ -1,15 +1,20 @@
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useParams} from "react-router-dom";
-import {spotIndexThunk, deleteSpotThunk} from "../../store/spots";
+import { spotIndexThunk, deleteSpotThunk } from "../../store/spots";
 // import {CreateReviewForm} from "../CreateReviewForm/index.js";
 import OpenModalButton from "../OpenModalButton";
+import SpotReview from "../Reviews/index"
+import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
+import PostReviewModal from "../PostReviewModal";
+
 
 function SpotIndex() {
 	const {id} = useParams();
 	const dispatch = useDispatch();
 	const spot = useSelector((state) => state.spots[id]);
-	// const spotOwner = spot?.Owner;
+	const closeMenu = () => setShowMenu(false);
+
 	let spotOwner;
 	if (spot) {
 		spotOwner = spot.Owner;
@@ -17,16 +22,16 @@ function SpotIndex() {
 	const [isLoaded, setIsLoaded] = useState(false);
 
 	const [hide, setHide] = useState(true);
+	const [showMenu, setShowMenu] = useState(false);
+
 	const showButton = () => setHide(false);
 
 	useEffect(() => {
 		dispatch(spotIndexThunk(id)).then(() => setIsLoaded(true));
 	}, [dispatch]);
 
-	// if (!spot?.Owner) {
-	// 	return null;
-	// }
-	console.log(spot, "<------1------->");
+
+
 	return (
 		<>
 			{isLoaded && (
@@ -45,8 +50,13 @@ function SpotIndex() {
 								Hosted by
 								{spotOwner ? spotOwner.firstName : null}
 								{spotOwner ? spot.Owner.lastName : null}
+								{spot.description}
 								{spot.price} {spot.AvgRating}
+								<div>
+									<SpotReview key={spot.id} spot={spot} />
+								</div>
 							</div>
+
 							{/* <div>
 								<OpenModalButton
 								buttonText="Post Your Review"
@@ -57,6 +67,13 @@ function SpotIndex() {
 					</div>
 				</div>
 			)}
+			<div>
+				<OpenModalMenuItem
+					itemText="Post Your Review"
+					onItemClick={closeMenu}
+					modalComponent={<PostReviewModal spotId={id} />}
+				/>
+			</div>
 		</>
 	);
 }

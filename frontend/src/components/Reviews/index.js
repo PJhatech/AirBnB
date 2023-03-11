@@ -1,48 +1,51 @@
 import React, {useEffect, useState} from "react";
+import {NavLink} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {useParams} from "react-router-dom";
-import { userReviewsThunk } from "../../store/reviews";
-import { getUserSpots, spotIndexThunk } from "../../store/reviews";
+import { spotReviewThunk } from "../../store/reviews";
+import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
+import DeleteReviewModal from "../DeleteReviewModal";
 
-function ManageReviews() {
-   const {id} = useParams()
-   const dispatch = useDispatch();
-   const review = useSelector(state => state.reviews[id]);
-   const userReviews = useSelector((state) => state.reviews);
-	const reviews = Object.values(userReviews);
-   const user = useSelector(state => state.session);
+export default function SpotReview({spot}) {
+	const dispatch = useDispatch();
+	const reviewList = useSelector((state) => state.reviews);
+	// const reviewList = Object.values(reviews)
 
-   let reviewOwner;
-   if (review) {
-      reviewOwner = review.userId;
-   }
 
-   const [isLoaded, setIsLoaded] = useState(false);
+	console.log(reviewList)
+	const [showMenu, setShowMenu] = useState(false);
+	const [isLoaded, setIsLoaded] = useState(false);
+	const closeMenu = () => setShowMenu(false);
 
-  useEffect(() => {
-		dispatch(userReviewsThunk(user.id)).then(() =>
-			setIsLoaded(true)
-		);
-  }, [dispatch]);
+	useEffect(() => {
+		dispatch(spotReviewThunk(spot.id)).then(() => setIsLoaded(true));
+	}, [dispatch]);
+	// console.log(selectorReviews, "<--------5------->");
 
-//    const handleClick = async (e) => {
-//       e.preventDefault()
-//       dispatch(userReviewsThunk(userReviews.ownerId))
-//    }
-
-   return (
-      <>
-         <div>
-            <h1>Manage Reviews</h1>
-         </div>
-         <div>
-			{isLoaded && reviews.map((review) => (
-               {review}
-                  ))}
-         </div>
-      </>
-   )
-
+	return (
+		<>
+			{isLoaded && (
+				<div>
+					<h1>Spot Review</h1>
+					<div>
+						{Object.values(
+							reviewList).map((reviews) => (
+								<>
+									{reviews.review}
+									<OpenModalMenuItem
+										itemText="Delete"
+										onItemClick={closeMenu}
+										modalComponent={
+											<DeleteReviewModal
+												reviewId={reviews.id}
+												spotId={spot.id}
+											/>
+										}
+									/>
+								</>
+							))}
+					</div>
+				</div>
+			)}
+		</>
+	);
 }
-
-export default ManageReviews

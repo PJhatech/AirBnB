@@ -1,69 +1,90 @@
-import { csrfFetch } from "./csrf";
+import {csrfFetch} from "./csrf";
 
-const REVIEWS = "session/REVIEWS"
-const CREATE_REVIEW = "session/CREATE_IMAGE";
-
+const SPOT_REVIEW = "session/SPOT_REVIEW";
+const CREATE_REVIEW = "session/CREATE_REVIEW";
+const DELETE_REVIEW = "session/DELETE_REVIEW";
 
 //Action
-const getReviews = (review, reviewList) => {
-   return {
-      type: REVIEWS,
-		review,
-		reviewList
-   }
-}
+const getReviews = (spotReviews) => {
+	return {
+		type: SPOT_REVIEW,
+		spotReviews,
+	};
+	console.log(spotReviews, "<-------5----->")
+};
 
-const createReview = (createReview) => {
+const createReview = (newReview) => {
 	return {
 		type: CREATE_REVIEW,
-		createReview,
+		newReview
 	};
 };
 
-//Thunk
-export const userReviewsThunk = (current) => async (dispatch) => {
-	const response = await csrfFetch(`api/reviews/${current}`);
-   const reviews = await response.json();
-   dispatch(getReviews(reviews));
+const deleteReview = (deleteReview) => {
+	return {
+		type: DELETE_REVIEW,
+		deleteReview
+	}
 }
 
-export const reviewIndexThunk = (spotId) => async (dispatch) => {
-	const response = await fetch(`/api/${spotId}/reviews`);
+//Thunk
+export const spotReviewThunk = (spotId) => async (dispatch) => {
+	const response = await fetch(`/api/spots/${spotId}/reviews`);
 	const review = await response.json();
-
-	dispatch(getReviews(review[0]));
-	return review;
+	console.log(spotId);
+	dispatch(getReviews(review));
 };
 
-export const createReviewThunk = (reviewData) => async (dispatch) => {
-	const response = await csrfFetch(`api/reviews/${reviewData.spotId}/reviews`, {
+export const userReviewsThunk = (userId) => async (dispatch) => {
+	const response = await csrfFetch(`api/reviews/${userId}`);
+	const reviews = await response.json();
+	dispatch(getReviews(reviews));
+};
+
+export const createReviewThunk = (payload) => async (dispatch) => {
+	let {review, stars, spotId} = payload
+	const response = await csrfFetch(`/api/spots/${spotId.spotId}/reviews`, {
 		method: "POST",
-		header: {"Content-Type": "application/json"},
-		body: JSON.stringify(reviewData),
+		body: JSON.stringify({review, stars})
 	});
-
-	if (response.ok) {
-		const reviewData = await response.json();
-		dispatch(createReview(reviewData));
-		return reviewData;
-	}
+	const reviewData = await response.json();
+	dispatch(createReview(reviewData));
+	return reviewData
 };
+
+export const deleteReviewThunk = (payload) => async (dispatch) => {
+	const response = await csrfFetch(`/api/${payload.id}/reviews`, {
+		method: "DELETE",
+		body: JSON.stringify()
+	})
+
+	const deletedReview = await response.json();
+	dispatch(deleteReview(deletedReview))
+}
 
 const initialState = {};
 
 const reviewReducer = (state = initialState, action) => {
-   let newState = {};
-   switch (action.type) {
-		case REVIEWS:
-			return action.reviews.reduce((state, reviews) => {
-				state[reviews.id] = reviews;
-				return state;
-			}, {});
+	let newState = {};
+	switch (action.type) {
+		case SPOT_REVIEW:
+			console.log(action.spotReviews.Review)
+
+			newState = [...action.spotReviews.Reviews]
+
+			newState.forEach(review => newState[review.id] = review)
+			return newState
 		case CREATE_REVIEW:
-			return {...state, ...action.createReview};
+			newState = {...state};
+			newState[action.newReview.id] = action.newReview;
+			return newState
+		case DELETE_REVIEW:
+			newState = { ...state };
+			delete newState[action.id];
+			return newState;
 		default:
 			return state;
 	}
-}
+};
 
 export default reviewReducer;

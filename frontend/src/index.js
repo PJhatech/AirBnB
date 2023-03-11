@@ -11,7 +11,8 @@ import App from "./App";
 import configureStore from "./store";
 import {restoreCSRF, csrfFetch} from "./store/csrf";
 import * as sessionActions from "./store/session";
-
+import * as spotAction from "./store/spots";
+import * as reviewAction from "./store/reviews";
 const store = configureStore();
 
 if (process.env.NODE_ENV !== "production") {
@@ -20,6 +21,8 @@ if (process.env.NODE_ENV !== "production") {
 	window.csrfFetch = csrfFetch;
 	window.store = store;
 	window.sessionActions = sessionActions;
+	window.spotAction = spotAction;
+	window.reviewACtion = reviewAction;
 }
 
 

@@ -8,7 +8,8 @@ import SpotIndex from "./components/Spots/index";
 import CreateForm from "./components/Spots/CreateForm/index";
 import ManageSpots from "./components/Spots/ManageSpots/index";
 import UpdateSpot from "./components/Spots/UpdateSpot/index";
-import ManageReviews from "./components/Reviews";
+import PostReviewModal from "./components/PostReviewModal";
+// import ManageReviews from "./components/Reviews/ManageReviews"
 
 function App() {
 	const dispatch = useDispatch();
@@ -29,15 +30,12 @@ function App() {
 						</Route>
 
 						<Route exact path="/spots/current" component={ManageSpots} />
-						<Route exact path="/reviews/current" component={ManageReviews} />
+						<Route exact path="/spots/spotId/reviews" component={PostReviewModal} />
 						<Route exact path="/spots/new" component={CreateForm} />
 						<Route path="/spots/:spotId/edit" component={UpdateSpot} />
 						<Route path="/spots/:id" component={SpotIndex} />
-						{/* <Route path=" /spots/:spotId/delete" component={DeleteSpot}/> */}
+						{/* <Route exact path="/spots/:userId" component={ManageReviews} /> */}
 
-						{/* <SpotIndex */}
-						{/* // <CreateForm /> */}
-						{/* </Route> */}
 					</Switch>
 				)}
 			</nav>

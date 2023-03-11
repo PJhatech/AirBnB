@@ -8,6 +8,7 @@ import "./Navigation.css";
 function Navigation({isLoaded}) {
 	const sessionUser = useSelector((state) => state.session.user);
 	const [setUser] = useState(false);
+	const [hide, setHide] = useState(true);
 	// console.log()
 
 	useEffect(() => {
@@ -24,12 +25,15 @@ function Navigation({isLoaded}) {
 					<NavLink exact to="/">
 						Home
 					</NavLink>
-				</li>
-				<li>
-					<NavLink exact to="/spots/new">
-						Create New Spot
-					</NavLink>
-				</li>
+					</li>
+					{sessionUser ? (
+					<li>
+						<NavLink exact to="/spots/new">
+							Create New Spot
+						</NavLink>
+					</li>
+
+					) : [hide]}
 				</div>
 			)}
 			{/* {sessionUser && (

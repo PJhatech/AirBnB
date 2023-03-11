@@ -517,12 +517,12 @@ router.post("/:spotId/reviews", requireAuth, async (req, res) => {
 			statusCode: 404,
 		});
 	} else {
-		if (reviews.length) {
-			res.status(403);
-			return res.json({
-				message: "User already has a review for this spot",
-				statusCode: 403,
-			});
+		if (reviews.length ) {
+			// res.status(403);
+			// return res.json({
+			// 	message: "User already has a review for this spot",
+			// 	statusCode: 403,
+			// });
 		} else if (!reviews.length) {
 			const newReview = await Review.create({
 				userId: req.user.id,

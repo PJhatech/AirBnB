@@ -13,7 +13,7 @@ const user = require("../../db/models/user");
 const router = express.Router();
 
 //Get all Reviews of the Current User
-router.get("/current", requireAuth, async (req, res) => {
+router.get("/:userId", requireAuth, async (req, res) => {
 	const Reviews = await Review.findAll({
 		attributes: [
 			"id",

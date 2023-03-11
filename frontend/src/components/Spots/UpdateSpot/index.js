@@ -6,26 +6,24 @@ import {useParams} from "react-router-dom";
 
 const UpdateSpot = () => {
 	const dispatch = useDispatch();
-	const ownerSpot = useSelector((state) => state.spots);
-	const userSpots = Object.values(ownerSpot);
-	const user = useSelector((state) => state.session);
-	const spotOwner = userSpots.Owner;
 	const {spotId} = useParams();
+	const ownerSpot = useSelector((state) => state.spots[spotId]);
+	const user = useSelector((state) => state.session);
 	const [loaded, setLoaded] = useState(false);
 	const history = useHistory();
 
-	const [address, setAddress] = useState(userSpots.address);
-	const [city, setCity] = useState(userSpots.city);
-	const [state, setState] = useState(userSpots.state);
-	const [country, setCountry] = useState(userSpots.country);
-	const [lat, setLat] = useState(userSpots.lat);
-	const [lng, setLng] = useState(userSpots.lng);
-	const [name, setName] = useState(userSpots.name);
-	const [description, setDescription] = useState(userSpots.description);
-	const [price, setPrice] = useState(userSpots.price);
-	const [url, setImageUrl] = useState(userSpots.url);
-	const [preview, setPreview] = useState(userSpots.preview);
-	const [previewImage, setPreviewImage] = useState(userSpots.previewImage);
+	const [address, setAddress] = useState(ownerSpot.address);
+	const [city, setCity] = useState(ownerSpot.city);
+	const [state, setState] = useState(ownerSpot.state);
+	const [country, setCountry] = useState(ownerSpot.country);
+	const [lat, setLat] = useState(ownerSpot.lat);
+	const [lng, setLng] = useState(ownerSpot.lng);
+	const [name, setName] = useState(ownerSpot.name);
+	const [description, setDescription] = useState(ownerSpot.description);
+	const [price, setPrice] = useState(ownerSpot.price);
+	const [url, setImageUrl] = useState(ownerSpot.url);
+	const [preview, setPreview] = useState(ownerSpot.preview);
+	const [previewImage, setPreviewImage] = useState(ownerSpot.previewImage);
 
 	const updateAddress = (e) => setAddress(e.target.value);
 	const updateCity = (e) => setCity(e.target.value);
@@ -47,6 +45,7 @@ const UpdateSpot = () => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		const putData = {
+			...ownerSpot,
 			address,
 			city,
 			state,
@@ -54,13 +53,14 @@ const UpdateSpot = () => {
 			lat,
 			lng,
 			lat,
+			name,
 			description,
 			price,
 			previewImage,
 		};
 
 		if (user) {
-			// const spotId = userSpots.id
+			// const spotId = ownerSpot.id
 			console.log(user, "<----------2---------->");
 			dispatch(updateSpotThunk(putData, spotId));
 			history.push(`/spots/${spotId}`);
@@ -119,7 +119,7 @@ const UpdateSpot = () => {
 				/>
 				<h2>Describe your Place to guests</h2>
 				<p>
-					Mention the best features of your space, any special amentities
+					Mention the best features of your space, any special amenities
 					like fast wif or parking, and what you love about the
 					neighborhood.
 				</p>
