@@ -32,39 +32,41 @@ function ProfileButton({ user }) {
   };
   const ulClassName = "delete-dropdown" + (showMenu ? "" : " hidden");
   return (
-    <>
-      <button onClick={openMenu}>
-        <i className="fas fa-user-circle" />
-      </button>
-      <ul className={ulClassName} ref={ulRef}>
-        {user ? (
-          <>
-            <li>{user.username}</li>
-            <li>{user.firstName} {user.lastName}</li>
-            <li>{user.email}</li>
-            <li>
-              <Link to='/spots/current'>Manage Spots</Link>
-            </li>
-            <li>
-              <button onClick={logout}>Log Out</button>
-            </li>
-          </>
-        ) : (
-          <>
-            <OpenModalMenuItem
-              itemText="Log In"
-              onItemClick={closeMenu}
-              modalComponent={<LoginFormModal />}
-            />
-            <OpenModalMenuItem
-              itemText="Sign Up"
-              onItemClick={closeMenu}
-              modalComponent={<SignupFormModal />}
-            />
-          </>
-        )}
-      </ul>
-    </>
+		<>
+			<button onClick={openMenu}>
+				<i className="fas fa-user-circle" />
+			</button>
+			<ul className={ulClassName} ref={ulRef}>
+				{user ? (
+					<>
+						<li>{user.username}</li>
+						<li>
+							{user.firstName} {user.lastName}
+						</li>
+						<li>{user.email}</li>
+						<li>
+							<Link to="/spots/current">Manage Spots</Link>
+						</li>
+						<li>
+							<button onClick={logout}>Log Out</button>
+						</li>
+					</>
+				) : (
+					<>
+						<OpenModalMenuItem
+							itemText="Log In"
+							onItemClick={closeMenu}
+							modalComponent={<LoginFormModal />}
+						/>
+						<OpenModalMenuItem
+							itemText="Sign Up"
+							onItemClick={closeMenu}
+							modalComponent={<SignupFormModal />}
+						/>
+					</>
+				)}
+			</ul>
+		</>
   );
 }
 export default ProfileButton;

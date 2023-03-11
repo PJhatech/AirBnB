@@ -3,7 +3,7 @@ import * as sessionActions from "../../store/session";
 import {useDispatch} from "react-redux";
 import {useModal} from "../../context/Modal";
 import "./LoginForm.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 
 function LoginFormModal() {
 	const dispatch = useDispatch();
@@ -22,6 +22,13 @@ function LoginFormModal() {
 				if (data && data.errors) setErrors(data.errors);
 			});
 	};
+
+	const demoSubmit = (e) => {
+		setCredential("Number1Dog");
+		setPassword("password3");
+		return dispatch(sessionActions.login({credential, password}));
+	}
+
 
 	return (
 		<>
@@ -51,7 +58,7 @@ function LoginFormModal() {
 					/>
 				</label>
 				<button type="submit">Log In</button>
-
+			<button onClick={demoSubmit}>DemoUser</button>
 			</form>
 		</>
 	);
