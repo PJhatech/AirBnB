@@ -61,9 +61,8 @@ const deleteSpot = (spotId) => {
 export const spotsThunk = () => async (dispatch) => {
 	const response = await fetch("/api/spots");
 	const allSpots = await response.json();
-	console.log(allSpots,"<-------3----->")
+
 	dispatch(getAllSpots(allSpots));
-	// return allSpots;
 };
 
 export const spotIndexThunk = (id) => async (dispatch) => {
@@ -81,7 +80,7 @@ export const createSpotThunk = (newSpot) => async (dispatch) => {
 	});
 
 	if (response.ok) {
-		console.log("HELLO")
+
 		const spot = await response.json();
 		dispatch(addSpot(spot));
 		return spot;
@@ -125,7 +124,6 @@ export const getUserSpots = (user) => async (dispatch) => {
 export const createImageThunk = (imageArr, spotId) => async (dispatch) => {
 	let res;
    imageArr.forEach(async (image) => {
-      console.log(image, "<--------5------>")
 		const spotImageObj = {
 			url: image,
 			preview: true,
@@ -137,11 +135,11 @@ export const createImageThunk = (imageArr, spotId) => async (dispatch) => {
 				body: JSON.stringify(spotImageObj),
 			}
 		);
-		console.log(response, "<-------3------>");
+
 
 		if (response.ok) {
 			const imageData = await response.json();
-			console.log(imageData, "<-------4------>");
+
 			dispatch(createImage(imageData));
 			res = imageData;
 		}

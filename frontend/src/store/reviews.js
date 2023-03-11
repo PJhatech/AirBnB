@@ -10,7 +10,7 @@ const getReviews = (spotReviews) => {
 		type: SPOT_REVIEW,
 		spotReviews,
 	};
-	console.log(spotReviews, "<-------5----->")
+
 };
 
 const createReview = (newReview) => {
@@ -31,7 +31,7 @@ const deleteReview = (deleteReview) => {
 export const spotReviewThunk = (spotId) => async (dispatch) => {
 	const response = await fetch(`/api/spots/${spotId}/reviews`);
 	const review = await response.json();
-	console.log(spotId);
+
 	dispatch(getReviews(review));
 };
 
@@ -53,11 +53,12 @@ export const createReviewThunk = (payload) => async (dispatch) => {
 };
 
 export const deleteReviewThunk = (payload) => async (dispatch) => {
-	const response = await csrfFetch(`/api/${payload.id}/reviews`, {
+	const response = await csrfFetch(`/api/reviews/${payload.id}`, {
 		method: "DELETE",
-		body: JSON.stringify()
-	})
+		body: JSON.stringify(),
+	});
 
+	console.log(response)
 	const deletedReview = await response.json();
 	dispatch(deleteReview(deletedReview))
 }
@@ -68,7 +69,7 @@ const reviewReducer = (state = initialState, action) => {
 	let newState = {};
 	switch (action.type) {
 		case SPOT_REVIEW:
-			console.log(action.spotReviews.Review)
+
 
 			newState = [...action.spotReviews.Reviews]
 

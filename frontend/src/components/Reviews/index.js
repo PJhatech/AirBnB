@@ -8,10 +8,8 @@ import DeleteReviewModal from "../DeleteReviewModal";
 export default function SpotReview({spot}) {
 	const dispatch = useDispatch();
 	const reviewList = useSelector((state) => state.reviews);
-	// const reviewList = Object.values(reviews)
 
 
-	console.log(reviewList)
 	const [showMenu, setShowMenu] = useState(false);
 	const [isLoaded, setIsLoaded] = useState(false);
 	const closeMenu = () => setShowMenu(false);
@@ -19,7 +17,7 @@ export default function SpotReview({spot}) {
 	useEffect(() => {
 		dispatch(spotReviewThunk(spot.id)).then(() => setIsLoaded(true));
 	}, [dispatch]);
-	// console.log(selectorReviews, "<--------5------->");
+
 
 	return (
 		<>

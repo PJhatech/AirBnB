@@ -9,7 +9,7 @@ function Navigation({isLoaded}) {
 	const sessionUser = useSelector((state) => state.session.user);
 	const [setUser] = useState(false);
 	const [hide, setHide] = useState(true);
-	// console.log()
+
 
 	useEffect(() => {
 		if (sessionUser) {

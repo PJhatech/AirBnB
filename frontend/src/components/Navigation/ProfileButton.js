@@ -32,7 +32,7 @@ function ProfileButton({ user }) {
   };
   const ulClassName = "delete-dropdown" + (showMenu ? "" : " hidden");
   return (
-		<>
+		<div>
 			<button onClick={openMenu}>
 				<i className="fas fa-user-circle" />
 			</button>
@@ -66,7 +66,7 @@ function ProfileButton({ user }) {
 					</>
 				)}
 			</ul>
-		</>
+		</div>
   );
 }
 export default ProfileButton;

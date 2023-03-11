@@ -28,7 +28,6 @@ function DeleteSpot(spot) {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		console.log(spot.prop);
 		dispatch(deleteSpotThunk(spot.prop.id))
 		.then(dispatch(getUserSpots(user)))
 	};

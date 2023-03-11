@@ -15,7 +15,7 @@ function ManageReviews() {
 	if (reviews) {
 		reviewOwner = reviews.userId;
 	}
-	console.log(reviewOwner, "<--------2------->");
+
 
 	const [isLoaded, setIsLoaded] = useState(false);
 
@@ -34,7 +34,7 @@ function ManageReviews() {
 				<h1>Manage Reviews</h1>
 			</div>
 			<div>{isLoaded && reviews.map((review) => ({review}))}</div>
-			{console.log(reviews, "<------1------->")}
+		
 		</>
 	);
 }
