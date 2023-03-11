@@ -13,31 +13,31 @@ module.exports = {
 				{
 					userId: 1,
 					spotId: 2,
-					review: "Best place i have stayed!",
+					review: "Best place i have stayed.",
 					stars: 4,
 				},
 				{
 					userId: 2,
 					spotId: 1,
-					review: "really clean spot!",
+					review: "Would recommend",
 					stars: 4,
 				},
 				{
 					userId: 2,
 					spotId: 3,
-					review: "really clean spot!",
+					review: "Nice Place to stay",
 					stars: 4,
 				},
 				{
 					userId: 2,
 					spotId: 4,
-					review: "really clean spot!",
+					review: "Great stay",
 					stars: 4,
 				},
 				{
 					userId: 2,
 					spotId: 3,
-					review: "really clean spot!",
+					review: "Loved it!",
 					stars: 2,
 				},
 				{

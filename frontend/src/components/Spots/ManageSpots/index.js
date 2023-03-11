@@ -9,9 +9,11 @@ import {
 } from "../../../store/spots";
 import DeleteSpot from "../DeleteSpot/index";
 import OpenModalMenuItem from "../../Navigation/OpenModalMenuItem";
+import { useModal } from "../../../context/Modal";
 
 const ManageSpots = () => {
 	const dispatch = useDispatch();
+	 const {closeModal} = useModal();
 	const ownedSpots = useSelector((state) => state.spots);
 	const user = useSelector((state) => state.session);
 	const userSpots = Object.values(ownedSpots);
@@ -51,7 +53,9 @@ const ManageSpots = () => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		if (user) {
-			await dispatch(deleteSpotThunk(ownedSpots.id));
+			await dispatch(deleteSpotThunk(ownedSpots.id))
+			closeModal()
+			dispatch(getUserSpots(user))
 		}
 	};
 

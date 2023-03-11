@@ -24,8 +24,8 @@ function PostReviewModal(spotId) {
       };
       const newReview = dispatch(createReviewThunk(payload))
       closeModal()
-      await dispatch(spotReviewThunk(spotId))
       return newReview
+      // await dispatch(spotReviewThunk(spotId))
     };
 
    return (

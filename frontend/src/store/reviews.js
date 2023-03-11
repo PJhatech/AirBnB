@@ -31,7 +31,6 @@ const deleteReview = (deleteReview) => {
 export const spotReviewThunk = (spotId) => async (dispatch) => {
 	const response = await fetch(`/api/spots/${spotId}/reviews`);
 	const review = await response.json();
-
 	dispatch(getReviews(review));
 };
 
@@ -53,12 +52,12 @@ export const createReviewThunk = (payload) => async (dispatch) => {
 };
 
 export const deleteReviewThunk = (payload) => async (dispatch) => {
-	const response = await csrfFetch(`/api/reviews/${payload.id}`, {
+	const response = await csrfFetch(`/api/reviews/${payload}`, {
 		method: "DELETE",
 		body: JSON.stringify(),
 	});
 
-	console.log(response)
+	console.log(response, "<-----------1------------->")
 	const deletedReview = await response.json();
 	dispatch(deleteReview(deletedReview))
 }
@@ -69,14 +68,12 @@ const reviewReducer = (state = initialState, action) => {
 	let newState = {};
 	switch (action.type) {
 		case SPOT_REVIEW:
-
-
-			newState = [...action.spotReviews.Reviews]
-
+			newState =[...action.spotReviews.Reviews]
 			newState.forEach(review => newState[review.id] = review)
+			// console.log(newState)
 			return newState
 		case CREATE_REVIEW:
-			newState = {...state};
+			// newState = {...state};
 			newState[action.newReview.id] = action.newReview;
 			return newState
 		case DELETE_REVIEW:

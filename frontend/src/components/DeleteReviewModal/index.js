@@ -12,8 +12,8 @@ function DeleteReviewModal({reviewId, spotId}) {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-      dispatch(deleteReviewThunk({reviewId}))
-         .then(dispatch(spotReviewThunk({spotId})))
+      dispatch(deleteReviewThunk(reviewId))
+         .then(dispatch(spotReviewThunk(spotId)))
          .then(closeModal).catch();
 	};
 
