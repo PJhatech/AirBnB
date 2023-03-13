@@ -64,11 +64,7 @@ const ManageSpots = () => {
 		<div>
 			<div>
 				<h1>Manage Your Spots</h1>
-				{/* <button>
-						Create Spot Form
-					<NavLink to="/spots">
-					</NavLink>
-				</button> */}
+		
 			</div>
 			{loaded &&
 				userSpots.map((spot) => (

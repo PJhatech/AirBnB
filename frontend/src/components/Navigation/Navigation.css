@@ -2,6 +2,17 @@
    visibility: hidden;
 }
 
-/* .profile {
+.profileButton {
+  width: 100%;
 
+  display: flex;
+  gap: 16px;
+  /* margin-left: auto; */
+}
+.marginLeft { margin-left: auto;
+
+}
+
+/* .ulClassName {
+  margin:;
 } */

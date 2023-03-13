@@ -10,7 +10,6 @@ function Navigation({isLoaded}) {
 	const [setUser] = useState(false);
 	const [hide, setHide] = useState(true);
 
-
 	useEffect(() => {
 		if (sessionUser) {
 			setUser(true);
@@ -18,23 +17,24 @@ function Navigation({isLoaded}) {
 	}, []);
 
 	return (
-		<ul>
+		<ul className="profileButton">
 			{isLoaded && (
-				<div>
-				<li>
-					<NavLink exact to="/">
-						Home
-					</NavLink>
-					</li>
-					{sessionUser ? (
-					<li>
-						<NavLink exact to="/spots/new">
-							Create New Spot
+				<>
+					<div>
+						<NavLink exact to="/">
+							Home
 						</NavLink>
-					</li>
-
-					) : [hide]}
-				</div>
+					</div>
+					{sessionUser ? (
+						<div className="marginLeft">
+							<NavLink exact to="/spots/new">
+								Create New Spot
+							</NavLink>
+						</div>
+					) : (
+						[hide]
+					)}
+				</>
 			)}
 			{/* {sessionUser && (
 				<div>
@@ -42,9 +42,9 @@ function Navigation({isLoaded}) {
 				</div>
 			)} */}
 			{isLoaded && (
-				<li>
+				<div>
 					<ProfileButton user={sessionUser} />
-				</li>
+				</div>
 			)}
 		</ul>
 	);
