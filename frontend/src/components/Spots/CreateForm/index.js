@@ -89,7 +89,7 @@ const CreateSpotForm = () => {
 	};
 
 	return (
-		<div className="create-spot-container">
+		<div className="update-spot-container">
 			<div className="text-detail">
 				<h1>Create a new Spot</h1>
 				{errors.map((error) => (
@@ -107,7 +107,7 @@ const CreateSpotForm = () => {
 				<div>
 					Country
 					<input
-						className="country-street-title-price-image-fields"
+						className="country-street-title-price-image-input"
 						type="text"
 						value={country}
 						onChange={(e) => setCountry(e.target.value)}
@@ -117,7 +117,7 @@ const CreateSpotForm = () => {
 					<br />
 					Address
 					<input
-						className="country-street-title-price-image-fields"
+						className="country-street-title-price-image-input"
 						type="text"
 						value={address}
 						onChange={(e) => setAddress(e.target.value)}
@@ -126,7 +126,7 @@ const CreateSpotForm = () => {
 					/>
 				</div>
 				<br />
-				<div className="city-state-div">
+				<div className="city-state-input">
 					City
 					<input
 						type="text"
@@ -137,15 +137,15 @@ const CreateSpotForm = () => {
 					/>
 					State
 					<input
-						className="street-field"
+						className="street-input"
 						type="text"
 						value={state}
 						onChange={(e) => setState(e.target.value)}
-						placeholder="STATE"
+						placeholder="State"
 						required
 					/>
 				</div>
-				<div className="city-state-div">
+				<div className="city-state-input">
 					Latitude
 					<input
 						type="number"
@@ -163,9 +163,14 @@ const CreateSpotForm = () => {
 				</div>
 				<br />
 				<br />
-				Description
+				<h3>Describe your place to guests</h3>
+				<p>
+					Mention the best features of your space, any special amentities
+					like fast wif or parking, and what you love about the
+					neighborhood.
+				</p>
 				<input
-					className="describe-text-area"
+					className="describe-input"
 					type="text"
 					value={description}
 					onChange={(e) => setDescription(e.target.value)}
@@ -173,17 +178,28 @@ const CreateSpotForm = () => {
 					min="30"
 					required
 				/>
+				<h3>Create a title for your spot</h3>
+				<p>
+					Catch guests' attention with a spot title that highlights what
+					makes your place special.
+				</p>
 				<input
-					className="country-street-title-price-image-fields"
+					className="country-street-title-price-image-input"
 					type="text"
 					value={name}
 					onChange={(e) => setName(e.target.value)}
 					placeholder="Name of your spot"
 					required
 				/>
+				<h3>Set a base price for your spot</h3>
+				<p>
+					Competitive pricing can help your listing stand out and rank
+					higher in search results.
+				</p>
 				<div className="price-div">
+					Price
 					<input
-						className="country-street-title-price-image-fields"
+						className="country-street-title-price-image-input"
 						type="number"
 						value={price}
 						onChange={(e) => setPrice(e.target.value)}
@@ -192,21 +208,24 @@ const CreateSpotForm = () => {
 						required
 					/>
 				</div>
+				<h3>Liven up your spot with photos</h3>
+				<p>Submit a link to at least one photo to publish your spot</p>
 				<input
-					className="country-street-title-price-image-fields"
+					className="country-street-title-price-image-input"
 					type="text"
 					value={preview}
 					onChange={(e) => setPreview(e.target.value)}
 					placeholder="Preview Url"
 				/>
 				<input
-					className="country-street-title-price-image-fields"
+					className="country-street-title-price-image-input"
 					type="text"
 					value={url}
 					onChange={(e) => setImageUrl(e.target.value)}
 					placeholder="Image Url"
 				/>
-				<button type="submit">Create a Spot</button>
+				<br/>
+				<button className="create-button" type="submit">Create a Spot</button>
 			</form>
 		</div>
 	);

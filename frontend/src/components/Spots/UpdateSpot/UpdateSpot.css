@@ -1,13 +1,11 @@
 .update-spot-container{
     position: relative;
     display: flex;
-    flex-direction: column;
+    flex-flow: column wrap;
     justify-content: center;
-    align-items: center;
-    border-left: dotted #767676 2px;
-    padding-left: 15px;
-    border-right: dotted #767676  2px;
-    padding-right: 15px;
+    text-align: left;
+    margin: auto;
+    width: 400px;
 }
 
 .error-div{
@@ -23,9 +21,11 @@
     align-items: center;
 }
 
-.country-street-title-price-image-fields{
+.country-street-title-price-image-input{
     height: 15px;
     width: 275px;
+    border-style: solid;
+    color: black;
 }
 
 .city-text{
@@ -40,7 +40,7 @@
     top: calc(15px)
 }
 
-.city-state-div{
+.city-state-input{
     display: flex;
     flex-direction: row;
     margin: 10px;
@@ -56,11 +56,11 @@
     left: calc(-50px)
 }
 
-.street-field{
+.street-input{
     width: 70px;
 }
 
-.describe-text-area{
+.describe-input{
     height: 150px;
     width: 500px;
 }
@@ -81,4 +81,23 @@
     background-color: #FF5A5F;
     margin-bottom: 10px;
     margin-top: 10px;
+}
+/*
+h3, h1, p {
+     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: initial;
+
+} */
+
+.create-button{
+    margin-top: 5px;
+    margin-left: 100px;
+     flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    border: solid black 3px;
+    background-color: #FF5A5F;
+    color: white;
+   	box-shadow: 3px 2px 1px 0 rgba(0,0,0,20);
 }

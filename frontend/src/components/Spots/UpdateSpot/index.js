@@ -2,7 +2,8 @@ import React, {useEffect, useState} from "react";
 import {useHistory} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {updateSpotThunk, getUserSpots} from "../../../store/spots";
-import {useParams} from "react-router-dom";
+import { useParams } from "react-router-dom";
+import "./UpdateSpot.css"
 
 const UpdateSpot = () => {
 	const dispatch = useDispatch();
@@ -69,7 +70,7 @@ const UpdateSpot = () => {
 	};
 
 	return (
-		<div>
+		<div className="manage-spots-container">
 			<h1>Update your Spot</h1>
 			<h3>Where's your place located?</h3>
 			<p>
@@ -78,6 +79,7 @@ const UpdateSpot = () => {
 			</p>
 			<form onSubmit={handleSubmit}>
 				<input
+					className="country-street-title-price-image-input"
 					type="text"
 					value={country}
 					onChange={(e) => setCountry(e.target.value)}
@@ -85,38 +87,45 @@ const UpdateSpot = () => {
 					required
 				/>
 				<input
+					className="country-street-title-price-image-input"
 					type="text"
 					value={address}
 					onChange={(e) => setAddress(e.target.value)}
 					placeholder="Address"
 					required
 				/>
-				<input
-					type="text"
-					value={city}
-					onChange={(e) => setCity(e.target.value)}
-					placeholder="City"
-					required
-				/>
-				<input
-					type="text"
-					value={state}
-					onChange={(e) => setState(e.target.value)}
-					placeholder="STATE"
-					required
-				/>
+				<div className="city-state-div">
+					<input
+						type="text"
+						value={city}
+						onChange={(e) => setCity(e.target.value)}
+						placeholder="City"
+						required
+					/>
+					<input
+						className="street-field"
+						type="text"
+						value={state}
+						onChange={(e) => setState(e.target.value)}
+						placeholder="State"
+						required
+					/>
+				</div>
+				<div className="city-state-div">
+
 				<input
 					type="number"
 					value={lat}
 					onChange={(e) => setLat(e.target.value)}
 					placeholder="Latitude"
-				/>
+					/>
 				<input
 					type="number"
 					value={lng}
 					onChange={(e) => setLng(e.target.value)}
 					placeholder="Longitude"
-				/>
+					/>
+					</div>
 				<h2>Describe your Place to guests</h2>
 				<p>
 					Mention the best features of your space, any special amenities
@@ -138,6 +147,7 @@ const UpdateSpot = () => {
 					makes your place special
 				</p>
 				<input
+					className="country-street-title-price-image-input"
 					type="text"
 					value={name}
 					onChange={(e) => setName(e.target.value)}
@@ -151,6 +161,7 @@ const UpdateSpot = () => {
 				</p>
 				$
 				<input
+					className="country-street-title-price-image-input"
 					type="number"
 					value={price}
 					onChange={(e) => setPrice(e.target.value)}
@@ -161,6 +172,7 @@ const UpdateSpot = () => {
 				<h2>Liven up your spot with photos</h2>
 				<p>Submit a link to at least one photo to publish your spot.</p>
 				<input
+					className="country-street-title-price-image-input"
 					type="text"
 					value={previewImage}
 					onChange={(e) => setImageUrl(e.target.value)}

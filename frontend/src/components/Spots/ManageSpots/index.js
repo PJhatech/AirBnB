@@ -79,14 +79,20 @@ const ManageSpots = () => {
 							<br />
 							{spot.AvgRating}
 						</div>
+						<div className="manage-button">
 						<NavLink to={`/spots/${spot.id}/edit`}>
-							<button>Update</button>
+							<button type="submit">Update</button>
 						</NavLink>
+						</div>
+						<div className="manage-button">
+						<button type="submit">
 						<OpenModalMenuItem
 							itemText="Delete"
 							onItemClick={showMenu}
 							modalComponent={<DeleteSpot prop={spot} />}
 						/>
+						</button>
+						</div>
 						<br />
 					</div>
 				))}

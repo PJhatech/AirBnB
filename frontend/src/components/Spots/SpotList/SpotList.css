@@ -7,7 +7,7 @@ img {
 
 .spots-container {
 	display: flex;
-	flex-flow: row-wrap;
+	flex-flow: row wrap;
 	justify-content: center;
 	align-content: center;
 	gap: 20px 20px;
@@ -17,20 +17,4 @@ img {
 	width: 300px;
 	height: 250px;
 	border: solid black 3px;
-}
-
-.pekabo a:link {
-	text-decoration: none;
-}
-
-.pekabo a:visited {
-	text-decoration: none;
-}
-
-.pekabo a:hover {
-	text-decoration: none;
-}
-
-.pekabo a:active {
-	text-decoration: none;
 }

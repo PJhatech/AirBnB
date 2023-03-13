@@ -18,3 +18,17 @@ img {
 	height: 250px;
 	/* border: solid black 3px; */
 }
+
+.manage-button{
+	background-color: #FF5A5F;
+	width:60px;
+	 /* margin-top: 5px;
+    margin-left: 100px;
+
+    justify-content: center;
+    align-content: center;
+    align-items: center; */
+    border: solid black 3px;
+    color: white;
+   box-shadow: 3px 2px 1px 0 rgba(0,0,0,20);
+}
