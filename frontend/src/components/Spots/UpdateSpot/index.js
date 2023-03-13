@@ -61,9 +61,10 @@ const UpdateSpot = () => {
 
 		if (user) {
 			// const spotId = ownerSpot.id
+			console.log(user, "<----------2---------->");
 			dispatch(updateSpotThunk(putData, spotId));
 			history.push(`/spots/${spotId}`);
-			dispatch(getUserSpots(user));
+			 return dispatch(getUserSpots(user));
 		}
 	};
 

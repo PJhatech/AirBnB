@@ -1,4 +1,4 @@
-.create-spot-container{
+.update-spot-container{
     position: relative;
     display: flex;
     flex-direction: column;
@@ -23,7 +23,7 @@
     align-items: center;
 }
 
-.country-street-title-price-image-inputs{
+.country-street-title-price-image-fields{
     height: 15px;
     width: 275px;
 }
@@ -40,7 +40,7 @@
     top: calc(15px)
 }
 
-.city-state-input{
+.city-state-div{
     display: flex;
     flex-direction: row;
     margin: 10px;

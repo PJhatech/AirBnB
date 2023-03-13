@@ -114,13 +114,6 @@ export const getUserSpots = (user) => async (dispatch) => {
 	return ownedSpotObj
 }
 
-// export const getImageThunk = (id) => async (dispatch) => {
-//    const response = await fetch(`/api/spots/${id}/images`);
-//    const images = await response.json();
-//    dispatch(getSpotImages(images))
-//    return images
-// };
-
 export const createImageThunk = (imageArr, spotId) => async (dispatch) => {
 	let res;
    imageArr.forEach(async (image) => {

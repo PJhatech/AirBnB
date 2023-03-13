@@ -1,15 +1,24 @@
-img {
+/* img {
    width: min(80%, 25rem);
 }
 
 .spots {
-  width: 80%;
+
 
   display: grid;
   grid-template-rows: repeat(auto-fill, 40%);
-  grid-template-columns: repeat(4, auto);
-  gap: 80px;
+  grid-template-columns: repeat(4, auto); */
 
+
+
+    /* background-color: white;
+    display: flex;
+    flex-flow: row;
+
+    border-radius: 15px;
+    padding: 10px;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 200; */
   /* width: 1366px;
   height: 768px;
 
@@ -20,4 +29,4 @@ img {
 
   /* justify-content: space-evenly;
   align-content: space-evenly; */
-}
+

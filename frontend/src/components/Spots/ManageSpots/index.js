@@ -10,6 +10,7 @@ import {
 import DeleteSpot from "../DeleteSpot/index";
 import OpenModalMenuItem from "../../Navigation/OpenModalMenuItem";
 import { useModal } from "../../../context/Modal";
+import "./ManageSpots.css"
 
 const ManageSpots = () => {
 	const dispatch = useDispatch();
@@ -61,14 +62,13 @@ const ManageSpots = () => {
 
 	const ulClassName = showMenu ? "" : " hidden";
 	return (
-		<div>
+		<div className="manage-spots-container">
 			<div>
 				<h1>Manage Your Spots</h1>
-		
 			</div>
 			{loaded &&
 				userSpots.map((spot) => (
-					<div>
+					<div className="manage-spots-grid">
 						<br />
 						<img src={spot.previewImage} alt={spot.city} />
 						<div>

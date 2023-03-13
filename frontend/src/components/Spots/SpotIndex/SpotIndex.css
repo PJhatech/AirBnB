@@ -1,0 +1,9 @@
+.post-button {
+	border-width: 5px;
+	width: 110px;
+	border: solid black 2px;
+	color: white;
+	text-align: center;
+	padding: 3px;
+	background-color: grey;
+}

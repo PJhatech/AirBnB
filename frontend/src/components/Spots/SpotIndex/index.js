@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useParams} from "react-router-dom";
-import { spotIndexThunk, deleteSpotThunk } from "../../store/spots";
+import { spotIndexThunk, deleteSpotThunk } from "../../../store/spots";
 // import {CreateReviewForm} from "../CreateReviewForm/index.js";
-import OpenModalButton from "../OpenModalButton";
-import SpotReview from "../Reviews/index"
-import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
-import PostReviewModal from "../PostReviewModal";
-
+import OpenModalButton from "../../OpenModalButton";
+import SpotReview from "../../Reviews/index"
+import OpenModalMenuItem from "../../Navigation/OpenModalMenuItem";
+import PostReviewModal from "../../PostReviewModal";
+import "./SpotIndex.css"
 
 function SpotIndex() {
 	const {id} = useParams();
@@ -68,7 +68,7 @@ function SpotIndex() {
 					</div>
 				</div>
 			)}
-			<div>
+			<div className="post-button">
 				<OpenModalMenuItem
 					itemText="Post Your Review"
 					onItemClick={closeMenu}

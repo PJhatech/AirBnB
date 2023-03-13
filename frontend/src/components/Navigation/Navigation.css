@@ -20,14 +20,11 @@
 .home-icon{
     display: flex;
     flex:auto;
-    /* margin-right: 61%; */
     margin-top: 1px;
-    /* margin-left: 20px; */
     font-size: 30px;
     font-weight: bolder;
     font-style:italic;
     color: salmon;
-    /* order:1; */
 }
 
 .create-new-spot{
@@ -44,7 +41,6 @@
     margin-bottom: 5px;
     width:140px;
     text-align: right;
-    /* align-items: center; */
     font-size: 15px;
 }
 
@@ -134,7 +130,7 @@
     border-style: solid black ;
     width: 85px;
     height: 42px;
-    border-radius: 2550px ;
+    border-radius: 255px ;
     background-color: grey;
 }
 

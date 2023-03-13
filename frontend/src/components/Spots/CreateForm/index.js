@@ -25,6 +25,7 @@ const CreateSpotForm = () => {
 	const [url, setImageUrl] = useState();
 	const [preview, setPreview] = useState(); //previewImage
 	const [previewImage, setPreviewImage] = useState();
+	const [errors, setErrors] = useState([]);
 
 	// useEffect(() => {
 	// 	dispatch(spotsThunk());
@@ -32,6 +33,38 @@ const CreateSpotForm = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+		setErrors([]);
+		let errorsArr = [];
+		if (!country.length) {
+			errorsArr.push("Country is required");
+		}
+		if (!address.length) {
+			errorsArr.push("Address is required");
+		}
+		if (!city.length) {
+			errorsArr.push("City is required");
+		}
+		if (!state.length) {
+			errorsArr.push("State is required");
+		}
+		if (description.length < 30) {
+			errorsArr.push("Description needs a minimum of 30 characters");
+		}
+		if (!name.length) {
+			errorsArr.push("Name is required");
+		}
+		if (!price.length || price === 0) {
+			errorsArr.push("Price is required");
+		}
+		if (!preview.length) {
+			errorsArr.push("Preview image is required");
+		}
+
+		setErrors(errorsArr);
+
+		if (errorsArr.length) {
+			return errors;
+		}
 		const newSpot = {
 			address,
 			city,
@@ -56,9 +89,14 @@ const CreateSpotForm = () => {
 	};
 
 	return (
-		<div className="container">
+		<div className="create-spot-container">
 			<div className="text-detail">
 				<h1>Create a new Spot</h1>
+				{errors.map((error) => (
+					<div className="error-div" key={error}>
+						{error}
+					</div>
+				))}
 				<h3>Where's your place located?</h3>
 				<p>
 					Guest will only get your exact address once they booked a
@@ -66,9 +104,10 @@ const CreateSpotForm = () => {
 				</p>
 			</div>
 			<form onSubmit={handleSubmit}>
-				<div className="display-control">
+				<div>
 					Country
 					<input
+						className="country-street-title-price-image-fields"
 						type="text"
 						value={country}
 						onChange={(e) => setCountry(e.target.value)}
@@ -78,6 +117,7 @@ const CreateSpotForm = () => {
 					<br />
 					Address
 					<input
+						className="country-street-title-price-image-fields"
 						type="text"
 						value={address}
 						onChange={(e) => setAddress(e.target.value)}
@@ -86,48 +126,46 @@ const CreateSpotForm = () => {
 					/>
 				</div>
 				<br />
-				<div className="float">
-				City
-				<input
-					className="display-control"
-					type="text"
-					value={city}
-					onChange={(e) => setCity(e.target.value)}
-					placeholder="City"
-					required
-				/>
-				 State
-				<input
-					className="display-control"
-					type="text"
-					value={state}
-					onChange={(e) => setState(e.target.value)}
-					placeholder="STATE"
-					required
-				/>
+				<div className="city-state-div">
+					City
+					<input
+						type="text"
+						value={city}
+						onChange={(e) => setCity(e.target.value)}
+						placeholder="City"
+						required
+					/>
+					State
+					<input
+						className="street-field"
+						type="text"
+						value={state}
+						onChange={(e) => setState(e.target.value)}
+						placeholder="STATE"
+						required
+					/>
 				</div>
-				<div className="float">
-
-				Latitude
-				<input
-					type="number"
-					value={lat}
-					onChange={(e) => setLat(e.target.value)}
-					placeholder="Latitude"
-				/>
-				Longitude
-				<input
-					type="number"
-					value={lng}
-					onChange={(e) => setLng(e.target.value)}
-					placeholder="Longitude"
-				/>
+				<div className="city-state-div">
+					Latitude
+					<input
+						type="number"
+						value={lat}
+						onChange={(e) => setLat(e.target.value)}
+						placeholder="Latitude"
+					/>
+					Longitude
+					<input
+						type="number"
+						value={lng}
+						onChange={(e) => setLng(e.target.value)}
+						placeholder="Longitude"
+					/>
 				</div>
-
 				<br />
 				<br />
 				Description
 				<input
+					className="describe-text-area"
 					type="text"
 					value={description}
 					onChange={(e) => setDescription(e.target.value)}
@@ -136,31 +174,37 @@ const CreateSpotForm = () => {
 					required
 				/>
 				<input
+					className="country-street-title-price-image-fields"
 					type="text"
 					value={name}
 					onChange={(e) => setName(e.target.value)}
 					placeholder="Name of your spot"
 					required
 				/>
+				<div className="price-div">
+					<input
+						className="country-street-title-price-image-fields"
+						type="number"
+						value={price}
+						onChange={(e) => setPrice(e.target.value)}
+						min=""
+						placeholder="Price per night (USD)"
+						required
+					/>
+				</div>
 				<input
-					type="number"
-					value={price}
-					onChange={(e) => setPrice(e.target.value)}
-					min=""
-					placeholder="Price per night (USD)"
-					required
-				/>
-				<input
-					type="text"
-					value={url}
-					onChange={(e) => setImageUrl(e.target.value)}
-					placeholder="Image Url"
-				/>
-				<input
+					className="country-street-title-price-image-fields"
 					type="text"
 					value={preview}
 					onChange={(e) => setPreview(e.target.value)}
 					placeholder="Preview Url"
+				/>
+				<input
+					className="country-street-title-price-image-fields"
+					type="text"
+					value={url}
+					onChange={(e) => setImageUrl(e.target.value)}
+					placeholder="Image Url"
 				/>
 				<button type="submit">Create a Spot</button>
 			</form>
