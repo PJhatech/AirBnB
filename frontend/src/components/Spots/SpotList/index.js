@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {NavLink} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {spotsThunk} from "../../../store/spots";
-import "../Spot.css";
+import "../spot.css";
 
 function SpotList() {
 	const dispatch = useDispatch();
