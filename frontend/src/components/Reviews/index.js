@@ -9,7 +9,6 @@ export default function SpotReview({spot}) {
 	const dispatch = useDispatch();
 	const reviewList = useSelector((state) => state.reviews);
 	const user = useSelector(state => state.session.user)
-	console.log(user.id)
 	// const spot = useSelector((state) => state.spots[id]);
 
 	const [hide, setHide] = useState(true);

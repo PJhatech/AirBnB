@@ -25,13 +25,12 @@ function App() {
 				{isLoaded && (
 					<Switch>
 						<Route path="/" exact>
-							<h1>Home Page Route</h1>
 							<SpotList />
 						</Route>
 
 						<Route exact path="/spots/current" component={ManageSpots} />
-						<Route exact path="/spots/spotId/reviews" component={PostReviewModal} />
 						<Route exact path="/spots/new" component={CreateForm} />
+						<Route exact path="/spots/spotId/reviews" component={PostReviewModal} />
 						<Route path="/spots/:spotId/edit" component={UpdateSpot} />
 						<Route path="/spots/:id" component={SpotIndex} />
 						{/* <Route exact path="/spots/:userId" component={ManageReviews} /> */}

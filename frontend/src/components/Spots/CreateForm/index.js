@@ -7,6 +7,7 @@ import {
 	spotsThunk,
 	spotIndexThunk,
 } from "../../../store/spots";
+import "./CreateForm.css"
 
 const CreateSpotForm = () => {
 	const dispatch = useDispatch();
@@ -55,54 +56,77 @@ const CreateSpotForm = () => {
 	};
 
 	return (
-		<div>
-			<h1>Create a new Spot</h1>
-			<h3>Where's your place located?</h3>
-			<p>
-				Guest will only get your exact address once they booked a
-				reservation.
-			</p>
+		<div className="container">
+			<div className="text-detail">
+				<h1>Create a new Spot</h1>
+				<h3>Where's your place located?</h3>
+				<p>
+					Guest will only get your exact address once they booked a
+					reservation.
+				</p>
+			</div>
 			<form onSubmit={handleSubmit}>
+				<div className="display-control">
+					Country
+					<input
+						type="text"
+						value={country}
+						onChange={(e) => setCountry(e.target.value)}
+						placeholder="Country"
+						required
+					/>
+					<br />
+					Address
+					<input
+						type="text"
+						value={address}
+						onChange={(e) => setAddress(e.target.value)}
+						placeholder="Address"
+						required
+					/>
+				</div>
+				<br />
+				<div className="float">
+				City
 				<input
-					type="text"
-					value={country}
-					onChange={(e) => setCountry(e.target.value)}
-					placeholder="Country"
-					required
-				/>
-				<input
-					type="text"
-					value={address}
-					onChange={(e) => setAddress(e.target.value)}
-					placeholder="Address"
-					required
-				/>
-				<input
+					className="display-control"
 					type="text"
 					value={city}
 					onChange={(e) => setCity(e.target.value)}
 					placeholder="City"
 					required
 				/>
+				 State
 				<input
+					className="display-control"
 					type="text"
 					value={state}
 					onChange={(e) => setState(e.target.value)}
 					placeholder="STATE"
 					required
 				/>
+				</div>
+				<div className="float">
+
+				Latitude
 				<input
 					type="number"
 					value={lat}
 					onChange={(e) => setLat(e.target.value)}
 					placeholder="Latitude"
 				/>
+				Longitude
 				<input
 					type="number"
 					value={lng}
 					onChange={(e) => setLng(e.target.value)}
 					placeholder="Longitude"
 				/>
+				</div>
+
+				<br />
+				<br />
+				Description
 				<input
 					type="text"
 					value={description}
@@ -138,7 +162,6 @@ const CreateSpotForm = () => {
 					onChange={(e) => setPreview(e.target.value)}
 					placeholder="Preview Url"
 				/>
-
 				<button type="submit">Create a Spot</button>
 			</form>
 		</div>

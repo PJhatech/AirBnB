@@ -5,7 +5,7 @@ import OpenModalMenuItem from './OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
 import { Link } from "react-router-dom";
-
+import "./Navigation.css"
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -33,32 +33,42 @@ function ProfileButton({ user }) {
   };
   const ulClassName = "delete-dropdown" + (showMenu ? "" : " hidden");
   return (
-		<div>
-			<button onClick={openMenu}>
-				<i className="fas fa-user-circle" />
+		<div className="profile-button">
+			<button className="pekabo" onClick={openMenu}>
+				<i className="fas fa-user-circle wumbo" />
 			</button>
-			<ul className={ulClassName} ref={ulRef}>
+			<ul id="dropdown-styling" className={ulClassName} ref={ulRef}>
 				{user ? (
-					<>
-						<li>{user.username}</li>
+				  <div>
+					  <div className="dropdown-section-1">
+						{/* <li>{user.username}</li> */}
 						<li>
-							{user.firstName} {user.lastName}
+							  {`Hello, ${user.firstName}`}
+							  {/* {user.lastName} */}
 						</li>
 						<li>{user.email}</li>
+
+					  </div>
+					  <div className="manage-spot">
 						<li>
 							<Link to="/spots/current">Manage Spots</Link>
 						</li>
+
+					  </div>
 						<li>
-							<button onClick={logout}>Log Out</button>
-						</li>
-					</>
+							<button className="logout-button" onClick={logout}>
+								Log Out
+							</button>
+					  </li>
+					</div>
 				) : (
 					<>
 						<OpenModalMenuItem
 							itemText="Log In"
 							onItemClick={closeMenu}
 							modalComponent={<LoginFormModal />}
-						/>
+							/>
+							<br/>
 						<OpenModalMenuItem
 							itemText="Sign Up"
 							onItemClick={closeMenu}

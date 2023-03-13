@@ -2,17 +2,152 @@
    visibility: hidden;
 }
 
-.profileButton {
-  width: 100%;
+#navigation-container{
+    /* margin-left: auto; */
+    background-color: white;
+    top:0px;
+    display: flex;
+    justify-content: flex-end;
+    height: 45px;
+    width:100%;
+    border-bottom: solid #CCCCCC 2px;
+    padding: 0;
+    border-bottom: 5%;
 
-  display: flex;
-  gap: 16px;
-  /* margin-left: auto; */
+    z-index: 1;
 }
-.marginLeft { margin-left: auto;
+
+.home-icon{
+    display: flex;
+    flex:auto;
+    /* margin-right: 61%; */
+    margin-top: 1px;
+    /* margin-left: 20px; */
+    font-size: 30px;
+    font-weight: bolder;
+    font-style:italic;
+    color: salmon;
+    /* order:1; */
+}
+
+.create-new-spot{
+    position: relative;
+    left: 90px;
+    display: flex;
+    justify-content: flex-end;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    margin-top: 8px;
 
 }
 
-/* .ulClassName {
-  margin:;
-} */
+.profile-button{
+    margin-bottom: 5px;
+    width:140px;
+    text-align: right;
+    /* align-items: center; */
+    font-size: 15px;
+}
+
+.home-icon a:link{
+    text-decoration: none;
+    color: rgb(255, 90, 95);
+}
+
+.home-icon a:visited{
+    text-decoration: none;
+    color: rgb(255, 90, 95);
+}
+
+.home-icon a:hover{
+    text-decoration: none;
+    color: rgb(255, 90, 95);
+}
+
+.home-icon a:active{
+    text-decoration: none;
+    color: rgb(255, 90, 95);
+}
+
+.wumbo{
+    font-size: 30px;
+}
+
+.profile-button li {
+    list-style-type: none;
+}
+
+.profile-button a:link,
+.profile-button a:visited,
+.profile-button a:hover,
+.profile-button a:active{
+    color: black;
+}
+
+#dropdown-styling {
+    position: relative;
+    border: solid black 2px;
+    top: 5px;
+    background: white;
+    text-align: center;
+    padding:3px;
+}
+
+
+.create-new-spot a:link{
+    text-decoration: none;
+    color: rgb(0, 166, 153);
+}
+
+.create-new-spot a:visited{
+    text-decoration: none;
+    color: black
+}
+
+.create-new-spot a:hover{
+    text-decoration: none;
+    color: rgb(0, 166, 153);
+}
+
+.create-new-spot a:active{
+    text-decoration: none;
+    color: black
+}
+
+.pekabo{
+    background: none!important;
+    border: none;
+    padding: 0!important;
+    /*optional*/
+    font-family: arial, sans-serif;
+    /*input has OS specific font-family*/
+    color: black;
+    /* text-decoration: underline; */
+    cursor: pointer;
+  }
+
+.logout-button{
+    color: white;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    border-color: black;
+    border-width: 3px;
+    border-style: solid black ;
+    width: 85px;
+    height: 42px;
+    border-radius: 2550px ;
+    background-color: grey;
+}
+
+.dropdown-section-1{
+     border-bottom: solid grey  2px;
+
+}
+.dropdown-section-2{
+     border-bottom: solid darkgrey 2px;
+
+}
+
+.manage-spot{
+     border-bottom: solid black 2px;
+     margin-bottom: 2px;
+}

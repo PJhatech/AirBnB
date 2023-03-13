@@ -1,0 +1,86 @@
+.review-container {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    border: solid black 3px;
+    border-radius: 1px;
+    padding: 10px;
+}
+
+.button-class{
+    height:50px;
+    width:400px;
+    font-size: 20px;
+    color: white;
+    background-color: #FF5A5F;
+}
+
+.button-class:hover{
+    background-color: #d84247;
+}
+
+.button-class:active{
+    background-color: #767676;
+}
+
+.button-class::shadow{
+    color: black;
+}
+
+.text-area {
+    height: 175px;
+    width: 400px;
+    border: solid black 1px;
+    border-radius: 1px;
+}
+
+/*STAR CSS*/
+
+.star-rating {
+    display: flex;
+    align-items: center;
+    width: 160px;
+    flex-direction: row-reverse;
+    margin-bottom: 10px;
+}
+
+.star-rating input {
+    display: none;
+}
+
+.star-rating>label {
+    width: 30px;
+    height: 30px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 30px;
+    color: #767676;
+    transition: 0.2s ease;
+}
+
+.star-rating label:hover~label:before {
+    content: '\2606';
+    color: #FF5A5F;
+    transition: 0.2s ease;
+}
+
+.star-rating label:hover {
+    color: #FF5A5F;
+    content: '\2605';
+    transition: 0.2s ease;
+}
+
+.star-rating label:before {
+    content: '\2606';
+    top: 0px;
+    line-height: 26px;
+}
+
+
+
+.star-rating input:checked~label:before {
+    content: '\2605'
+}

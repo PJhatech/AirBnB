@@ -1,0 +1,22 @@
+.container {
+   display: grid;
+   width: 400px;
+   /* height: 500px; */
+   /* flex-wrap: wrap; */
+   flex-direction: column;
+   align-items: center;
+   /* text-align: left; */
+   align-content: center;
+   justify-content: center;
+   margin: auto;
+}
+
+.text-detail{
+   padding-top:-100px;
+   /* order: 1; */
+}
+
+.display-control {
+   display: grid;
+
+}

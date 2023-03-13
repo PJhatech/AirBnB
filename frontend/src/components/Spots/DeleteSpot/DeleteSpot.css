@@ -1,0 +1,29 @@
+.delete-container {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    border: solid black 3px;
+    border-radius: 1px;
+    padding: 10px;
+}
+
+.button-class-submit{
+    height:50px;
+    width:400px;
+    font-size: 20px;
+    color: white;
+    background-color: #FF5A5F;
+    margin-bottom: 10px;
+}
+
+.button-class-cancel{
+    height:50px;
+    width:400px;
+    font-size: 20px;
+    color: white;
+    background-color:#767676;
+}

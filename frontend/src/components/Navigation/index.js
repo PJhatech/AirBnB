@@ -17,35 +17,32 @@ function Navigation({isLoaded}) {
 	}, []);
 
 	return (
-		<ul className="profileButton">
-			{isLoaded && (
-				<>
-					<div>
-						<NavLink exact to="/">
-							Home
-						</NavLink>
-					</div>
-					{sessionUser ? (
-						<div className="marginLeft">
-							<NavLink exact to="/spots/new">
-								Create New Spot
+		<ul id="navigation-container">
+				{isLoaded && (
+					<>
+						<div className="home-icon">
+							<NavLink exact to="/">
+								<i className="fa-brands fa-airbnb" />
+								airbnb
 							</NavLink>
 						</div>
-					) : (
-						[hide]
-					)}
-				</>
-			)}
-			{/* {sessionUser && (
-				<div>
-					<NavLink to="/spots">Create a New Spot</NavLink>
-				</div>
-			)} */}
-			{isLoaded && (
-				<div>
-					<ProfileButton user={sessionUser} />
-				</div>
-			)}
+						{sessionUser ? (
+							<div className="create-new-spot">
+								<NavLink exact to="/spots/new">
+									Create New Spot
+								</NavLink>
+							</div>
+						) : (
+							[hide]
+						)}
+					</>
+				)}
+				{isLoaded && (
+					<div className="profile-button">
+						<ProfileButton user={sessionUser} />
+					</div>
+				)}
+
 		</ul>
 	);
 }
