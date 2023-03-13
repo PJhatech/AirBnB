@@ -14,7 +14,7 @@ function DeleteReviewModal({reviewId, spotId}) {
 		e.preventDefault();
       dispatch(deleteReviewThunk(reviewId))
          .then(dispatch(spotReviewThunk(spotId)))
-         .then(closeModal).catch();
+         .then(closeModal()).catch();
 	};
 
 	return (

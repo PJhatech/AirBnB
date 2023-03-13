@@ -16,7 +16,9 @@ function DeleteSpot(spot) {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		dispatch(deleteSpotThunk(spot.prop.id))
-		.then(dispatch(getUserSpots(user)))
+			.then(dispatch(getUserSpots(user)))
+			.then(closeModal())
+			.catch();
 	};
 
 	return (
